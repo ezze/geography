@@ -1,0 +1,8 @@
+{
+  "navigation": {
+    "home": "Начало",
+    "user": "Профиль",
+    "contacts": "Контакты",
+    "language": "Язык"
+  }
+}

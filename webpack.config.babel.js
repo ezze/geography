@@ -38,6 +38,9 @@ export default (env, argv) => {
       modules: ['node_modules'],
       moduleExtensions: ['.js'],
     },
+    externals: {
+      cesium: 'Cesium'
+    },
     module: {
       rules: [{
         test: /\.jsx?$/,
@@ -97,6 +100,7 @@ export default (env, argv) => {
           content: '0',
         }],
         appMountId: 'app',
+        scripts: ['./cesium/Cesium.js'],
         minify: {
           collapseWhitespace: mode === 'production',
         },

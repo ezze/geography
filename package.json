@@ -9,14 +9,16 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --mode=production --progress",
-    "build:dev": "webpack --mode=development --progress",
+    "build": "yarn copy:cesium && webpack --mode=production --progress",
+    "build:dev": "yarn copy:cesium && webpack --mode=development --progress",
     "wds": "webpack-dev-server --mode=production --progress",
     "wds:dev": "webpack-dev-server --mode=development --progress",
+    "copy:cesium": "copyfiles -s -u 4 \"node_modules/cesium/Build/Cesium/**/*\" dist/cesium",
     "lint": "eslint src"
   },
   "dependencies": {
     "bulma": "^0.7.5",
+    "cesium": "^1.59.0",
     "classnames": "^2.2.6",
     "core-js": "^3.1.4",
     "i18next": "^17.0.6",

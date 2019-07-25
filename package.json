@@ -1,0 +1,10 @@
+{
+  "name": "geography",
+  "version": "0.1.0",
+  "description": "Geography game",
+  "main": "index.js",
+  "repository": "git@gitlab.com:yellowberry/geography",
+  "author": "Dmitriy Pushkov <ezze@ezze.org>",
+  "license": "MIT",
+  "private": true
+}

@@ -1,19 +1,26 @@
 $body-size: 18px
-
-$yellow: #fff770
-
-$navbar-height: 3.5rem
-$navbar-padding-vertical: 0.5rem
-$navbar-item-img-max-height: 2.5rem
+$body-background-color: #000
 
 
 @import "~bulma"
+@import "./components/Globe/sass/index"
 
 
 html
   min-height: 600px
+  overflow: hidden
 
 
 body
   position: relative
   min-height: 100vh
+
+
+#app,
+.app
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  overflow: hidden

@@ -1,0 +1,65 @@
+[{
+  "id": "europe",
+  "name": { "en": "Europe", "ru": "Европа" },
+  "items": [{
+    "name": { "en": "Albania", "ru": "Албания" },
+    "path": "challenges/europe/albania.json"
+  }, {
+    "name": { "en": "Belgium", "ru": "Бельгия" },
+    "path": "challenges/europe/belgium.json"
+  }, {
+    "name": { "en": "Czech Republic", "ru": "Чехия" },
+    "path": "challenges/europe/czech-republic.json"
+  }, {
+    "name": { "en": "Cyprus", "ru": "Кипр" },
+    "path": "challenges/europe/cyprus.json"
+  }, {
+    "name": { "en": "Denmark", "ru": "Дания" },
+    "path": "challenges/europe/denmark.json"
+  }, {
+    "name": { "en": "France", "ru": "Франция" },
+    "path": "challenges/europe/france.json"
+  }, {
+    "name": { "en": "Germany", "ru": "Германия" },
+    "path": "challenges/europe/germany.json"
+  }, {
+    "name": { "en": "Great Britain", "ru": "Великобритания" },
+    "path": "challenges/europe/great-britain.json"
+  }, {
+    "name": { "en": "Greece", "ru": "Греция" },
+    "path": "challenges/europe/greece.json"
+  }, {
+    "name": { "en": "Italy", "ru": "Италия" },
+    "path": "challenges/europe/italy.json"
+  }, {
+    "name": { "en": "Ireland", "ru": "Ирландия" },
+    "path": "challenges/europe/ireland.json"
+  }, {
+    "name": { "en": "Netherlands", "ru": "Нидерланды" },
+    "path": "challenges/europe/netherlands.json"
+  }, {
+    "name": { "en": "Norway", "ru": "Норвегия" },
+    "path": "challenges/europe/norway.json"
+  }, {
+    "name": { "en": "Poland", "ru": "Польша" },
+    "path": "challenges/europe/poland.json"
+  }, {
+    "name": { "en": "Portugal", "ru": "Португалия" },
+    "path": "challenges/europe/portugal.json"
+  }, {
+    "name": { "en": "Russia", "ru": "Россия" },
+    "path": "challenges/europe/russia.json"
+  }, {
+    "name": { "en": "Spain", "ru": "Испания" },
+    "path": "challenges/europe/spain.json"
+  }, {
+    "name": { "en": "Sweden", "ru": "Швеция" },
+    "path": "challenges/europe/sweden.json"
+  }, {
+    "name": { "en": "Switzerland", "ru": "Швейцария" },
+    "path": "challenges/europe/switzerland.json"
+  }, {
+    "name": { "en": "Ukraine", "ru": "Украина" },
+    "path": "challenges/europe/ukraine.json"
+  }]
+}]

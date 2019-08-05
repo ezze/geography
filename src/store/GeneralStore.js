@@ -6,8 +6,10 @@ import BaseStore from './BaseStore';
 class GeneralStore extends BaseStore {
   @observable language = null;
 
-  constructor({ languages }) {
-    super();
+  constructor(options = {}) {
+    super({ key: 'general', ...options });
+
+    const { languages } = options;
 
     if (!Array.isArray(languages) || languages.length === 0) {
       throw new TypeError('Languages should be specified as non-empty array.');

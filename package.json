@@ -9,11 +9,12 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "build": "yarn copy:cesium && webpack --mode=production --progress",
-    "build:dev": "yarn copy:cesium && webpack --mode=development --progress",
+    "build": "yarn copy:cesium && yarn copy:challenges && webpack --mode=production --progress",
+    "build:dev": "yarn copy:cesium && yarn copy:challenges && webpack --mode=development --progress",
     "wds": "webpack-dev-server --mode=production --progress",
     "wds:dev": "webpack-dev-server --mode=development --progress",
     "copy:cesium": "copyfiles -s -u 4 \"node_modules/cesium/Build/Cesium/**/*\" dist/cesium",
+    "copy:challenges": "rm -Rf dist/challenges && copyfiles -u 1 \"src/challenges/**/*\" dist",
     "lint": "eslint src"
   },
   "dependencies": {

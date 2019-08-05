@@ -1,18 +1,26 @@
 import { stores } from './store';
 
 import CameraController from './CameraController';
+import ChallengeController from './ChallengeController';
 
 let cameraController = null;
+let challengeController = null;
 
 export function onGlobeCreate(cesiumWidget) {
-  console.log(stores);
-  const { cameraStore } = stores;
+  const { cameraStore, challengeStore } = stores;
+
   cameraController = new CameraController({
-    cesiumWidget,
-    store: cameraStore
+    store: cameraStore,
+    cesiumWidget
+  });
+
+  challengeController = new ChallengeController({
+    store: challengeStore,
+    cesiumWidget
   });
 }
 
 export function onGlobeDestroy() {
   cameraController.destroy();
+  challengeController.destroy();
 }

@@ -11,11 +11,8 @@ import {
 } from './constants';
 
 class CameraController {
-  constructor(options) {
-    const {
-      store,
-      cesiumWidget
-    } = options;
+  constructor(options = {}) {
+    const { store, cesiumWidget } = options;
 
     if (!store || typeof store !== 'object') {
       throw new TypeError('Store is not specified.');

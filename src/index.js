@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 import { I18nextProvider } from 'react-i18next';
 
-import './index.sass';
+import './sass/index.sass';
 
 import { initI18n } from './i18n';
 import { createStores } from './store';

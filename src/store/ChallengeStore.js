@@ -1,4 +1,5 @@
 import { observable, computed, action } from 'mobx';
+import { createTransformer } from 'mobx-utils';
 
 import BaseStore from './BaseStore';
 
@@ -20,6 +21,20 @@ class ChallengeStore extends BaseStore {
 
   @computed get challenge() {
     return challenges.find(challenge => challenge.id === this.challengeId) || null;
+  }
+
+  @computed get challengeItems() {
+    return this.challenge.items;
+  }
+
+  @computed get challengeItemIds() {
+    return this.challenge.items.map(item => item.id);
+  }
+
+  @computed get challengeItem() {
+    return createTransformer(id => {
+      return this.challenge.items.find(item => item.id === id);
+    });
   }
 
   @action setLoading(loading) {

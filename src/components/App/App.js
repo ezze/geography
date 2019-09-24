@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Globe from '../Globe';
+import ChallengeSidebar from '../ChallengeSidebar';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
@@ -9,6 +10,7 @@ class App extends Component {
     return (
       <div className="app">
         <Globe onCreate={onGlobeCreate} onDestroy={onGlobeDestroy} />
+        <ChallengeSidebar />
       </div>
     );
   }

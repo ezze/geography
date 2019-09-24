@@ -48,7 +48,16 @@ class ChallengeController {
         const stroke = Cesium.Color.fromCssColorString(challengeColors[i % challengeColors.length]);
         const fill = Cesium.Color.fromAlpha(stroke, 0.4);
         const { path } = item;
-        return Cesium.GeoJsonDataSource.load(path, { stroke, fill });
+        return Cesium.GeoJsonDataSource.load(path, { stroke, fill }).then(geoObject => {
+          // TODO: temporary fix for polygons: https://github.com/AnalyticalGraphicsInc/cesium/issues/8042
+          for (let i = 0; i < geoObject.entities.values.length; i++) {
+            const entity = geoObject.entities.values[i];
+            if (Cesium.defined(entity.polygon)) {
+              entity.polygon.arcType = Cesium.ArcType.GEODESIC;
+            }
+          }
+          return geoObject;
+        });
       }));
       for (let i = 0; i < geoObjects.length; i++) {
         this.dataSources.add(geoObjects[i]);

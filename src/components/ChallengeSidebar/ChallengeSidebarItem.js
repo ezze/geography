@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-@inject('challengeStore') @observer
+@inject('generalStore', 'challengeStore') @observer
 class ChallengeSidebarItem extends Component {
   render() {
-    const { challengeStore, id } = this.props;
+    const { generalStore, challengeStore, id } = this.props;
     const item = challengeStore.challengeItem(id);
+    const { language } = generalStore;
     return (
       <li>
-        <a>{item.name.ru}</a>
+        <a>{item.name[language]}</a>
       </li>
     )
   }

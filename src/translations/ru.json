@@ -4,5 +4,8 @@
     "user": "Профиль",
     "contacts": "Контакты",
     "language": "Язык"
+  },
+  "challenge-sidebar": {
+    "heading": "Географические объекты"
   }
 }

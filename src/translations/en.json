@@ -4,5 +4,8 @@
     "user": "User",
     "contacts": "Contacts",
     "language": "Language"
+  },
+  "challenge-sidebar": {
+    "heading": "Geographic objects"
   }
 }

@@ -24,3 +24,8 @@ export function onGlobeDestroy() {
   cameraController.destroy();
   challengeController.destroy();
 }
+
+
+export function getChallengeController() {
+  return challengeController;
+}

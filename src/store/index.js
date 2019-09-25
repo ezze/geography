@@ -16,9 +16,11 @@ export async function createStores() {
   const storeNames = Object.keys(stores);
 
   return new Promise(resolve => {
-    const disposeStoreInit = reaction(() => storeNames.map(storeName => stores[storeName].storeInitialized), inits => {
-      for (let i = 0; i < inits.length; i++) {
-        if (!inits[i]) {
+    const disposeStoreInit = reaction(() => storeNames.map(storeName => {
+      return stores[storeName].storeInitialized;
+    }), storeInits => {
+      for (let i = 0; i < storeInits.length; i++) {
+        if (!storeInits[i]) {
           return;
         }
       }

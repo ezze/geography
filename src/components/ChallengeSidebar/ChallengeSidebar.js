@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { withTranslation } from 'react-i18next';
 
 import ChallengeSidebarItem from './ChallengeSidebarItem';
 
-@inject('challengeStore') @observer
+@inject('generalStore', 'challengeStore') @observer
 class ChallengeSidebar extends Component {
   render() {
-    const { t, challengeStore } = this.props;
-    const { challengeItemIds } = challengeStore;
+    const { generalStore, challengeStore } = this.props;
+    const { language } = generalStore;
+    const { challenge, challengeItemIds } = challengeStore;
     return (
       <div className="challenge-sidebar">
         <nav className="panel">
-          <p className="panel-heading">{t('heading')}</p>
+          <p className="panel-heading">{challenge.name[language]}</p>
           <div className="panel-block">
             <aside className="menu">
               <ul className="menu-list">
@@ -28,4 +28,4 @@ class ChallengeSidebar extends Component {
   }
 }
 
-export default withTranslation('challenge-sidebar')(ChallengeSidebar);
+export default ChallengeSidebar;

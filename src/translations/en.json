@@ -1,4 +1,7 @@
 {
+  "app": {
+    "name": "Geography"
+  },
   "toolbar": {
     "start": "Start",
     "stop": "Stop",

@@ -2,8 +2,8 @@ import Cesium from 'cesium';
 
 // Language
 export const languages = [
-  { id: 'en', label: 'English' },
-  { id: 'ru', label: 'Русский' }
+  { id: 'ru', label: 'Русский' },
+  { id: 'en', label: 'English' }
 ];
 
 // Camera

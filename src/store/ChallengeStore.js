@@ -10,7 +10,7 @@ import { stores } from './index';
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
   @observable id = challenges[0].id;
-  @observable duration = 0.2;
+  @observable duration = 5;
   @observable startTime = null;
   @observable elapsedTime = 0;
   @observable gameOver = false;
@@ -68,6 +68,12 @@ class ChallengeStore extends BaseStore {
       }
       else {
         this.stop();
+      }
+    });
+
+    this.disposeDuration = reaction(() => this.duration, duration => {
+      if (this.playMode) {
+        this.start();
       }
     });
 
@@ -188,6 +194,10 @@ class ChallengeStore extends BaseStore {
 
   @action setPlayMode(playMode) {
     this.playMode = playMode;
+  }
+
+  @action setDuration(duration) {
+    this.duration = duration;
   }
 
   @action setPickedItemId(id) {

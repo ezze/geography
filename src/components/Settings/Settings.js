@@ -3,21 +3,27 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+const durations = [5, 10, 15, 20];
+
 @inject('generalStore', 'challengeStore') @observer
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.onLanguageChange = this.onLanguageChange.bind(this);
+    this.onDurationChange = this.onDurationChange.bind(this);
     this.onCloseClick = this.onCloseClick.bind(this);
   }
 
   render() {
     const { t, generalStore, challengeStore } = this.props;
     const { settingsVisible, languages, language } = generalStore;
+    const { duration } = challengeStore;
+
     const className = classNames({
       modal: true,
       'is-active': settingsVisible
     });
+
     return (
       <div className={className}>
         <div className="modal-background"></div>
@@ -39,6 +45,20 @@ class Settings extends Component {
                   </div>
                 </div>
               </div>
+              <div className="field">
+                <label className="label">{t('duration')}</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select value={duration} onChange={this.onDurationChange}>
+                      {durations.map(duration => (
+                        <option key={duration} value={duration}>
+                          {duration}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
               <div className="has-text-right">
                 <button className="button is-primary" onClick={this.onCloseClick}>{t('close')}</button>
               </div>
@@ -52,6 +72,11 @@ class Settings extends Component {
   onLanguageChange(event) {
     const { generalStore } = this.props;
     generalStore.setLanguage(event.target.value);
+  }
+
+  onDurationChange(event) {
+    const { challengeStore } = this.props;
+    challengeStore.setDuration(event.target.value);
   }
 
   onCloseClick() {

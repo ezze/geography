@@ -20,8 +20,7 @@ export default (env, argv) => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `[name].${mode === 'production' ? '[chunkhash:6].' : ''}js`,
-      publicPath: '/',
+      filename: `[name].${mode === 'production' ? '[chunkhash:6].' : ''}js`
     },
     devtool: mode === 'development' ? 'source-map' : false,
     devServer: {
@@ -63,6 +62,15 @@ export default (env, argv) => {
             name: 'img/[name].[hash:6].[ext]',
           },
         },
+      }, {
+        test: /\.(eot|otf|svg|ttf|woff2?)/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[1].[hash:6].[ext]',
+            regExp: /node_modules\/@fortawesome\/fontawesome-free\/webfonts\/([^.]+)\.[^.]+/
+          }
+        }
       }],
     },
     optimization: {

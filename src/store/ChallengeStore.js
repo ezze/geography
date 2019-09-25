@@ -6,6 +6,7 @@ import BaseStore from './BaseStore';
 import challenges from '../challenges.json';
 
 class ChallengeStore extends BaseStore {
+  @observable playMode = false;
   @observable id = challenges[0].id;
   @observable pickedItemId = null;
   @observable loading = false;
@@ -42,6 +43,10 @@ class ChallengeStore extends BaseStore {
 
   @computed get pickedChallengeItem() {
     return this.pickedItemId ? this.challengeItem(this.pickedItemId) : null;
+  }
+
+  @action setPlayMode(playMode) {
+    this.playMode = playMode;
   }
 
   @action setPickedChallengeItemId(id) {

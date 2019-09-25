@@ -15,7 +15,7 @@ class ChallengeSidebarItem extends Component {
     const item = challengeStore.challengeItem(id);
     const { language } = generalStore;
     const linkClassName = classNames({
-      'is-active': challengeStore.pickedChallengeItemId === id
+      'is-active': challengeStore.pickedItemId === id
     });
     return (
       <li>

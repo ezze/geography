@@ -1,8 +1,7 @@
 {
-  "navigation": {
-    "home": "Home",
-    "user": "User",
-    "contacts": "Contacts",
-    "language": "Language"
+  "toolbar": {
+    "start": "Start",
+    "stop": "Stop",
+    "settings": "Settings"
   }
 }

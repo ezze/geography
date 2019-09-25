@@ -8,8 +8,8 @@ class ChallengeSidebar extends Component {
   render() {
     const { generalStore, challengeStore } = this.props;
     const { language } = generalStore;
-    const { challenge, challengeItemIds } = challengeStore;
-    return (
+    const { playMode, challenge, challengeItemIds } = challengeStore;
+    return playMode ? '' : (
       <div className="challenge-sidebar">
         <nav className="panel">
           <p className="panel-heading">{challenge.name[language]}</p>

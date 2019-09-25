@@ -14,7 +14,7 @@ class ChallengeStore extends BaseStore {
   @observable elapsedTime = 0;
   @observable gameOver = false;
   @observable guessedItemId = null;
-  @observable guessedCount = 0;
+  @observable overallCount = 0;
   @observable correctCount = 0;
   @observable pickedItemId = null;
   @observable userItemId = null;
@@ -34,7 +34,7 @@ class ChallengeStore extends BaseStore {
         'elapsedTime',
         'gameOver',
         'guessedItemId',
-        'guessedCount',
+        'overallCount',
         'correctCount',
         'pickedItemId',
         'userItemId',
@@ -49,6 +49,12 @@ class ChallengeStore extends BaseStore {
       }
       else {
         this.stop();
+      }
+    });
+
+    this.disposeGameOver = reaction(() => this.gameOver, gameOver => {
+      if (this.playMode && !gameOver) {
+        this.playMode = false;
       }
     });
 
@@ -71,6 +77,7 @@ class ChallengeStore extends BaseStore {
 
   async destroy() {
     this.disposePlayMode();
+    this.disposeGameOver();
     this.disposeUserItemId();
     super.destroy();
   }
@@ -85,7 +92,7 @@ class ChallengeStore extends BaseStore {
         this.gameOver = true;
       }
     }, 100);
-    this.guessedCount = 0;
+    this.overallCount = 0;
     this.correctCount = 0;
     this.guessNextItem();
   }
@@ -98,7 +105,7 @@ class ChallengeStore extends BaseStore {
       this.elapsedInterval = null;
     }
     this.guessedItemId = null;
-    this.guessedCount = 0;
+    this.overallCount = 0;
     this.correctCount = 0;
   }
 
@@ -119,7 +126,7 @@ class ChallengeStore extends BaseStore {
   guessNextItem() {
     const guessIndex = Math.floor(Math.random() * this.itemIds.length);
     this.guessedItemId = this.itemIds[guessIndex];
-    this.guessedCount++;
+    this.overallCount++;
   }
 
   @computed get remainingTimeDisplay() {

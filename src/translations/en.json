@@ -3,5 +3,10 @@
     "start": "Start",
     "stop": "Stop",
     "settings": "Settings"
+  },
+  "game-over": {
+    "main": "Game is over",
+    "correct-count": "Correct objects' count: {{count}}",
+    "overall-count": "Overall objects' count: {{count}}"
   }
 }

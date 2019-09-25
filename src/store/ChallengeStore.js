@@ -6,8 +6,8 @@ import BaseStore from './BaseStore';
 import challenges from '../challenges.json';
 
 class ChallengeStore extends BaseStore {
-  @observable challengeId = challenges[0].id;
-  @observable pickedChallengeItemId = null;
+  @observable id = challenges[0].id;
+  @observable pickedItemId = null;
   @observable loading = false;
   @observable loadingError = false;
 
@@ -15,14 +15,14 @@ class ChallengeStore extends BaseStore {
     super({
       key: 'challenge',
       exclude: [
-        'pickedChallengeItemId',
+        'pickedItemId',
         'loading',
         'loadingError'
       ], ...options });
   }
 
   @computed get challenge() {
-    return challenges.find(challenge => challenge.id === this.challengeId) || null;
+    return challenges.find(challenge => challenge.id === this.id) || null;
   }
 
   @computed get challengeItems() {
@@ -40,13 +40,17 @@ class ChallengeStore extends BaseStore {
     });
   }
 
+  @computed get pickedChallengeItem() {
+    return this.pickedItemId ? this.challengeItem(this.pickedItemId) : null;
+  }
+
   @action setPickedChallengeItemId(id) {
     if (id) {
       const challengeItem = this.challengeItem(id);
-      this.pickedChallengeItemId = challengeItem ? id : null;
+      this.pickedItemId = challengeItem ? id : null;
     }
     else {
-      this.pickedChallengeItemId = null;
+      this.pickedItemId = null;
     }
   }
 
@@ -61,7 +65,7 @@ class ChallengeStore extends BaseStore {
 
   @action setChallenge(id) {
     if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
-      this.challengeId = id;
+      this.id = id;
     }
   }
 }

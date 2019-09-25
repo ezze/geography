@@ -62,7 +62,7 @@ class ChallengeController {
     this.eventHelper = new Cesium.EventHelper();
     this.eventHelper.add(clock.onTick, clock => this.dataSourceDisplay.update(clock.currentTime));
 
-    this.disposePickedChallengeItemId = reaction(() => this.store.pickedChallengeItemId, id => {
+    this.disposePickedChallengeItemId = reaction(() => this.store.pickedItemId, id => {
       this.highlightGeoObject(id);
     });
 

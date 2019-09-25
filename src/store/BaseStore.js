@@ -10,7 +10,7 @@ import {
 const regExpIso8601 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
 
 class BaseStore {
-  @observable initialized = false;
+  @observable storeInitialized = false;
 
   constructor(options = {}) {
     const {
@@ -43,7 +43,7 @@ class BaseStore {
 
         autorun(async() => {
           const data = this.filterObservables(toJS(this));
-          if (this.initialized) {
+          if (this.storeInitialized) {
             if (this.storable) {
               await this.save(data);
             }
@@ -52,13 +52,13 @@ class BaseStore {
             await this.init(options);
             console.log(`Store${this.key ? ` "${this.key}"` : ''} is initialized.`);
             console.log(data);
-            this.initialized = true;
+            this.storeInitialized = true;
           }
         });
       }
       catch (e) {
         console.error(e);
-        console.error(`Unable to initialize store${this.kery ? ` "${this.key}"` : ''}.`);
+        console.error(`Unable to initialize store${this.key ? ` "${this.key}"` : ''}.`);
       }
     })();
   }
@@ -72,13 +72,13 @@ class BaseStore {
   }
 
   async ready() {
-    if (this.initialized) {
+    if (this.storeInitialized) {
       return;
     }
 
     return new Promise(resolve => {
-      reaction(() => this.initialized, (initialized, reaction) => {
-        if (initialized) {
+      reaction(() => this.storeInitialized, (storeInitialized, reaction) => {
+        if (storeInitialized) {
           reaction.dispose();
           resolve();
         }
@@ -135,7 +135,7 @@ class BaseStore {
     const filtered = {};
     const names = Object.keys(data);
     names.forEach((name) => {
-      if (name !== 'initialized' && !this.exclude.includes(name) && isObservableProp(this, name)) {
+      if (name !== 'storeInitialized' && !this.exclude.includes(name) && isObservableProp(this, name)) {
         filtered[name] = data[name];
       }
     });

@@ -48,6 +48,7 @@
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-preset-mobx": "^2.0.0",
+    "copyfiles": "^2.1.1",
     "css-loader": "^3.2.0",
     "eslint": "^6.4.0",
     "eslint-config-ezze-react": "^0.8.1",

@@ -84,7 +84,7 @@ class ChallengeStore extends BaseStore {
   }
 
   async init() {
-    // this.sortChallengeItems(this.generalStore.language);
+    this.sortChallengeItems(this.generalStore.language);
 
     if (this.playMode) {
       this.start();

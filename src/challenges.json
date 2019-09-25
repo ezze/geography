@@ -3,7 +3,7 @@
   "name": { "en": "Europe", "ru": "Европа" },
   "view": {
     "destination": {
-      "west": -10,
+      "west": -20,
       "east": 60,
       "north": 70,
       "south": 30,
@@ -15,25 +15,77 @@
     "name": { "en": "Albania", "ru": "Албания" },
     "path": "challenges/europe/albania.json"
   }, {
+    "id": "andorra",
+    "name": { "en": "Andorra", "ru": "Андорра" },
+    "path": "challenges/europe/andorra.json"
+  }, {
+    "id": "armenia",
+    "name": { "en": "Armenia", "ru": "Армения" },
+    "path": "challenges/europe/armenia.json"
+  }, {
+    "id": "austria",
+    "name": { "en": "Austria", "ru": "Австрия" },
+    "path": "challenges/europe/austria.json"
+  }, {
+    "id": "azerbaijan",
+    "name": { "en": "Azerbaijan", "ru": "Азербайджан" },
+    "path": "challenges/europe/azerbaijan.json"
+  }, {
+    "id": "belarus",
+    "name": { "en": "Belarus", "ru": "Белоруссия" },
+    "path": "challenges/europe/belarus.json"
+  }, {
     "id": "belgium",
     "name": { "en": "Belgium", "ru": "Бельгия" },
     "path": "challenges/europe/belgium.json"
   }, {
-    "id": "czech-republic",
-    "name": { "en": "Czech Republic", "ru": "Чехия" },
-    "path": "challenges/europe/czech-republic.json"
+    "id": "bosnia-and-herzegovina",
+    "name": { "en": "Bosnia & Herzegovina", "ru": "Босния и Герцеговина" },
+    "path": "challenges/europe/bosnia-and-herzegovina.json"
+  }, {
+    "id": "bulgaria",
+    "name": { "en": "Bulgaria", "ru": "Болгария" },
+    "path": "challenges/europe/bulgaria.json"
+  }, {
+    "id": "croatia",
+    "name": { "en": "Croatia", "ru": "Хорватия" },
+    "path": "challenges/europe/croatia.json"
+  }, {
+    "id": "cabo-verde",
+    "name": { "en": "Cabo Verde", "ru": "Кабо-Верде" },
+    "path": "challenges/europe/cabo-verde.json"
   }, {
     "id": "cyprus",
     "name": { "en": "Cyprus", "ru": "Кипр" },
     "path": "challenges/europe/cyprus.json"
   }, {
+    "id": "czech-republic",
+    "name": { "en": "Czech Republic", "ru": "Чехия" },
+    "path": "challenges/europe/czech-republic.json"
+  }, {
     "id": "denmark",
     "name": { "en": "Denmark", "ru": "Дания" },
     "path": "challenges/europe/denmark.json"
   }, {
+    "id": "estonia",
+    "name": { "en": "Estonia", "ru": "Эстония" },
+    "path": "challenges/europe/estonia.json"
+  }, {
+    "id": "faroe-islands",
+    "name": { "en": "Faroe islands", "ru": "Фарерские острова" },
+    "path": "challenges/europe/faroe-islands.json"
+  }, {
+    "id": "finland",
+    "name": { "en": "Finland", "ru": "Финлядндия" },
+    "path": "challenges/europe/finland.json"
+  }, {
     "id": "france",
     "name": { "en": "France", "ru": "Франция" },
     "path": "challenges/europe/france.json"
+  }, {
+    "id": "georgia",
+    "name": { "en": "Georgia", "ru": "Грузия" },
+    "path": "challenges/europe/georgia.json"
   }, {
     "id": "germany",
     "name": { "en": "Germany", "ru": "Германия" },
@@ -47,17 +99,69 @@
     "name": { "en": "Greece", "ru": "Греция" },
     "path": "challenges/europe/greece.json"
   }, {
-    "id": "italy",
-    "name": { "en": "Italy", "ru": "Италия" },
-    "path": "challenges/europe/italy.json"
+    "id": "hungary",
+    "name": { "en": "Hungary", "ru": "Венгрия" },
+    "path": "challenges/europe/hungary.json"
+  }, {
+    "id": "iceland",
+    "name": { "en": "Iceland", "ru": "Исландия" },
+    "path": "challenges/europe/iceland.json"
   }, {
     "id": "ireland",
     "name": { "en": "Ireland", "ru": "Ирландия" },
     "path": "challenges/europe/ireland.json"
   }, {
+    "id": "italy",
+    "name": { "en": "Italy", "ru": "Италия" },
+    "path": "challenges/europe/italy.json"
+  }, {
+    "id": "kosovo",
+    "name": { "en": "Kosovo", "ru": "Косово" },
+    "path": "challenges/europe/kosovo.json"
+  }, {
+    "id": "latvia",
+    "name": { "en": "Latvia", "ru": "Лавтия" },
+    "path": "challenges/europe/latvia.json"
+  }, {
+    "id": "liechtenstein",
+    "name": { "en": "Liechtenstein", "ru": "Лихтенштейн" },
+    "path": "challenges/europe/liechtenstein.json"
+  }, {
+    "id": "lithuania",
+    "name": { "en": "Lithuania", "ru": "Литва" },
+    "path": "challenges/europe/lithuania.json"
+  }, {
+    "id": "luxembourg",
+    "name": { "en": "Luxembourg", "ru": "Люксембург" },
+    "path": "challenges/europe/luxembourg.json"
+  }, {
+    "id": "macedonia",
+    "name": { "en": "Macedonia", "ru": "Македония" },
+    "path": "challenges/europe/macedonia.json"
+  }, {
+    "id": "malta",
+    "name": { "en": "malta", "ru": "Мальта" },
+    "path": "challenges/europe/malta.json"
+  }, {
+    "id": "moldova",
+    "name": { "en": "Moldova", "ru": "Молдавия" },
+    "path": "challenges/europe/moldova.json"
+  }, {
+    "id": "monaco",
+    "name": { "en": "Monaco", "ru": "Монако" },
+    "path": "challenges/europe/monaco.json"
+  }, {
+    "id": "montenegro",
+    "name": { "en": "Montenegro", "ru": "Черногория" },
+    "path": "challenges/europe/montenegro.json"
+  }, {
     "id": "netherlands",
     "name": { "en": "Netherlands", "ru": "Нидерланды" },
     "path": "challenges/europe/netherlands.json"
+  }, {
+    "id": "northern-cyprus",
+    "name": { "en": "Northern Cyprus", "ru": "Северный Кипр" },
+    "path": "challenges/europe/northern-cyprus.json"
   }, {
     "id": "norway",
     "name": { "en": "Norway", "ru": "Норвегия" },
@@ -71,9 +175,29 @@
     "name": { "en": "Portugal", "ru": "Португалия" },
     "path": "challenges/europe/portugal.json"
   }, {
+    "id": "romania",
+    "name": { "en": "Romania", "ru": "Румыния" },
+    "path": "challenges/europe/romania.json"
+  }, {
     "id": "russia",
     "name": { "en": "Russia", "ru": "Россия" },
     "path": "challenges/europe/russia.json"
+  }, {
+    "id": "san-marino",
+    "name": { "en": "San marino", "ru": "Сан-Марино" },
+    "path": "challenges/europe/san-marino.json"
+  }, {
+    "id": "serbia",
+    "name": { "en": "Serbia", "ru": "Сербия" },
+    "path": "challenges/europe/serbia.json"
+  }, {
+    "id": "slovakia",
+    "name": { "en": "Slovakia", "ru": "Словакия" },
+    "path": "challenges/europe/slovakia.json"
+  }, {
+    "id": "slovenia",
+    "name": { "en": "Slovenia", "ru": "Словения" },
+    "path": "challenges/europe/slovenia.json"
   }, {
     "id": "spain",
     "name": { "en": "Spain", "ru": "Испания" },
@@ -90,5 +214,17 @@
     "id": "ukraine",
     "name": { "en": "Ukraine", "ru": "Украина" },
     "path": "challenges/europe/ukraine.json"
+  }]
+}, {
+  "id": "asia",
+  "name": { "en": "Asia", "ru": "Азия" },
+  "items": [{
+    "id": "israel",
+    "name": { "en": "Israel", "ru": "Израиль" },
+    "path": "challenges/europe/israel.json"
+  }, {
+    "id": "turkey",
+    "name": { "en": "Turkey", "ru": "Турция" },
+    "path": "challenges/europe/turkey.json"
   }]
 }]

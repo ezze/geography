@@ -120,7 +120,7 @@
     "path": "challenges/europe/kosovo.json"
   }, {
     "id": "latvia",
-    "name": { "en": "Latvia", "ru": "Лавтия" },
+    "name": { "en": "Latvia", "ru": "Латвия" },
     "path": "challenges/europe/latvia.json"
   }, {
     "id": "liechtenstein",

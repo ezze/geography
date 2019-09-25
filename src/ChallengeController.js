@@ -44,7 +44,7 @@ const geoObjectColors = {
 
 class ChallengeController {
   constructor(options = {}) {
-    const { store, cesiumWidget } = options;
+    const { store, cesiumWidget, cameraController } = options;
 
     if (!store || typeof store !== 'object') {
       throw new TypeError('Store is not specified.');
@@ -54,8 +54,13 @@ class ChallengeController {
       throw new TypeError('Cesium widget is not specified.');
     }
 
+    if (!cameraController || typeof cameraController !== 'object') {
+      throw new TypeError('Camera controller is not specified.');
+    }
+
     this.store = store;
     this.cesiumWidget = cesiumWidget;
+    this.cameraController = cameraController;
 
     this.highlightedId = null;
     this.entityMap = {};
@@ -68,8 +73,11 @@ class ChallengeController {
     this.eventHelper = new Cesium.EventHelper();
     this.eventHelper.add(clock.onTick, clock => this.dataSourceDisplay.update(clock.currentTime));
 
-    this.disposePlayMode = reaction(() => this.store.playMode, () => {
+    this.disposePlayMode = reaction(() => this.store.playMode, playMode => {
       this.validateGeoObjectVisibility();
+      if (playMode) {
+        this.restoreView();
+      }
     });
 
     this.disposeChallengeId = reaction(() => this.store.id, async() => {
@@ -124,6 +132,8 @@ class ChallengeController {
       for (let i = 0; i < geoObjects.length; i++) {
         this.dataSources.add(geoObjects[i]);
       }
+
+      this.restoreView();
     }
     catch (e) {
       console.error(e);
@@ -132,6 +142,15 @@ class ChallengeController {
     finally {
       this.store.setLoading(false);
     }
+  }
+
+  async restoreView() {
+    const { challenge } = this.store;
+    if (!challenge) {
+      return;
+    }
+    const { view } = challenge;
+    this.cameraController.flyToView(view);
   }
 
   async unload() {

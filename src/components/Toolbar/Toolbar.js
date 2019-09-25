@@ -17,8 +17,7 @@ class Toolbar extends Component {
     const playModeButtonClassName = classNames({
       button: true,
       'is-primary': !playMode,
-      'is-danger': playMode,
-      'is-small': true
+      'is-danger': playMode
     });
     const playModeButton = (
       <button
@@ -34,7 +33,7 @@ class Toolbar extends Component {
     return (
       <div className="toolbar">
         <div className="buttons has-addons">
-          <button className="button is-white is-small" onClick={this.onSettingsClick}>
+          <button className="button is-white" onClick={this.onSettingsClick}>
             <span className="icon">
               <i className="fas fa-wrench" />
             </span>

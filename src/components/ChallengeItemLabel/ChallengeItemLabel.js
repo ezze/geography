@@ -22,7 +22,7 @@ class ChallengeItemLabel extends Component {
 
     return content ? (
       <div className="challenge-item-label">
-        <article className="message is-primary is-small">
+        <article className="message is-primary">
           <div className="message-body">
             {content}
           </div>

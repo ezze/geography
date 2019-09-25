@@ -1,6 +1,15 @@
 [{
   "id": "europe",
   "name": { "en": "Europe", "ru": "Европа" },
+  "view": {
+    "destination": {
+      "west": -10,
+      "east": 60,
+      "north": 70,
+      "south": 30,
+      "units": "degrees"
+    }
+  },
   "items": [{
     "id": "albania",
     "name": { "en": "Albania", "ru": "Албания" },

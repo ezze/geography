@@ -16,7 +16,8 @@ export function onGlobeCreate(cesiumWidget) {
 
   challengeController = new ChallengeController({
     store: challengeStore,
-    cesiumWidget
+    cesiumWidget,
+    cameraController
   });
 }
 

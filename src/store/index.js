@@ -11,6 +11,14 @@ export const stores = {};
 export async function createStores() {
   const generalStore = stores.generalStore = new GeneralStore({ languages });
   stores.cameraStore = new CameraStore();
+
+  await new Promise(resolve => {
+    const disposeGeneralInit = reaction(() => generalStore.storeInitialized, () => {
+      disposeGeneralInit();
+      resolve();
+    });
+  });
+
   stores.challengeStore = new ChallengeStore({ generalStore });
 
   const storeNames = Object.keys(stores);

@@ -47,19 +47,8 @@ class ChallengeStore extends BaseStore {
     const { generalStore } = options;
     this.generalStore = generalStore;
 
-    const sortChallengeItems = language => {
-      const { id } = this;
-      this.id = null;
-      challenges.forEach(challenge => {
-        challenge.items.sort((item1, item2) => {
-          return item1.name[language].localeCompare(item2.name[language]);
-        });
-      });
-      setTimeout(() => this.id = id, 0);
-    };
-
     this.disposeLanguage = reaction(() => generalStore.language, language => {
-      sortChallengeItems(language);
+      this.sortChallengeItems(language);
     });
 
     this.disposePlayMode = reaction(() => this.playMode, playMode => {
@@ -71,7 +60,7 @@ class ChallengeStore extends BaseStore {
       }
     });
 
-    this.disposeDuration = reaction(() => this.duration, duration => {
+    this.disposeDuration = reaction(() => this.duration, () => {
       if (this.playMode) {
         this.start();
       }
@@ -92,11 +81,11 @@ class ChallengeStore extends BaseStore {
         this.guessNextItem();
       }
     });
-
-    sortChallengeItems(generalStore.language);
   }
 
   async init() {
+    // this.sortChallengeItems(this.generalStore.language);
+
     if (this.playMode) {
       this.start();
     }
@@ -109,6 +98,17 @@ class ChallengeStore extends BaseStore {
     this.disposeGameOver();
     this.disposeUserItemId();
     super.destroy();
+  }
+
+  sortChallengeItems(language) {
+    const { id } = this;
+    this.id = null;
+    challenges.forEach(challenge => {
+      challenge.items.sort((item1, item2) => {
+        return item1.name[language].localeCompare(item2.name[language]);
+      });
+    });
+    setTimeout(() => this.id = id, 0);
   }
 
   start() {

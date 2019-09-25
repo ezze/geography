@@ -22,3 +22,4 @@ export const challengeItemCorrectColor = Cesium.Color.fromCssColorString('#87d91
 export const challengeItemCorrectFillColor = Cesium.Color.fromAlpha(challengeItemCorrectColor, challengeItemOpacity);
 export const challengeItemWrongColor = Cesium.Color.fromCssColorString('#ff5501');
 export const challengeItemWrongFillColor = Cesium.Color.fromAlpha(challengeItemWrongColor, challengeItemOpacity);
+export const challengeItemHiddenColor = Cesium.Color.fromAlpha(challengeItemDefaultColor, 0.004);

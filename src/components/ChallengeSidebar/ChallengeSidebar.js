@@ -8,7 +8,7 @@ class ChallengeSidebar extends Component {
   render() {
     const { generalStore, challengeStore } = this.props;
     const { language } = generalStore;
-    const { playMode, challenge, challengeItemIds } = challengeStore;
+    const { playMode, challenge, itemIds } = challengeStore;
     return playMode ? '' : (
       <div className="challenge-sidebar">
         <nav className="panel">
@@ -16,7 +16,7 @@ class ChallengeSidebar extends Component {
           <div className="panel-block">
             <aside className="menu">
               <ul className="menu-list">
-                {challengeItemIds.map(id => (
+                {itemIds.map(id => (
                   <ChallengeSidebarItem key={id} id={id} />
                 ))}
               </ul>

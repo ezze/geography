@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Globe from '../Globe';
 import Toolbar from '../Toolbar';
+import State from '../State';
 import ChallengeSidebar from '../ChallengeSidebar';
 import ChallengeItemLabel from '../ChallengeItemLabel';
 
@@ -13,6 +14,7 @@ class App extends Component {
       <div className="app">
         <Globe onCreate={onGlobeCreate} onDestroy={onGlobeDestroy} />
         <Toolbar />
+        <State />
         <ChallengeSidebar />
         <ChallengeItemLabel />
       </div>

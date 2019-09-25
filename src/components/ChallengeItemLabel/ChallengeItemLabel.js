@@ -6,15 +6,17 @@ class ChallengeItemLabel extends Component {
   render() {
     const { generalStore, challengeStore } = this.props;
     const { language } = generalStore;
-    const { playMode, pickedChallengeItem } = challengeStore;
+    const { playMode, guessedItem, pickedItem } = challengeStore;
 
     let content = '';
     if (playMode) {
-      return '';
+      if (guessedItem) {
+        content = guessedItem.name[language];
+      }
     }
     else {
-      if (pickedChallengeItem) {
-        content = pickedChallengeItem.name[language];
+      if (pickedItem) {
+        content = pickedItem.name[language];
       }
     }
 

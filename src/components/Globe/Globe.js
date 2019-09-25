@@ -17,6 +17,7 @@ class Globe extends Component {
   constructor(props) {
     super(props);
     this.onMouseMove = this.onMouseMove.bind(this);
+    this.onLeftClick = this.onLeftClick.bind(this);
   }
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class Globe extends Component {
 
     this.canvasEventHandler = new Cesium.ScreenSpaceEventHandler(this.cesiumWidget.canvas);
     this.canvasEventHandler.setInputAction(this.onMouseMove, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    this.canvasEventHandler.setInputAction(this.onLeftClick, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
     if (typeof this.props.onCreate === 'function') {
       this.props.onCreate(this.cesiumWidget);
@@ -58,6 +60,7 @@ class Globe extends Component {
 
   destroyCesium() {
     this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
     this.cesiumWidget.destroy();
 
     if (typeof this.props.onDestroy === 'function') {
@@ -87,12 +90,31 @@ class Globe extends Component {
 
     const picked = this.cesiumWidget.scene.pick(event.endPosition);
     if (!picked || !picked.id || !picked.id.id) {
-      challengeStore.setPickedChallengeItemId(null);
+      challengeStore.setPickedItemId(null);
       return;
     }
 
     const id = challengeContoller.getGeoObjectIdByEntityId(picked.id.id);
-    challengeStore.setPickedChallengeItemId(id);
+    challengeStore.setPickedItemId(id);
+  }
+
+  onLeftClick(event) {
+    const { challengeStore } = this.props;
+    if (!challengeStore.playMode) {
+      return;
+    }
+
+    if (challengeStore.userItemId) {
+      challengeStore.userItemId = null;
+      return;
+    }
+
+    const picked = this.cesiumWidget.scene.pick(event.position);
+    if (!picked || !picked.id || !picked.id.id) {
+      return;
+    }
+
+    challengeStore.guess();
   }
 }
 

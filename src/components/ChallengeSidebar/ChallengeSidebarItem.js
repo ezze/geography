@@ -12,7 +12,7 @@ class ChallengeSidebarItem extends Component {
 
   render() {
     const { generalStore, challengeStore, id } = this.props;
-    const item = challengeStore.challengeItem(id);
+    const item = challengeStore.item(id);
     const { language } = generalStore;
     const linkClassName = classNames({
       'is-active': challengeStore.pickedItemId === id
@@ -28,12 +28,12 @@ class ChallengeSidebarItem extends Component {
 
   onMouseEnter() {
     const { challengeStore, id } = this.props;
-    challengeStore.setPickedChallengeItemId(id);
+    challengeStore.setPickedItemId(id);
   }
 
   onMouseLeave() {
     const { challengeStore } = this.props;
-    challengeStore.setPickedChallengeItemId(null);
+    challengeStore.setPickedItemId(null);
   }
 }
 

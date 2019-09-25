@@ -9,9 +9,9 @@ import ChallengeStore from './ChallengeStore';
 export const stores = {};
 
 export async function createStores() {
-  stores.generalStore = new GeneralStore({ languages });
+  const generalStore = stores.generalStore = new GeneralStore({ languages });
   stores.cameraStore = new CameraStore();
-  stores.challengeStore = new ChallengeStore();
+  stores.challengeStore = new ChallengeStore({ generalStore });
 
   const storeNames = Object.keys(stores);
 

@@ -4,6 +4,12 @@
     "stop": "Stop",
     "settings": "Settings"
   },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "duration": "Game duration (in minutes)",
+    "close": "Close"
+  },
   "game-over": {
     "main": "Game is over",
     "correct-count": "Correct objects' count: {{count}}",

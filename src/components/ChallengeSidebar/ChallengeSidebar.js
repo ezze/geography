@@ -9,7 +9,12 @@ class ChallengeSidebar extends Component {
     const { generalStore, challengeStore } = this.props;
     const { language } = generalStore;
     const { playMode, challenge, itemIds } = challengeStore;
-    return playMode ? '' : (
+
+    if (playMode) {
+      return '';
+    }
+
+    return challenge ? (
       <div className="challenge-sidebar">
         <nav className="panel">
           <p className="panel-heading">{challenge.name[language]}</p>
@@ -24,7 +29,7 @@ class ChallengeSidebar extends Component {
           </div>
         </nav>
       </div>
-    );
+    ) : '';
   }
 }
 

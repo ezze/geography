@@ -1,9 +1,11 @@
-import { observable } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import i18n from 'i18next';
 
 import BaseStore from './BaseStore';
 
 class GeneralStore extends BaseStore {
+  @observable settingsVisible = false;
+  @observable languages = [];
   @observable language = null;
 
   constructor(options = {}) {
@@ -30,7 +32,11 @@ class GeneralStore extends BaseStore {
     }
   }
 
-  setLanguage(id) {
+  @action setSettingsVisible(settingsVisible) {
+    this.settingsVisible = settingsVisible;
+  }
+
+  @action setLanguage(id) {
     if (this.languages.findIndex(language => language.id === id) === -1) {
       throw new TypeError(`Language "${id}" is not supported.`);
     }

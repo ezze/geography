@@ -3,10 +3,11 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-@inject('challengeStore') @observer
+@inject('generalStore', 'challengeStore') @observer
 class Toolbar extends Component {
   constructor(props) {
     super(props);
+    this.onSettingsClick = this.onSettingsClick.bind(this);
     this.onPlayModeClick = this.onPlayModeClick.bind(this);
   }
 
@@ -33,7 +34,7 @@ class Toolbar extends Component {
     return (
       <div className="toolbar">
         <div className="buttons has-addons">
-          <button className="button is-white is-small">
+          <button className="button is-white is-small" onClick={this.onSettingsClick}>
             <span className="icon">
               <i className="fas fa-wrench" />
             </span>
@@ -43,6 +44,11 @@ class Toolbar extends Component {
         </div>
       </div>
     );
+  }
+
+  onSettingsClick() {
+    const { generalStore } = this.props;
+    generalStore.setSettingsVisible(true);
   }
 
   onPlayModeClick() {

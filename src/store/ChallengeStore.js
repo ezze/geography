@@ -5,6 +5,7 @@ import moment from 'moment';
 import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
+import { stores } from './index';
 
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
@@ -43,6 +44,24 @@ class ChallengeStore extends BaseStore {
         'loadingError'
       ], ...options });
 
+    const { generalStore } = options;
+    this.generalStore = generalStore;
+
+    const sortChallengeItems = language => {
+      const { id } = this;
+      this.id = null;
+      challenges.forEach(challenge => {
+        challenge.items.sort((item1, item2) => {
+          return item1.name[language].localeCompare(item2.name[language]);
+        });
+      });
+      setTimeout(() => this.id = id, 0);
+    };
+
+    this.disposeLanguage = reaction(() => generalStore.language, language => {
+      sortChallengeItems(language);
+    });
+
     this.disposePlayMode = reaction(() => this.playMode, playMode => {
       if (playMode) {
         this.start();
@@ -67,6 +86,8 @@ class ChallengeStore extends BaseStore {
         this.guessNextItem();
       }
     });
+
+    sortChallengeItems(generalStore.language);
   }
 
   async init() {
@@ -76,6 +97,7 @@ class ChallengeStore extends BaseStore {
   }
 
   async destroy() {
+    this.disposeLanguage();
     this.disposePlayMode();
     this.disposeGameOver();
     this.disposeUserItemId();

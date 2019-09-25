@@ -105,6 +105,7 @@ class ChallengeStore extends BaseStore {
   async destroy() {
     this.disposeLanguage();
     this.disposePlayMode();
+    this.disposeDuration();
     this.disposeGameOver();
     this.disposeUserItemId();
     super.destroy();
@@ -113,6 +114,9 @@ class ChallengeStore extends BaseStore {
   start() {
     this.startTime = moment().unix();
     this.elapsedTime = 0;
+    if (this.elapsedInterval) {
+      clearInterval(this.elapsedInterval);
+    }
     this.elapsedInterval = setInterval(() => {
       this.elapsedTime = moment().unix() - this.startTime;
       if (this.elapsedTime > this.duration * 60) {
@@ -120,6 +124,7 @@ class ChallengeStore extends BaseStore {
         this.gameOver = true;
       }
     }, 100);
+    this.gameOver = false;
     this.overallCount = 0;
     this.correctCount = 0;
     this.guessNextItem();
@@ -132,6 +137,7 @@ class ChallengeStore extends BaseStore {
       clearInterval(this.elapsedInterval);
       this.elapsedInterval = null;
     }
+    this.gameOver = false;
     this.guessedItemId = null;
     this.overallCount = 0;
     this.correctCount = 0;

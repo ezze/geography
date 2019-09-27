@@ -76,7 +76,7 @@ class ChallengeController {
     this.disposePlayMode = reaction(() => this.store.playMode, playMode => {
       this.validateGeoObjectVisibility();
       if (playMode) {
-        this.restoreView();
+        this.restoreView().catch(e => console.error(e));
       }
     });
 
@@ -116,17 +116,22 @@ class ChallengeController {
     const { items } = challenge;
 
     try {
-      const geoObjects = await Promise.all(items.map(item => {
+      const styles = Object.keys(geoObjectColors);
+      const promises = [];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
         const { id, path } = item;
-        return Promise.all(Object.keys(geoObjectColors).map(style => {
-          return this.loadGeoObject(id, path, style);
+        promises.push(loadGeoJson(path).then(geoJson => {
+          return Promise.all(styles.map(style => {
+            return this.loadGeoObject(id, geoJson, style);
+          }));
         }));
-      })).then(geoObjectLists => {
-        const geoObjects = [];
-        geoObjectLists.forEach(geoObjectList => {
-          Array.prototype.push.apply(geoObjects, geoObjectList);
-        });
-        return geoObjects;
+      }
+
+      const geoObjects = [];
+      const geoObjectLists = await Promise.all(promises);
+      geoObjectLists.forEach(geoObjectList => {
+        Array.prototype.push.apply(geoObjects, geoObjectList);
       });
 
       for (let i = 0; i < geoObjects.length; i++) {
@@ -144,22 +149,13 @@ class ChallengeController {
     }
   }
 
-  async restoreView() {
-    const { challenge } = this.store;
-    if (!challenge) {
-      return;
-    }
-    const { view } = challenge;
-    this.cameraController.flyToView(view);
-  }
-
   async unload() {
     this.dataSources.removeAll();
   }
 
-  loadGeoObject(id, path, style) {
+  loadGeoObject(id, geoJson, style) {
     const { stroke, fill } = geoObjectColors[style];
-    return Cesium.GeoJsonDataSource.load(path, { stroke, fill }).then(geoObject => {
+    return Cesium.GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
       geoObject.id = id;
       geoObject.style = style;
       geoObject.show = this.store.playMode ? style === GEOOBJECT_STYLE_HIDDEN : style === GEOOBJECT_STYLE_DEFAULT;
@@ -174,6 +170,15 @@ class ChallengeController {
       }
       return geoObject;
     });
+  }
+
+  async restoreView() {
+    const { challenge } = this.store;
+    if (!challenge) {
+      return;
+    }
+    const { view } = challenge;
+    this.cameraController.flyToView(view);
   }
 
   validateGeoObjectVisibility() {
@@ -241,6 +246,19 @@ class ChallengeController {
 
   getGeoObjectIdByEntityId(entityId) {
     return this.entityMap[entityId] || null;
+  }
+}
+
+async function loadGeoJson(path) {
+  try {
+    const response = await fetch(path);
+    if (response.ok) {
+      return response.json();
+    }
+    return Promise.reject(`Unable to load GeoJSON ${path}.`);
+  }
+  catch (e) {
+    return Promise.reject(`Unable to load GeoJSON ${path}.`);
   }
 }
 

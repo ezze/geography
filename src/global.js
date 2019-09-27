@@ -26,7 +26,6 @@ export function onGlobeDestroy() {
   challengeController.destroy();
 }
 
-
 export function getChallengeController() {
   return challengeController;
 }

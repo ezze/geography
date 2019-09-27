@@ -1,6 +1,7 @@
 [{
   "id": "europe",
   "name": { "en": "Europe", "ru": "Европа" },
+  "minimumZoomDistance": 1000000.0,
   "view": {
     "destination": {
       "west": -20,

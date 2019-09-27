@@ -14,7 +14,9 @@
     "close": "Close"
   },
   "loading": {
-    "challenge": "Please wait while challenge is loaded..."
+    "challenge": "Please wait while challenge is loaded...",
+    "error": "Unable to load challenge!",
+    "retry": "Retry"
   },
   "game-over": {
     "main": "Game is over",

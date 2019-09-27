@@ -116,6 +116,7 @@ class ChallengeController {
       return this.load();
     }
 
+    this.store.setLoadingError(false);
     this.store.setLoading(true);
 
     const { items } = challenge;

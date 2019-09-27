@@ -218,7 +218,6 @@ class ChallengeStore extends BaseStore {
 
   @action setLoading(loading) {
     this.loading = loading;
-    this.loadingError = false;
   }
 
   @action setLoadingError(loadingError) {

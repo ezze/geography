@@ -2,6 +2,7 @@ import Cesium from 'cesium';
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { getChallengeController } from '../../global';
 
@@ -75,8 +76,12 @@ class Globe extends Component {
   }
 
   render() {
+    const className = classNames({
+      globe: true,
+      'globe-picked': this.props.challengeStore.pickedItemId
+    });
     return (
-      <div ref={this.globeRef} className="globe"></div>
+      <div ref={this.globeRef} className={className}></div>
     );
   }
 

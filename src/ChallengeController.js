@@ -177,7 +177,9 @@ class ChallengeController {
     if (minimumZoomDistance) {
       this.cameraController.controller.minimumZoomDistance = minimumZoomDistance;
     }
-    this.cameraController.flyToView(view);
+    if (view) {
+      this.cameraController.flyToView(view);
+    }
   }
 
   validateGeoObjectVisibility() {

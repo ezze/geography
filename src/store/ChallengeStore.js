@@ -127,6 +127,7 @@ class ChallengeStore extends BaseStore {
     this.gameOver = false;
     this.overallCount = 0;
     this.correctCount = 0;
+    this.guessedIndexes = [];
     this.guessNextItem();
   }
 

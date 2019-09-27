@@ -177,7 +177,6 @@ class ChallengeController {
     if (minimumZoomDistance) {
       this.cameraController.controller.minimumZoomDistance = minimumZoomDistance;
     }
-    console.log(this.cameraController.controller.minimumZoomDistance);
     this.cameraController.flyToView(view);
   }
 

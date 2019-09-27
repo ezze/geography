@@ -111,33 +111,28 @@ class ChallengeController {
       return;
     }
 
+    if (this.store.loading) {
+      await delay(500);
+      return this.load();
+    }
+
     this.store.setLoading(true);
 
     const { items } = challenge;
 
     try {
       const styles = Object.keys(geoObjectColors);
-      const promises = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const { id, path } = item;
-        promises.push(loadGeoJson(path).then(geoJson => {
-          return Promise.all(styles.map(style => {
-            return this.loadGeoObject(id, geoJson, style);
-          }));
-        }));
+        const geoJson = await loadGeoJson(path);
+        for (let j = 0; j < styles.length; j++) {
+          const style = styles[j];
+          const geoObject = this.loadGeoObject(id, geoJson, style);
+          this.dataSources.add(geoObject);
+          await delay(5);
+        }
       }
-
-      const geoObjects = [];
-      const geoObjectLists = await Promise.all(promises);
-      geoObjectLists.forEach(geoObjectList => {
-        Array.prototype.push.apply(geoObjects, geoObjectList);
-      });
-
-      for (let i = 0; i < geoObjects.length; i++) {
-        this.dataSources.add(geoObjects[i]);
-      }
-
       this.restoreView();
     }
     catch (e) {
@@ -260,6 +255,10 @@ async function loadGeoJson(path) {
   catch (e) {
     return Promise.reject(`Unable to load GeoJSON ${path}.`);
   }
+}
+
+function delay(ms = 100) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default ChallengeController;

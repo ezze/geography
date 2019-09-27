@@ -13,6 +13,9 @@
     "duration": "Game duration (in minutes)",
     "close": "Close"
   },
+  "loading": {
+    "challenge": "Please wait while challenge is loaded..."
+  },
   "game-over": {
     "main": "Game is over",
     "correct-count": "Correct objects' count: {{count}}",

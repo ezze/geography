@@ -6,6 +6,7 @@ import State from '../State';
 import ChallengeSidebar from '../ChallengeSidebar';
 import ChallengeItemLabel from '../ChallengeItemLabel';
 import Settings from '../Settings';
+import Loading from '../Loading';
 import GameOver from '../GameOver';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
@@ -20,6 +21,7 @@ class App extends Component {
         <ChallengeSidebar />
         <ChallengeItemLabel />
         <Settings />
+        <Loading />
         <GameOver />
       </div>
     );

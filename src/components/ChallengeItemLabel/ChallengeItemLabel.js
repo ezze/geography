@@ -32,4 +32,4 @@ class ChallengeItemLabel extends Component {
   }
 }
 
-export default ChallengeItemLabel
+export default ChallengeItemLabel;

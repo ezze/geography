@@ -73,7 +73,7 @@ class Settings extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   onLanguageChange(event) {

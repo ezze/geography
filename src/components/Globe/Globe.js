@@ -32,7 +32,7 @@ class Globe extends Component {
   createCesium() {
     this.cesiumWidget = new Cesium.CesiumWidget(this.globeRef.current, {
       imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
-        url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
       }),
       creditContainer: document.createElement('div'),
       orderIndependentTranslucency: true,

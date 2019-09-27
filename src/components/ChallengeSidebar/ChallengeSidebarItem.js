@@ -23,7 +23,7 @@ class ChallengeSidebarItem extends Component {
           {item.name[language]}
         </a>
       </li>
-    )
+    );
   }
 
   onMouseEnter() {

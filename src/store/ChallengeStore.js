@@ -162,7 +162,7 @@ class ChallengeStore extends BaseStore {
         successSound.play().catch(e => console.error(e));
       }
       else if (!this.userCorrect && errorSound) {
-        errorSound.play().catch(e => console.error(e));;
+        errorSound.play().catch(e => console.error(e));
       }
     }
 

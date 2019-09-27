@@ -5,7 +5,6 @@ import moment from 'moment';
 import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
-import { stores } from './index';
 
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
@@ -26,6 +25,7 @@ class ChallengeStore extends BaseStore {
 
   elapsedInterval = null;
   nextTimeout = null;
+  guessedIndexes = [];
 
   constructor(options) {
     super({
@@ -158,8 +158,18 @@ class ChallengeStore extends BaseStore {
   }
 
   guessNextItem() {
-    const guessIndex = Math.floor(Math.random() * this.itemIds.length);
-    this.guessedItemId = this.itemIds[guessIndex];
+    if (this.guessedIndexes.length === this.itemIds.length) {
+      this.guessedIndexes = [];
+    }
+
+    let guessedIndex;
+    do {
+      guessedIndex = Math.floor(Math.random() * this.itemIds.length);
+    }
+    while (this.guessedIndexes.includes(guessedIndex));
+
+    this.guessedIndexes.push(guessedIndex);
+    this.guessedItemId = this.itemIds[guessedIndex];
     this.overallCount++;
   }
 

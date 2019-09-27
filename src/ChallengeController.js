@@ -131,7 +131,7 @@ class ChallengeController {
           const style = styles[j];
           const geoObject = this.loadGeoObject(id, geoJson, style);
           this.dataSources.add(geoObject);
-          await delay(5);
+          await delay(1);
         }
       }
       this.restoreView();

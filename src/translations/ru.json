@@ -5,6 +5,7 @@
   "toolbar": {
     "start": "Начать",
     "stop": "Остановить",
+    "restore-view": "Восстановить начальный вид",
     "settings": "Настройки"
   },
   "settings": {

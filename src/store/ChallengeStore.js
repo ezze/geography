@@ -6,6 +6,12 @@ import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
 
+import successSoundUrl from '../sound/success.mp3';
+import errorSoundUrl from '../sound/error.mp3';
+
+const successSound = Audio ? new Audio(successSoundUrl) : null;
+const errorSound = Audio ? new Audio(errorSoundUrl) : null;
+
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
   @observable id = challenges[0].id;
@@ -149,6 +155,15 @@ class ChallengeStore extends BaseStore {
 
     if (this.userCorrect) {
       this.correctCount++;
+    }
+
+    if (this.generalStore.soundEnabled) {
+      if (this.userCorrect && successSound) {
+        successSound.play().catch(e => console.error(e));
+      }
+      else if (!this.userCorrect && errorSound) {
+        errorSound.play().catch(e => console.error(e));;
+      }
     }
 
     this.userItemId = this.pickedItemId;

@@ -71,6 +71,14 @@ export default (env, argv) => {
             regExp: /node_modules\/@fortawesome\/fontawesome-free\/webfonts\/([^.]+)\.[^.]+/
           }
         }
+      }, {
+        test: /\.mp3$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'sound/[name].[hash:6].[ext]'
+          }
+        }
       }],
     },
     optimization: {

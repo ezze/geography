@@ -12,6 +12,7 @@
     "title": "Settings",
     "language": "Language",
     "duration": "Game duration (in minutes)",
+    "sound-enabled": "Enable sound",
     "close": "Close"
   },
   "loading": {

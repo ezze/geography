@@ -11,12 +11,13 @@ class Settings extends Component {
     super(props);
     this.onLanguageChange = this.onLanguageChange.bind(this);
     this.onDurationChange = this.onDurationChange.bind(this);
+    this.onSoundEnabledChange = this.onSoundEnabledChange.bind(this);
     this.onCloseClick = this.onCloseClick.bind(this);
   }
 
   render() {
     const { t, generalStore, challengeStore } = this.props;
-    const { settingsVisible, languages, language } = generalStore;
+    const { settingsVisible, languages, language, soundEnabled } = generalStore;
     const { duration } = challengeStore;
 
     const className = classNames({
@@ -59,6 +60,12 @@ class Settings extends Component {
                   </div>
                 </div>
               </div>
+              <div className="field">
+                <label className="checkbox">
+                  <input type="checkbox" checked={soundEnabled} onChange={this.onSoundEnabledChange} />
+                  <span>{t('sound-enabled')}</span>
+                </label>
+              </div>
               <div className="has-text-right">
                 <button className="button is-primary" onClick={this.onCloseClick}>{t('close')}</button>
               </div>
@@ -77,6 +84,11 @@ class Settings extends Component {
   onDurationChange(event) {
     const { challengeStore } = this.props;
     challengeStore.setDuration(event.target.value);
+  }
+
+  onSoundEnabledChange(event) {
+    const { generalStore } = this.props;
+    generalStore.setSoundEnabled(event.target.checked);
   }
 
   onCloseClick() {

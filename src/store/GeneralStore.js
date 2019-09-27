@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx';
+import { observable, action } from 'mobx';
 import i18n from 'i18next';
 
 import BaseStore from './BaseStore';
@@ -7,6 +7,7 @@ class GeneralStore extends BaseStore {
   @observable settingsVisible = false;
   @observable languages = [];
   @observable language = null;
+  @observable soundEnabled = true;
 
   constructor(options = {}) {
     super({ key: 'general', ...options });
@@ -44,6 +45,10 @@ class GeneralStore extends BaseStore {
       this.language = id;
     }
     i18n.changeLanguage(id).catch(e => console.error(e));
+  }
+
+  @action setSoundEnabled(soundEnabled) {
+    this.soundEnabled = soundEnabled;
   }
 }
 

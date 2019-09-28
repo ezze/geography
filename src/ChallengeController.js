@@ -123,15 +123,30 @@ class ChallengeController {
 
     try {
       const styles = Object.keys(geoObjectColors);
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const { id, path } = item;
-        const geoJson = await loadGeoJson(path);
-        for (let j = 0; j < styles.length; j++) {
-          const style = styles[j];
-          const geoObject = this.loadGeoObject(id, geoJson, style);
-          this.dataSources.add(geoObject);
-          await delay(1);
+      const { generalStore } = this.store;
+      if (generalStore.developerMode) {
+        const promises = [];
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const { id, path } = item;
+          promises.push(loadGeoJson(path).then(geoJson => {
+            return Promise.all(styles.map(style => {
+              this.dataSources.add(this.loadGeoObject(id, geoJson, style));
+            }));
+          }));
+        }
+        await Promise.all(promises);
+      }
+      else {
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const { id, path } = item;
+          const geoJson = await loadGeoJson(path);
+          for (let j = 0; j < styles.length; j++) {
+            const style = styles[j];
+            this.dataSources.add(this.loadGeoObject(id, geoJson, style));
+            await delay(1);
+          }
         }
       }
       this.restoreView();

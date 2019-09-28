@@ -17,7 +17,7 @@ class Settings extends Component {
 
   render() {
     const { t, generalStore, challengeStore } = this.props;
-    const { settingsVisible, languages, language, soundEnabled } = generalStore;
+    const { settingsVisible, languages, language, soundEnabled, developerMode } = generalStore;
     const { duration } = challengeStore;
 
     const className = classNames({
@@ -51,7 +51,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select value={duration} onChange={this.onDurationChange}>
-                      {challengeDurations.map(duration => (
+                      {challengeDurations.concat(developerMode ? [0.1]: []).map(duration => (
                         <option key={duration} value={duration}>
                           {duration}
                         </option>

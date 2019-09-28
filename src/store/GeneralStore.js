@@ -8,6 +8,7 @@ class GeneralStore extends BaseStore {
   @observable languages = [];
   @observable language = null;
   @observable soundEnabled = true;
+  @observable developerMode = false;
 
   constructor(options = {}) {
     super({ key: 'general', ...options });
@@ -49,6 +50,10 @@ class GeneralStore extends BaseStore {
 
   @action setSoundEnabled(soundEnabled) {
     this.soundEnabled = soundEnabled;
+  }
+
+  @action setDeveloperMode(developerMode) {
+    this.developerMode = developerMode;
   }
 }
 

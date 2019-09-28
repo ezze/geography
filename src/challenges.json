@@ -353,8 +353,8 @@
     "path": "challenges/russian-regions/zabaykalsky-region.json"
   }]
 }, {
-  "id": "europe",
-  "name": { "en": "Europe", "ru": "Европа" },
+  "id": "europe-countries",
+  "name": { "en": "Countries of Europe", "ru": "Страны Европы" },
   "minimumZoomDistance": 1000000.0,
   "view": {
     "destination": {
@@ -571,15 +571,15 @@
     "path": "challenges/europe/ukraine.json"
   }]
 }, {
-  "id": "asia",
-  "name": { "en": "Asia", "ru": "Азия" },
+  "id": "asia-countries",
+  "name": { "en": "Countries of Asia", "ru": "Страны Азии" },
   "items": [{
     "id": "israel",
     "name": { "en": "Israel", "ru": "Израиль" },
-    "path": "challenges/europe/israel.json"
+    "path": "challenges/asia/israel.json"
   }, {
     "id": "turkey",
     "name": { "en": "Turkey", "ru": "Турция" },
-    "path": "challenges/europe/turkey.json"
+    "path": "challenges/asia/turkey.json"
   }]
 }]

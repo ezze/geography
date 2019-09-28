@@ -82,11 +82,9 @@ class ChallengeController {
       }
     });
 
-    this.disposeChallengeId = reaction(() => this.store.id, async id => {
-      if (id) {
-        await this.unload();
-        await this.load();
-      }
+    this.disposeChallengeId = reaction(() => this.store.id, async() => {
+      await this.unload();
+      await this.load();
     });
 
     this.disposePickedChallengeItemId = reaction(() => this.store.pickedItemId, id => {
@@ -162,6 +160,11 @@ class ChallengeController {
   }
 
   async unload() {
+    if (this.store.loading) {
+      await delay(500);
+      return this.unload;
+    }
+    this.entityMap = {};
     this.dataSources.removeAll();
   }
 

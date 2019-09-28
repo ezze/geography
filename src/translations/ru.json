@@ -10,8 +10,9 @@
   },
   "settings": {
     "title": "Настройки",
-    "language": "Язык",
+    "challenge": "Задание",
     "duration": "Продолжительность игры (в минутах)",
+    "language": "Язык",
     "sound-enabled": "Включить звук",
     "close": "Закрыть"
   },

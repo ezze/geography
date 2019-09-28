@@ -10,8 +10,9 @@
   },
   "settings": {
     "title": "Settings",
-    "language": "Language",
+    "challenge": "Challenge",
     "duration": "Game duration (in minutes)",
+    "language": "Language",
     "sound-enabled": "Enable sound",
     "close": "Close"
   },

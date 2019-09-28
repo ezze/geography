@@ -94,6 +94,19 @@ class ChallengeStore extends BaseStore {
     this.playMode = playMode;
   }
 
+  @action setChallenge(id) {
+    if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
+      const playMode = this.playMode;
+      if (playMode) {
+        this.playMode = false;
+      }
+      this.id = id;
+      if (playMode) {
+        setTimeout(() => this.playMode = true, 0);
+      }
+    }
+  }
+
   @action setDuration(duration) {
     this.duration = duration;
   }
@@ -114,12 +127,6 @@ class ChallengeStore extends BaseStore {
 
   @action setLoadingError(loadingError) {
     this.loadingError = loadingError;
-  }
-
-  @action setChallenge(id) {
-    if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
-      this.id = id;
-    }
   }
 
   constructor(options) {

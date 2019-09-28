@@ -125,17 +125,14 @@ class ChallengeController {
       const styles = Object.keys(geoObjectColors);
       const { generalStore } = this.store;
       if (generalStore.developerMode) {
-        const promises = [];
-        for (let i = 0; i < items.length; i++) {
-          const item = items[i];
+        await Promise.all(items.map(item => {
           const { id, path } = item;
-          promises.push(loadGeoJson(path).then(geoJson => {
+          return loadGeoJson(path).then(geoJson => {
             return Promise.all(styles.map(style => {
               this.dataSources.add(this.loadGeoObject(id, geoJson, style));
             }));
-          }));
-        }
-        await Promise.all(promises);
+          });
+        }));
       }
       else {
         for (let i = 0; i < items.length; i++) {

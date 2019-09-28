@@ -13,6 +13,8 @@ import {
   challengeItemHiddenColor
 } from './constants';
 
+import { delay } from './helpers';
+
 const GEOOBJECT_STYLE_DEFAULT = 'GEOOBJECT_STYLE_DEFAULT';
 const GEOOBJECT_STYLE_PICKED = 'GEOOBJECT_STYLE_PICKED';
 const GEOOBJECT_STYLE_CORRECT = 'GEOOBJECT_STYLE_CORRECT';
@@ -273,10 +275,6 @@ async function loadGeoJson(path) {
   catch (e) {
     return Promise.reject(`Unable to load GeoJSON ${path}.`);
   }
-}
-
-function delay(ms = 100) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default ChallengeController;

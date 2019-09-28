@@ -12,7 +12,7 @@ class GameOver extends Component {
 
   render() {
     const { t, challengeStore } = this.props;
-    const { gameOver, userItemId, correctCount, overallCount } = challengeStore;
+    const { gameOver, correctCount, overallCountForUser } = challengeStore;
     const className = classNames({
       modal: true,
       'is-active': gameOver
@@ -25,7 +25,7 @@ class GameOver extends Component {
             <button className="delete" onClick={this.close}></button>
             <p>{t('main')}</p>
             <p>{t('correct-count', { count: correctCount })}</p>
-            <p>{t('overall-count', { count: overallCount - (userItemId ? 0 : 1) })}</p>
+            <p>{t('overall-count', { count: overallCountForUser })}</p>
           </div>
         </div>
       </div>

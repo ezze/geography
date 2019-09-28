@@ -8,11 +8,22 @@ import challenges from '../challenges.json';
 
 import { challengeDurations } from '../constants';
 
+import { delay } from '../helpers';
+
 import successSoundUrl from '../sound/success.mp3';
 import errorSoundUrl from '../sound/error.mp3';
+import pickSoundUrl from '../sound/pick.mp3';
+import gameOverSoundUrl from '../sound/game-over.mp3';
 
 const successSound = Audio ? new Audio(successSoundUrl) : null;
 const errorSound = Audio ? new Audio(errorSoundUrl) : null;
+const pickSound = Audio ? new Audio(pickSoundUrl) : null;
+const gameOverSound = Audio ? new Audio(gameOverSoundUrl) : null;
+
+const SOUND_TYPE_SUCCESS = 'SOUND_TYPE_SUCCESS';
+const SOUND_TYPE_ERROR = 'SOUND_TYPE_ERROR';
+const SOUND_TYPE_PICK = 'SOUND_TYPE_PICK';
+const SOUND_TYPE_GAME_OVER = 'SOUND_TYPE_GAME_OVER';
 
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
@@ -34,6 +45,7 @@ class ChallengeStore extends BaseStore {
   elapsedInterval = null;
   nextTimeout = null;
   guessedIndexes = [];
+  playingSounds = {};
 
   constructor(options) {
     super({
@@ -56,12 +68,12 @@ class ChallengeStore extends BaseStore {
     this.generalStore = generalStore;
 
     this.disposeLanguage = reaction(() => generalStore.language, language => {
-      this.sortChallengeItems(language);
+      this.sortChallengeItems(language).catch(e => console.error(e));
     });
 
     this.disposePlayMode = reaction(() => this.playMode, playMode => {
       if (playMode) {
-        this.start();
+        this.start().catch(e => console.error(e));
       }
       else {
         this.stop();
@@ -70,17 +82,31 @@ class ChallengeStore extends BaseStore {
 
     this.disposeDuration = reaction(() => this.duration, () => {
       if (this.playMode) {
-        this.start();
+        this.start().catch(e => console.error(e));
       }
     });
 
     this.disposeGameOver = reaction(() => this.gameOver, gameOver => {
+      if (gameOver) {
+        this.playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
+      }
+
       if (this.playMode && !gameOver) {
         this.playMode = false;
       }
     });
 
+    this.disposePickedItemId = reaction(() => this.pickedItemId, pickedItemId => {
+      if (pickedItemId) {
+        this.playSound(SOUND_TYPE_PICK).catch(e => console.error(e));
+      }
+    });
+
     this.disposeUserItemId = reaction(() => this.userItemId, userItemId => {
+      if (userItemId) {
+        this.playSound(this.userCorrect ? SOUND_TYPE_SUCCESS : SOUND_TYPE_ERROR).catch(e => console.error(e));
+      }
+
       if (this.playMode && userItemId === null) {
         if (this.nextTimeout) {
           clearTimeout(this.nextTimeout);
@@ -91,11 +117,39 @@ class ChallengeStore extends BaseStore {
     });
   }
 
-  async init() {
-    this.sortChallengeItems(this.generalStore.language);
+  async playSound(type) {
+    if (!this.generalStore.soundEnabled || this.playingSounds[type]) {
+      return;
+    }
 
+    let sound;
+    switch (type) {
+      case SOUND_TYPE_SUCCESS: sound = successSound; break;
+      case SOUND_TYPE_ERROR: sound = errorSound; break;
+      case SOUND_TYPE_PICK: sound = pickSound; break;
+      case SOUND_TYPE_GAME_OVER: sound = gameOverSound; break;
+    }
+
+    if (!sound) {
+      return;
+    }
+
+    this.playingSounds[type] = sound;
+    try {
+      await sound.play();
+    }
+    catch (e) {
+      console.error(e);
+    }
+    finally {
+      delete this.playingSounds[type];
+    }
+  }
+
+  async init() {
+    await this.sortChallengeItems(this.generalStore.language);
     if (this.playMode) {
-      this.start();
+      await this.start();
     }
   }
 
@@ -104,22 +158,45 @@ class ChallengeStore extends BaseStore {
     this.disposePlayMode();
     this.disposeDuration();
     this.disposeGameOver();
+    this.disposePickedItemId();
     this.disposeUserItemId();
     super.destroy();
   }
 
-  sortChallengeItems(language) {
+  async sortChallengeItems(language) {
     const { id } = this;
+    if (!id) {
+      return;
+    }
     this.id = null;
     challenges.forEach(challenge => {
       challenge.items.sort((item1, item2) => {
         return item1.name[language].localeCompare(item2.name[language]);
       });
     });
-    setTimeout(() => this.id = id, 0);
+    await delay(0);
+    this.id = id;
   }
 
-  start() {
+  async start() {
+    this.gameOver = false;
+    this.guessedItemId = null;
+    this.overallCount = 0;
+    this.correctCount = 0;
+    this.pickedItemId = null;
+    this.userItemId = null;
+    this.guessedIndexes = [];
+
+    if (this.loading) {
+      await delay();
+      return this.start();
+    }
+
+    if (!this.challenge) {
+      this.playMode = false;
+      return;
+    }
+
     this.startTime = moment().unix();
     this.elapsedTime = 0;
     if (this.elapsedInterval) {
@@ -132,10 +209,7 @@ class ChallengeStore extends BaseStore {
         this.gameOver = true;
       }
     }, 100);
-    this.gameOver = false;
-    this.overallCount = 0;
-    this.correctCount = 0;
-    this.guessedIndexes = [];
+
     this.guessNextItem();
   }
 
@@ -150,6 +224,8 @@ class ChallengeStore extends BaseStore {
     this.guessedItemId = null;
     this.overallCount = 0;
     this.correctCount = 0;
+    this.pickedItemId = null;
+    this.userItemId = null;
   }
 
   guess() {
@@ -157,15 +233,6 @@ class ChallengeStore extends BaseStore {
 
     if (this.userCorrect) {
       this.correctCount++;
-    }
-
-    if (this.generalStore.soundEnabled) {
-      if (this.userCorrect && successSound) {
-        successSound.play().catch(e => console.error(e));
-      }
-      else if (!this.userCorrect && errorSound) {
-        errorSound.play().catch(e => console.error(e));
-      }
     }
 
     this.userItemId = this.pickedItemId;
@@ -212,6 +279,10 @@ class ChallengeStore extends BaseStore {
     return createTransformer(id => {
       return challenge ? challenge.items.find(item => item.id === id) || null : null;
     });
+  }
+
+  @computed get overallCountForUser() {
+    return Math.max(this.overallCount - (this.userItemId ? 0 : 1), 0);
   }
 
   @computed get guessedItem() {

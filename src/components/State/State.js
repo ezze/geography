@@ -5,11 +5,11 @@ import { inject, observer } from 'mobx-react';
 class State extends Component {
   render() {
     const { challengeStore } = this.props;
-    const { playMode, remainingTimeDisplay, userItemId, correctCount, overallCount } = challengeStore;
+    const { playMode, remainingTimeDisplay, correctCount, overallCountForUser } = challengeStore;
     return playMode ? (
       <div className="state">
         <div>{remainingTimeDisplay}</div>
-        <div>{correctCount} / {overallCount - (userItemId ? 0 : 1)}</div>
+        <div>{correctCount} / {overallCountForUser }</div>
       </div>
     ) : '';
   }

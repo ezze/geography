@@ -39,6 +39,7 @@ class BaseStore {
       try {
         if (this.storable) {
           await this.load();
+          console.log(toJS(this));
         }
 
         autorun(async() => {
@@ -49,10 +50,10 @@ class BaseStore {
             }
           }
           else {
+            this.storeInitialized = true;
             await this.init(options);
             console.log(`Store${this.key ? ` "${this.key}"` : ''} is initialized.`);
             console.log(data);
-            this.storeInitialized = true;
           }
         });
       }

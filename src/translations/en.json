@@ -20,9 +20,17 @@
     "error": "Unable to load challenge!",
     "retry": "Retry"
   },
+  "modal-notification": {
+    "audio": {
+      "title": "Audio notification",
+      "text": "Please note that interacting with a page you allow it play sounds. If you don't want sounds to be played consider disabling them in game settings."
+    }
+  },
   "game-over": {
     "main": "Game is over",
-    "correct-count": "Correct objects' count: {{count}}",
-    "overall-count": "Overall objects' count: {{count}}"
+    "score": "Scored points: {{score}}",
+    "overall-count": "Overall answers' count: {{count}}",
+    "correct-count": "Correct answers' count: {{count}}",
+    "incorrect-count": "Incorrect answers' count: {{count}}"
   }
 }

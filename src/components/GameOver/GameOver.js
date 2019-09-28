@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
-import classNames from 'classnames';
+
+import ModalNotification from '../ModalNotification';
 
 @inject('challengeStore') @observer
 class GameOver extends Component {
@@ -12,23 +13,15 @@ class GameOver extends Component {
 
   render() {
     const { t, challengeStore } = this.props;
-    const { gameOver, correctCount, overallCountForUser } = challengeStore;
-    const className = classNames({
-      modal: true,
-      'is-active': gameOver
-    });
+    const { gameOver, correctCount, overallCount, score } = challengeStore;
     return (
-      <div className={className}>
-        <div className="modal-background"></div>
-        <div className="modal-content">
-          <div className="notification is-warning">
-            <button className="delete" onClick={this.close}></button>
-            <p>{t('main')}</p>
-            <p>{t('correct-count', { count: correctCount })}</p>
-            <p>{t('overall-count', { count: overallCountForUser })}</p>
-          </div>
-        </div>
-      </div>
+      <ModalNotification style="warning" isOpen={gameOver} close={this.close}>
+        <h1 className="title is-4">{t('main')}</h1>
+        <p><b>{t('score', { score })}</b></p>
+        <p>{t('overall-count', { count: overallCount })}</p>
+        <p>{t('correct-count', { count: correctCount })}</p>
+        <p>{t('incorrect-count', { count: overallCount - correctCount })}</p>
+      </ModalNotification>
     );
   }
 

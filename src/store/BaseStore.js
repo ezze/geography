@@ -39,7 +39,6 @@ class BaseStore {
       try {
         if (this.storable) {
           await this.load();
-          console.log(toJS(this));
         }
 
         autorun(async() => {

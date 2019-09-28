@@ -30,12 +30,13 @@ const soundTypes = [
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
   @observable id = challenges[0].id;
+  @observable items = [];
   @observable duration = challengeDurations[1];
   @observable startTime = null;
   @observable elapsedTime = 0;
   @observable gameOver = false;
   @observable guessedItemId = null;
-  @observable overallCount = 0;
+  @observable innerCount = 0;
   @observable correctCount = 0;
   @observable pickedItemId = null;
   @observable userItemId = null;
@@ -59,23 +60,22 @@ class ChallengeStore extends BaseStore {
     return challenges.find(challenge => challenge.id === this.id) || null;
   }
 
-  @computed get items() {
-    return this.challenge ? this.challenge.items : [];
-  }
-
   @computed get itemIds() {
-    return this.challenge ? this.challenge.items.map(item => item.id) : [];
+    return this.items.map(item => item.id);
   }
 
   @computed get item() {
-    const { challenge } = this;
     return createTransformer(id => {
-      return challenge ? challenge.items.find(item => item.id === id) || null : null;
+      return this.items.find(item => item.id === id) || null;
     });
   }
 
-  @computed get overallCountForUser() {
-    return Math.max(this.overallCount - (this.userItemId ? 0 : 1), 0);
+  @computed get overallCount() {
+    return Math.max(this.innerCount - (this.userItemId ? 0 : 1), 0);
+  }
+
+  @computed get score() {
+    return this.correctCount - (this.overallCount - this.correctCount) * 2;
   }
 
   @computed get guessedItem() {
@@ -126,11 +126,12 @@ class ChallengeStore extends BaseStore {
     super({
       key: 'challenge',
       exclude: [
+        'items',
         'startTime',
         'elapsedTime',
         'gameOver',
         'guessedItemId',
-        'overallCount',
+        'innerCount',
         'correctCount',
         'pickedItemId',
         'userItemId',
@@ -142,8 +143,14 @@ class ChallengeStore extends BaseStore {
     const { generalStore } = options;
     this.generalStore = generalStore;
 
-    this.disposeLanguage = reaction(() => generalStore.language, language => {
-      this.sortChallengeItems(language).catch(e => console.error(e));
+    this.disposeId = reaction(() => this.id, id => {
+      if (id) {
+        this.sortItems();
+      }
+    });
+
+    this.disposeLanguage = reaction(() => generalStore.language, () => {
+      this.sortItems();
     });
 
     this.disposePlayMode = reaction(() => this.playMode, playMode => {
@@ -193,14 +200,15 @@ class ChallengeStore extends BaseStore {
   }
 
   async init() {
+    this.sortItems();
     await this.initSounds();
-    await this.sortChallengeItems(this.generalStore.language);
     if (this.playMode) {
       await this.start();
     }
   }
 
   async destroy() {
+    this.disposeId();
     this.disposeLanguage();
     this.disposePlayMode();
     this.disposeDuration();
@@ -210,25 +218,17 @@ class ChallengeStore extends BaseStore {
     super.destroy();
   }
 
-  async sortChallengeItems(language) {
-    const { id } = this;
-    if (!id) {
-      return;
-    }
-    this.id = null;
-    challenges.forEach(challenge => {
-      challenge.items.sort((item1, item2) => {
-        return item1.name[language].localeCompare(item2.name[language]);
-      });
-    });
-    await delay(0);
-    this.id = id;
+  sortItems() {
+    const { language } = this.generalStore;
+    this.items = this.challenge ? [].concat(this.challenge.items).sort((item1, item2) => {
+      return item1.name[language].localeCompare(item2.name[language]);
+    }) : [];
   }
 
   async start() {
     this.gameOver = false;
     this.guessedItemId = null;
-    this.overallCount = 0;
+    this.innerCount = 0;
     this.correctCount = 0;
     this.pickedItemId = null;
     this.userItemId = null;
@@ -264,7 +264,7 @@ class ChallengeStore extends BaseStore {
   stop() {
     this.gameOver = false;
     this.guessedItemId = null;
-    this.overallCount = 0;
+    this.innerCount = 0;
     this.correctCount = 0;
     this.pickedItemId = null;
     this.userItemId = null;
@@ -301,13 +301,14 @@ class ChallengeStore extends BaseStore {
 
     this.guessedIndexes.push(guessedIndex);
     this.guessedItemId = this.itemIds[guessedIndex];
-    this.overallCount++;
+    this.innerCount++;
   }
 
   async initSounds() {
     if (!Audio) {
       return;
     }
+
     for (let i = 0; i < soundTypes.length; i++) {
       const type = soundTypes[i];
       let url;
@@ -320,15 +321,26 @@ class ChallengeStore extends BaseStore {
       if (!url) {
         continue;
       }
-      const sound = new Audio(url);
-      await new Promise((resolve, reject) => {
-        const canPlay = () => {
-          sound.removeEventListener('canplay', canPlay);
+
+      await new Promise(resolve => {
+        const sound = new Audio();
+        const onCanPlay = () => {
+          removeListeners();
+          this.sounds[type] = sound;
           resolve();
         };
-        sound.addEventListener('canplay', canPlay);
+        const onError = () => {
+          removeListeners();
+          reject();
+        };
+        const removeListeners = () => {
+          sound.removeEventListener('canplaythrough', onCanPlay);
+          sound.removeEventListener('error', onError);
+        };
+        sound.addEventListener('canplaythrough', onCanPlay);
+        sound.addEventListener('error', onError);
+        sound.src = url;
       });
-      this.sounds[type] = sound;
     }
   }
 

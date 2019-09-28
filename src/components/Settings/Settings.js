@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-const durations = [5, 10, 15, 20];
+import { challengeDurations } from '../../constants';
 
 @inject('generalStore', 'challengeStore') @observer
 class Settings extends Component {
@@ -51,7 +51,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select value={duration} onChange={this.onDurationChange}>
-                      {durations.map(duration => (
+                      {challengeDurations.map(duration => (
                         <option key={duration} value={duration}>
                           {duration}
                         </option>

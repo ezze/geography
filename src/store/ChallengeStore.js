@@ -6,6 +6,8 @@ import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
 
+import { challengeDurations } from '../constants';
+
 import successSoundUrl from '../sound/success.mp3';
 import errorSoundUrl from '../sound/error.mp3';
 
@@ -15,7 +17,7 @@ const errorSound = Audio ? new Audio(errorSoundUrl) : null;
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
   @observable id = challenges[0].id;
-  @observable duration = 5;
+  @observable duration = challengeDurations[1];
   @observable startTime = null;
   @observable elapsedTime = 0;
   @observable gameOver = false;

@@ -13,6 +13,7 @@ export const cameraMinHeight = 100.0;
 export const cameraMaxHeight = 60000000.0;
 
 // Challenge
+export const challengeDurations = [3, 5, 7, 10, 15];
 export const challengeItemOpacity = 0.25;
 export const challengeItemDefaultColor = Cesium.Color.fromCssColorString('#fff');
 export const challengeItemDefaultFillColor = Cesium.Color.fromAlpha(challengeItemDefaultColor, challengeItemOpacity);

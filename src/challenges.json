@@ -316,7 +316,7 @@
     "name": { "en": "Udmurt Republic", "ru": "Удмуртская республика" },
     "path": "challenges/russian-regions/udmurt-republic.json"
   }, {
-    "id": "ulyanosk-region",
+    "id": "ulyanovsk-region",
     "name": { "en": "Ulyanovsk Region", "ru": "Ульяновская область" },
     "path": "challenges/russian-regions/ulyanovsk-region.json"
   }, {

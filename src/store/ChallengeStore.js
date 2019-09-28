@@ -15,15 +15,17 @@ import errorSoundUrl from '../sound/error.mp3';
 import pickSoundUrl from '../sound/pick.mp3';
 import gameOverSoundUrl from '../sound/game-over.mp3';
 
-const successSound = Audio ? new Audio(successSoundUrl) : null;
-const errorSound = Audio ? new Audio(errorSoundUrl) : null;
-const pickSound = Audio ? new Audio(pickSoundUrl) : null;
-const gameOverSound = Audio ? new Audio(gameOverSoundUrl) : null;
-
 const SOUND_TYPE_SUCCESS = 'SOUND_TYPE_SUCCESS';
 const SOUND_TYPE_ERROR = 'SOUND_TYPE_ERROR';
 const SOUND_TYPE_PICK = 'SOUND_TYPE_PICK';
 const SOUND_TYPE_GAME_OVER = 'SOUND_TYPE_GAME_OVER';
+
+const soundTypes = [
+  SOUND_TYPE_SUCCESS,
+  SOUND_TYPE_ERROR,
+  SOUND_TYPE_PICK,
+  SOUND_TYPE_GAME_OVER
+];
 
 class ChallengeStore extends BaseStore {
   @observable playMode = false;
@@ -45,7 +47,80 @@ class ChallengeStore extends BaseStore {
   elapsedInterval = null;
   nextTimeout = null;
   guessedIndexes = [];
+
+  sounds = {};
   playingSounds = {};
+
+  @computed get remainingTimeDisplay() {
+    return moment.utc(Math.max((this.duration * 60 - this.elapsedTime) * 1000, 0)).format('mm:ss');
+  }
+
+  @computed get challenge() {
+    return challenges.find(challenge => challenge.id === this.id) || null;
+  }
+
+  @computed get items() {
+    return this.challenge ? this.challenge.items : [];
+  }
+
+  @computed get itemIds() {
+    return this.challenge ? this.challenge.items.map(item => item.id) : [];
+  }
+
+  @computed get item() {
+    const { challenge } = this;
+    return createTransformer(id => {
+      return challenge ? challenge.items.find(item => item.id === id) || null : null;
+    });
+  }
+
+  @computed get overallCountForUser() {
+    return Math.max(this.overallCount - (this.userItemId ? 0 : 1), 0);
+  }
+
+  @computed get guessedItem() {
+    return this.guessedItemId ? this.item(this.guessedItemId) : null;
+  }
+
+  @computed get pickedItem() {
+    return this.pickedItemId ? this.item(this.pickedItemId) : null;
+  }
+
+  @computed get userItem() {
+    return this.userItemId ? this.item(this.userItemId) : null;
+  }
+
+  @action setPlayMode(playMode) {
+    this.playMode = playMode;
+  }
+
+  @action setDuration(duration) {
+    this.duration = duration;
+  }
+
+  @action setPickedItemId(id) {
+    if (id) {
+      const challengeItem = this.item(id);
+      this.pickedItemId = challengeItem ? id : null;
+    }
+    else {
+      this.pickedItemId = null;
+    }
+  }
+
+  @action setLoading(loading) {
+    this.loading = loading;
+  }
+
+  @action setLoadingError(loadingError) {
+    this.loadingError = loadingError;
+  }
+
+  @action setChallenge(id) {
+    if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
+      this.id = id;
+    }
+  }
 
   constructor(options) {
     super({
@@ -117,36 +192,8 @@ class ChallengeStore extends BaseStore {
     });
   }
 
-  async playSound(type) {
-    if (!this.generalStore.soundEnabled || this.playingSounds[type]) {
-      return;
-    }
-
-    let sound;
-    switch (type) {
-      case SOUND_TYPE_SUCCESS: sound = successSound; break;
-      case SOUND_TYPE_ERROR: sound = errorSound; break;
-      case SOUND_TYPE_PICK: sound = pickSound; break;
-      case SOUND_TYPE_GAME_OVER: sound = gameOverSound; break;
-    }
-
-    if (!sound) {
-      return;
-    }
-
-    this.playingSounds[type] = sound;
-    try {
-      await sound.play();
-    }
-    catch (e) {
-      console.error(e);
-    }
-    finally {
-      delete this.playingSounds[type];
-    }
-  }
-
   async init() {
+    await this.initSounds();
     await this.sortChallengeItems(this.generalStore.language);
     if (this.playMode) {
       await this.start();
@@ -185,6 +232,7 @@ class ChallengeStore extends BaseStore {
     this.correctCount = 0;
     this.pickedItemId = null;
     this.userItemId = null;
+
     this.guessedIndexes = [];
 
     if (this.loading) {
@@ -214,29 +262,27 @@ class ChallengeStore extends BaseStore {
   }
 
   stop() {
-    this.startTime = null;
-    this.elapsedTime = 0;
-    if (this.elapsedInterval) {
-      clearInterval(this.elapsedInterval);
-      this.elapsedInterval = null;
-    }
     this.gameOver = false;
     this.guessedItemId = null;
     this.overallCount = 0;
     this.correctCount = 0;
     this.pickedItemId = null;
     this.userItemId = null;
+
+    this.startTime = null;
+    this.elapsedTime = 0;
+    if (this.elapsedInterval) {
+      clearInterval(this.elapsedInterval);
+      this.elapsedInterval = null;
+    }
   }
 
   guess() {
     this.userCorrect = this.guessedItemId === this.pickedItemId;
-
     if (this.userCorrect) {
       this.correctCount++;
     }
-
     this.userItemId = this.pickedItemId;
-
     this.nextTimeout = setTimeout(() => {
       this.userItemId = null;
     }, 1500);
@@ -258,74 +304,53 @@ class ChallengeStore extends BaseStore {
     this.overallCount++;
   }
 
-  @computed get remainingTimeDisplay() {
-    return moment.utc(Math.max((this.duration * 60 - this.elapsedTime) * 1000, 0)).format('mm:ss');
-  }
-
-  @computed get challenge() {
-    return challenges.find(challenge => challenge.id === this.id) || null;
-  }
-
-  @computed get items() {
-    return this.challenge ? this.challenge.items : [];
-  }
-
-  @computed get itemIds() {
-    return this.challenge ? this.challenge.items.map(item => item.id) : [];
-  }
-
-  @computed get item() {
-    const { challenge } = this;
-    return createTransformer(id => {
-      return challenge ? challenge.items.find(item => item.id === id) || null : null;
-    });
-  }
-
-  @computed get overallCountForUser() {
-    return Math.max(this.overallCount - (this.userItemId ? 0 : 1), 0);
-  }
-
-  @computed get guessedItem() {
-    return this.guessedItemId ? this.item(this.guessedItemId) : null;
-  }
-
-  @computed get pickedItem() {
-    return this.pickedItemId ? this.item(this.pickedItemId) : null;
-  }
-
-  @computed get userItem() {
-    return this.userItemId ? this.item(this.userItemId) : null;
-  }
-
-  @action setPlayMode(playMode) {
-    this.playMode = playMode;
-  }
-
-  @action setDuration(duration) {
-    this.duration = duration;
-  }
-
-  @action setPickedItemId(id) {
-    if (id) {
-      const challengeItem = this.item(id);
-      this.pickedItemId = challengeItem ? id : null;
+  async initSounds() {
+    if (!Audio) {
+      return;
     }
-    else {
-      this.pickedItemId = null;
+    for (let i = 0; i < soundTypes.length; i++) {
+      const type = soundTypes[i];
+      let url;
+      switch (type) {
+        case SOUND_TYPE_SUCCESS: url = successSoundUrl; break;
+        case SOUND_TYPE_ERROR: url = errorSoundUrl; break;
+        case SOUND_TYPE_PICK: url = pickSoundUrl; break;
+        case SOUND_TYPE_GAME_OVER: url = gameOverSoundUrl; break;
+      }
+      if (!url) {
+        continue;
+      }
+      const sound = new Audio(url);
+      await new Promise((resolve, reject) => {
+        const canPlay = () => {
+          sound.removeEventListener('canplay', canPlay);
+          resolve();
+        };
+        sound.addEventListener('canplay', canPlay);
+      });
+      this.sounds[type] = sound;
     }
   }
 
-  @action setLoading(loading) {
-    this.loading = loading;
-  }
+  async playSound(type) {
+    if (!this.generalStore.soundEnabled || this.playingSounds[type]) {
+      return;
+    }
 
-  @action setLoadingError(loadingError) {
-    this.loadingError = loadingError;
-  }
+    const sound = this.sounds[type];
+    if (!sound) {
+      return;
+    }
 
-  @action setChallenge(id) {
-    if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
-      this.id = id;
+    this.playingSounds[type] = sound;
+    try {
+      await sound.play();
+    }
+    catch (e) {
+      console.error(e);
+    }
+    finally {
+      delete this.playingSounds[type];
     }
   }
 }

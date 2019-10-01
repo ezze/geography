@@ -329,7 +329,7 @@ class ChallengeStore extends BaseStore {
         continue;
       }
 
-      await new Promise(resolve => {
+      await new Promise((resolve, reject) => {
         const sound = new Audio();
         const onCanPlay = () => {
           removeListeners();

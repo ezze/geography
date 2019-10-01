@@ -88,7 +88,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select value={duration} onChange={this.onDurationChange}>
-                      {challengeDurations.concat(developerMode ? [0.1]: []).map(duration => (
+                      {challengeDurations.concat(developerMode ? [0.1] : []).map(duration => (
                         <option key={duration} value={duration}>
                           {duration}
                         </option>

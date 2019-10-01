@@ -3,6 +3,8 @@ import i18n from 'i18next';
 
 import BaseStore from './BaseStore';
 
+import { modalErrors } from '../constants';
+
 class GeneralStore extends BaseStore {
   @observable languages = [];
   @observable language = null;
@@ -31,6 +33,13 @@ class GeneralStore extends BaseStore {
       i18n.on('initialized', () => {
         this.setLanguage(this.language);
       });
+    }
+  }
+
+  async init() {
+    super.init();
+    if (modalErrors.includes(this.modal)) {
+      this.modal = null;
     }
   }
 

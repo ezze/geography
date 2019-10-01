@@ -64,7 +64,8 @@ class Globe extends Component {
         this.props.onCreate(this.cesiumWidget);
       }
     }
-    catch(e) {
+    catch (e) {
+      console.error(e);
       this.props.generalStore.setModal(MODAL_GLOBE_INITIALIZATION_ERROR);
     }
 
@@ -88,11 +89,14 @@ class Globe extends Component {
       Cesium.requestAnimationFrame(() => this.animate());
     }
     catch (e) {
+      console.error(e);
       this.props.generalStore.setModal(MODAL_GLOBE_RENDERING_ERROR);
     }
   }
 
   render() {
+    const { generalStore } = this.props;
+    const { modal } = generalStore;
     const className = classNames({
       globe: true,
       'globe-picked': this.props.challengeStore.pickedItemId
@@ -100,8 +104,16 @@ class Globe extends Component {
     return (
       <div className={className}>
         <div ref={this.globeRef} className="globe-webgl"></div>
-        <ModalNotification id="globe-initialization-error" style="danger" />
-        <ModalNotification id="globe-rendering-error" style="danger" />
+        <ModalNotification
+          id="globe-initialization-error"
+          style="danger"
+          visible={modal === MODAL_GLOBE_INITIALIZATION_ERROR}
+        />
+        <ModalNotification
+          id="globe-rendering-error"
+          style="danger"
+          visible={modal === MODAL_GLOBE_RENDERING_ERROR}
+        />
       </div>
     );
   }

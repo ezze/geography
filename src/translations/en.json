@@ -24,7 +24,16 @@
       "text": "Please wait while challenge is loaded..."
     },
     "loading-error": {
+      "title": "Error",
       "text": "Unable to load challenge!"
+    },
+    "globe-initialization-error": {
+      "title": "Error",
+      "text": "3D globe initialization error has occurred. Please be sure that you use a modern web browser with WebGL support and you have a modern graphics card (dedicated graphics cards such as NVIDIA are preferred)."
+    },
+    "globe-rendering-error": {
+      "title": "Error",
+      "text": "3D globe rendering error has occurred.. Please contact delevopers to resolve the issue."
     },
     "audio": {
       "title": "Audio notification",

@@ -13,7 +13,10 @@ import GameOver from '../GameOver';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
-import { MODAL_AUDIO_NOTIFICATION } from '../../constants';
+import {
+  MODAL_AUDIO_NOTIFICATION,
+  modalErrors
+} from '../../constants';
 
 @inject('generalStore') @observer
 class App extends Component {
@@ -26,7 +29,7 @@ class App extends Component {
   componentDidMount() {
     const { generalStore } = this.props;
     const { soundEnabled, developerMode, modal } = generalStore;
-    if (soundEnabled && !developerMode) {
+    if (soundEnabled && !developerMode && !modalErrors.includes(modal)) {
       this.previousModal = modal;
       generalStore.setModal(MODAL_AUDIO_NOTIFICATION);
     }

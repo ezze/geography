@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
-import ReactLoading from 'react-loading';
-import classNames from 'classnames';
 
 import ModalNotification from '../ModalNotification';
 

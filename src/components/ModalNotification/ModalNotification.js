@@ -65,7 +65,7 @@ class ModalNotification extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   onCloseClick() {

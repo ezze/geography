@@ -50,9 +50,9 @@ class BaseStore {
           }
           else {
             this.storeInitialized = true;
-            await this.init(options);
             console.log(`Store${this.key ? ` "${this.key}"` : ''} is initialized.`);
             console.log(data);
+            await this.init(options);
           }
         });
       }

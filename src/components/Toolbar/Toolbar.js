@@ -5,7 +5,10 @@ import classNames from 'classnames';
 
 import { getChallengeController } from '../../global';
 
-import { MODAL_SETTINGS } from '../../constants';
+import {
+  MODAL_SETTINGS,
+  MODAL_USER_NAME
+} from '../../constants';
 
 @inject('generalStore', 'challengeStore') @observer
 class Toolbar extends Component {
@@ -14,11 +17,32 @@ class Toolbar extends Component {
     this.onPlayModeClick = this.onPlayModeClick.bind(this);
     this.onRestoreViewClick = this.onRestoreViewClick.bind(this);
     this.onSettingsClick = this.onSettingsClick.bind(this);
+    this.onEditUserNameClick = this.onEditUserNameClick.bind(this);
+  }
+
+  onPlayModeClick() {
+    const { challengeStore } = this.props;
+    challengeStore.setPlayMode(!challengeStore.playMode);
+  }
+
+  onRestoreViewClick() {
+    const challengeController = getChallengeController();
+    challengeController.restoreView();
+  }
+
+  onSettingsClick() {
+    const { generalStore } = this.props;
+    generalStore.setModal(MODAL_SETTINGS);
+  }
+
+  onEditUserNameClick() {
+    const { generalStore } = this.props;
+    generalStore.setModal(MODAL_USER_NAME);
   }
 
   render() {
     const { t, challengeStore } = this.props;
-    const { playMode } = challengeStore;
+    const { userName, playMode } = challengeStore;
     const playModeButtonClassName = classNames({
       button: true,
       'is-primary': !playMode,
@@ -46,23 +70,20 @@ class Toolbar extends Component {
             <i className="fas fa-wrench" />
           </span>
         </button>
+        <div className="field has-addons">
+          <div className="control">
+            <input className="toolbar-user-name input" disabled={true} value={userName} />
+          </div>
+          <div className="control">
+            <button className="button is-primary" title={t('edit-user-name')} onClick={this.onEditUserNameClick}>
+              <span className="icon">
+                <i className="fas fa-edit" />
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     );
-  }
-
-  onPlayModeClick() {
-    const { challengeStore } = this.props;
-    challengeStore.setPlayMode(!challengeStore.playMode);
-  }
-
-  onRestoreViewClick() {
-    const challengeController = getChallengeController();
-    challengeController.restoreView();
-  }
-
-  onSettingsClick() {
-    const { generalStore } = this.props;
-    generalStore.setModal(MODAL_SETTINGS);
   }
 }
 

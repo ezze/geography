@@ -117,7 +117,7 @@ class Settings extends Component {
                   <span>{t('sound-enabled')}</span>
                 </label>
               </div>
-              <div className="has-text-right">
+              <div className="buttons is-right">
                 <button className="button is-primary" onClick={this.onCloseClick}>{t('close')}</button>
               </div>
             </div>

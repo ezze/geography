@@ -28,6 +28,7 @@ const soundTypes = [
 ];
 
 class ChallengeStore extends BaseStore {
+  @observable userName = '';
   @observable playMode = false;
   @observable id = challenges[0].id;
   @observable items = [];
@@ -88,6 +89,10 @@ class ChallengeStore extends BaseStore {
 
   @computed get userItem() {
     return this.userItemId ? this.item(this.userItemId) : null;
+  }
+
+  @action setUserName(userName) {
+    this.userName = userName;
   }
 
   @action setPlayMode(playMode) {

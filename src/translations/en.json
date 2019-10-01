@@ -6,7 +6,8 @@
     "start": "Start",
     "stop": "Stop",
     "restore-view": "Restore initial view",
-    "settings": "Settings"
+    "settings": "Settings",
+    "edit-user-name": "Edit user name"
   },
   "settings": {
     "title": "Settings",
@@ -18,6 +19,10 @@
   },
   "loading": {
     "retry": "Retry"
+  },
+  "user-name": {
+    "apply": "Apply",
+    "cancel": "Cancel"
   },
   "modal-notification": {
     "loading": {
@@ -34,6 +39,9 @@
     "globe-rendering-error": {
       "title": "Error",
       "text": "3D globe rendering error has occurred.. Please contact delevopers to resolve the issue."
+    },
+    "user-name": {
+      "text": "Input user name:"
     },
     "audio": {
       "title": "Audio notification",

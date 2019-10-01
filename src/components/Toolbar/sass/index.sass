@@ -9,5 +9,15 @@
   top: $toolbar-gap
 
   > .button ~ .buttons,
-  > .buttons ~ .button
+  > .button ~ .field,
+  > .buttons ~ .button,
+  > .buttons ~ .field,
+  > .field ~ .button,
+  > .field ~ .buttons
     margin-left: $toolbar-button-gap
+
+.toolbar-user-name
+  width: $toolbar-user-name-width
+  text-overflow: ellipsis
+  color: $input-color !important
+  background-color: $input-background-color !important

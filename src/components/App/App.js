@@ -8,17 +8,19 @@ import ChallengeSidebar from '../ChallengeSidebar';
 import ChallengeItemLabel from '../ChallengeItemLabel';
 import Settings from '../Settings';
 import Loading from '../Loading';
+import UserNamePrompt from '../UserNamePrompt';
 import ModalNotification from '../ModalNotification';
 import GameOver from '../GameOver';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
 import {
+  MODAL_USER_NAME,
   MODAL_AUDIO_NOTIFICATION,
   modalErrors
 } from '../../constants';
 
-@inject('generalStore') @observer
+@inject('generalStore', 'challengeStore') @observer
 class App extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +51,13 @@ class App extends Component {
   }
 
   onCloseAudioNotification() {
-    this.props.generalStore.setModal(this.previousModal);
+    const { generalStore, challengeStore } = this.props;
+    if (!challengeStore.userName) {
+      generalStore.setModal(MODAL_USER_NAME);
+    }
+    else {
+      generalStore.setModal(this.previousModal);
+    }
     delete this.previousModal;
   }
 
@@ -65,13 +73,14 @@ class App extends Component {
         <ChallengeItemLabel />
         <Settings />
         <Loading />
-        <GameOver />
+        <UserNamePrompt />
         <ModalNotification
           id="audio"
           style="warning"
           visible={modal === MODAL_AUDIO_NOTIFICATION}
           close={this.onCloseAudioNotification}
         />
+        <GameOver />
       </div>
     );
   }

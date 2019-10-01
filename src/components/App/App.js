@@ -9,6 +9,7 @@ import ChallengeItemLabel from '../ChallengeItemLabel';
 import Settings from '../Settings';
 import Loading from '../Loading';
 import UserNamePrompt from '../UserNamePrompt';
+import HallOfFame from '../HallOfFame';
 import ModalNotification from '../ModalNotification';
 import GameOver from '../GameOver';
 
@@ -74,6 +75,7 @@ class App extends Component {
         <Settings />
         <Loading />
         <UserNamePrompt />
+        <HallOfFame />
         <ModalNotification
           id="audio"
           style="warning"

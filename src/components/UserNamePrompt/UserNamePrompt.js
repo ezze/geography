@@ -66,7 +66,7 @@ class UserNamePrompt extends Component {
       >{t('cancel')}</button>
     ) : '';
     return (
-      <ModalNotification id="user-name" style="info" visible={modal === MODAL_USER_NAME}>
+      <ModalNotification id="user-name" visible={modal === MODAL_USER_NAME}>
         <form onSubmit={this.onApplyClick}>
           <div className="field">
             <div className="control">
@@ -74,7 +74,7 @@ class UserNamePrompt extends Component {
             </div>
           </div>
           <div className="buttons is-right">
-            <button className="button" disabled={!userName} onClick={this.onApplyClick}>{t('apply')}</button>
+            <button className="button is-primary" disabled={!userName} onClick={this.onApplyClick}>{t('apply')}</button>
             {cancelButton}
           </div>
         </form>

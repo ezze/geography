@@ -6,7 +6,7 @@ import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
 
-import { challengeDurations } from '../constants';
+import { challengeRecordsCount, challengeDurations } from '../constants';
 
 import { delay } from '../helpers';
 
@@ -42,6 +42,7 @@ class ChallengeStore extends BaseStore {
   @observable pickedItemId = null;
   @observable userItemId = null;
   @observable userCorrect = false;
+  @observable records = {};
 
   @observable loading = false;
   @observable loadingError = false;
@@ -61,6 +62,15 @@ class ChallengeStore extends BaseStore {
     return challenges.find(challenge => challenge.id === this.id) || null;
   }
 
+  @computed get name() {
+    const { language } = this.generalStore;
+    if (!this.challenge) {
+      return '';
+    }
+    const { name } = this.challenge;
+    return name[language] || '';
+  }
+
   @computed get itemIds() {
     return this.items.map(item => item.id);
   }
@@ -76,7 +86,7 @@ class ChallengeStore extends BaseStore {
   }
 
   @computed get score() {
-    return this.correctCount - (this.overallCount - this.correctCount) * 2;
+    return 2 * this.correctCount - this.overallCount;
   }
 
   @computed get guessedItem() {
@@ -183,6 +193,28 @@ class ChallengeStore extends BaseStore {
     this.disposeGameOver = reaction(() => this.gameOver, gameOver => {
       if (gameOver) {
         this.playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
+        const { score } = this;
+        if (score >= 0) {
+          if (!this.records[this.id]) {
+            this.records[this.id] = {};
+          }
+          if (!this.records[this.id][`duration-${this.duration}`]) {
+            this.records[this.id][`duration-${this.duration}`] = [];
+          }
+          const records = this.records[this.id][`duration-${this.duration}`];
+          const index = records.findIndex(record => record.score < score);
+          if (index === -1) {
+            if (records.length < challengeRecordsCount) {
+              records.push({ name: this.userName, score });
+            }
+          }
+          else {
+            records.splice(index, 0, { name: this.userName, score });
+            if (records.length > challengeRecordsCount) {
+              records.splice(challengeRecordsCount, 1);
+            }
+          }
+        }
       }
 
       if (this.playMode && !gameOver) {
@@ -213,7 +245,13 @@ class ChallengeStore extends BaseStore {
 
   async init() {
     this.sortItems();
-    await this.initSounds();
+    if (this.generalStore.developerMode) {
+      this.initSounds().catch(e => console.error(e));
+    }
+    else {
+      await this.initSounds();
+    }
+
     if (this.playMode) {
       await this.start();
     }

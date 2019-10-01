@@ -7,14 +7,13 @@ import classNames from 'classnames';
 class ModalNotification extends Component {
   static propTypes = {
     id: PropTypes.string,
-    style: PropTypes.string.isRequired,
+    style: PropTypes.string,
     visible: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
     close: PropTypes.func
   };
 
   static defaultProps = {
-    style: 'info',
     visible: false,
     loading: false
   };
@@ -32,13 +31,13 @@ class ModalNotification extends Component {
     });
     const notificationClassName = classNames({
       notification: true,
-      [`is-${style}`]: true
+      [`is-${style}`]: !!style
     });
 
     let content;
     if (id) {
       const title = t(`${id}.title`, { defaultValue: '' });
-      const text = t(`${id}.text`);
+      const text = t(`${id}.text`, { defaultValue: '' });
       content = (
         <div>
           {title ? <h1 className="title is-4">{title}</h1> : ''}

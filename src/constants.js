@@ -9,6 +9,7 @@ export const languages = [
 // Modal
 export const MODAL_USER_NAME = 'MODAL_USER_NAME';
 export const MODAL_SETTINGS = 'MODAL_SETTINGS';
+export const MODAL_HALL_OF_FAME = 'MODAL_HALL_OF_FAME';
 export const MODAL_AUDIO_NOTIFICATION = 'MODAL_AUDIO_NOTIFICATION';
 export const MODAL_GLOBE_INITIALIZATION_ERROR = 'MODAL_GLOBE_INITIALIZATION_ERROR';
 export const MODAL_GLOBE_RENDERING_ERROR = 'MODAL_GLOBE_RENDERING_ERROR';
@@ -24,6 +25,7 @@ export const cameraMinHeight = 100.0;
 export const cameraMaxHeight = 60000000.0;
 
 // Challenge
+export const challengeRecordsCount = 5;
 export const challengeDurations = [3, 5, 7, 10, 15];
 export const challengeItemOpacity = 0.25;
 export const challengeItemDefaultColor = Cesium.Color.fromCssColorString('#fff');

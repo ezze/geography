@@ -7,7 +7,8 @@ import { getChallengeController } from '../../global';
 
 import {
   MODAL_SETTINGS,
-  MODAL_USER_NAME
+  MODAL_USER_NAME,
+  MODAL_HALL_OF_FAME
 } from '../../constants';
 
 @inject('generalStore', 'challengeStore') @observer
@@ -18,6 +19,7 @@ class Toolbar extends Component {
     this.onRestoreViewClick = this.onRestoreViewClick.bind(this);
     this.onSettingsClick = this.onSettingsClick.bind(this);
     this.onEditUserNameClick = this.onEditUserNameClick.bind(this);
+    this.onHallOfFameClick = this.onHallOfFameClick.bind(this);
   }
 
   onPlayModeClick() {
@@ -38,6 +40,11 @@ class Toolbar extends Component {
   onEditUserNameClick() {
     const { generalStore } = this.props;
     generalStore.setModal(MODAL_USER_NAME);
+  }
+
+  onHallOfFameClick() {
+    const { generalStore } = this.props;
+    generalStore.setModal(MODAL_HALL_OF_FAME);
   }
 
   render() {
@@ -82,6 +89,11 @@ class Toolbar extends Component {
             </button>
           </div>
         </div>
+        <button className="button is-white" title={t('hall-of-fame')} onClick={this.onHallOfFameClick}>
+          <span className="icon">
+            <i className="fas fa-list" />
+          </span>
+        </button>
       </div>
     );
   }

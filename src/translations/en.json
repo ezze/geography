@@ -7,7 +7,8 @@
     "stop": "Stop",
     "restore-view": "Restore initial view",
     "settings": "Settings",
-    "edit-user-name": "Edit user name"
+    "edit-user-name": "Edit user name",
+    "hall-of-fame": "Hall of fame"
   },
   "settings": {
     "title": "Settings",
@@ -23,6 +24,11 @@
   "user-name": {
     "apply": "Apply",
     "cancel": "Cancel"
+  },
+  "hall-of-fame": {
+    "challenge": "Challenge: \"{{name}}\"",
+    "duration": "Duration (in minutes): {{duration}}",
+    "no-results": "No results for this challenge yet..."
   },
   "modal-notification": {
     "loading": {
@@ -43,6 +49,9 @@
     "user-name": {
       "text": "Input user name:"
     },
+    "hall-of-fame": {
+      "title": "Hall of fame"
+    },
     "audio": {
       "title": "Audio notification",
       "text": "Please note that interacting with a page you allow it play sounds. If you don't want sounds to be played consider disabling them in game settings."
@@ -53,6 +62,7 @@
     "score": "Scored points: {{score}}",
     "overall-count": "Overall answers' count: {{count}}",
     "correct-count": "Correct answers' count: {{count}}",
-    "incorrect-count": "Incorrect answers' count: {{count}}"
+    "incorrect-count": "Incorrect answers' count: {{count}}",
+    "hall-of-fame": "Hall of fame"
   }
 }

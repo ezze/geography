@@ -3,21 +3,20 @@ import { inject, observer } from 'mobx-react';
 
 import ChallengeSidebarItem from './ChallengeSidebarItem';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('challengeStore') @observer
 class ChallengeSidebar extends Component {
   render() {
-    const { generalStore, challengeStore } = this.props;
-    const { language } = generalStore;
-    const { playMode, challenge, itemIds } = challengeStore;
+    const { challengeStore } = this.props;
+    const { playMode, name, itemIds } = challengeStore;
 
     if (playMode) {
       return '';
     }
 
-    return challenge ? (
+    return name ? (
       <div className="challenge-sidebar">
         <nav className="panel">
-          <p className="panel-heading">{challenge.name[language]}</p>
+          <p className="panel-heading">{name}</p>
           <div className="panel-block">
             <aside className="menu">
               <ul className="menu-list">

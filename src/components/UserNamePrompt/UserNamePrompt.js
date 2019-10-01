@@ -38,7 +38,8 @@ class UserNamePrompt extends Component {
     this.setState({ userName: event.target.value });
   }
 
-  onApplyClick() {
+  onApplyClick(event) {
+    event.preventDefault();
     const { generalStore, challengeStore } = this.props;
     const { userName } = this.state;
     if (!userName) {
@@ -66,15 +67,17 @@ class UserNamePrompt extends Component {
     ) : '';
     return (
       <ModalNotification id="user-name" style="info" visible={modal === MODAL_USER_NAME}>
-        <div className="field">
-          <div className="control">
-            <input className="input is-fullwidth" type="text" value={userName} onChange={this.onChange} />
+        <form onSubmit={this.onApplyClick}>
+          <div className="field">
+            <div className="control">
+              <input className="input is-fullwidth" type="text" value={userName} onChange={this.onChange} />
+            </div>
           </div>
-        </div>
-        <div className="buttons is-right">
-          <button className="button" disabled={!userName} onClick={this.onApplyClick}>{t('apply')}</button>
-          {cancelButton}
-        </div>
+          <div className="buttons is-right">
+            <button className="button" disabled={!userName} onClick={this.onApplyClick}>{t('apply')}</button>
+            {cancelButton}
+          </div>
+        </form>
       </ModalNotification>
     );
   }

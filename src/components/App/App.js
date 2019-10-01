@@ -13,12 +13,10 @@ import GameOver from '../GameOver';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
+import { MODAL_AUDIO_NOTIFICATION } from '../../constants';
+
 @inject('generalStore') @observer
 class App extends Component {
-  state = {
-    showAudioNotification: true
-  };
-
   constructor(props) {
     super(props);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -26,9 +24,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { soundEnabled, developerMode } = this.props.generalStore;
-    if (!soundEnabled || developerMode) {
-      this.setState({ showAudioNotification: false });
+    const { generalStore } = this.props;
+    const { soundEnabled, developerMode, modal } = generalStore;
+    if (soundEnabled && !developerMode) {
+      this.previousModal = modal;
+      generalStore.setModal(MODAL_AUDIO_NOTIFICATION);
     }
     document.addEventListener('keydown', this.onKeyDown);
   }
@@ -46,18 +46,14 @@ class App extends Component {
   }
 
   onCloseAudioNotification() {
-    this.setState({ showAudioNotification: false });
+    this.props.generalStore.setModal(this.previousModal);
+    delete this.previousModal;
   }
 
   render() {
-    return this.state.showAudioNotification ? (
-      <ModalNotification
-        id="audio"
-        style="warning"
-        isOpen={this.state.showAudioNotification}
-        close={this.onCloseAudioNotification}
-      />
-    ) : (
+    const { generalStore } = this.props;
+    const { modal } = generalStore;
+    return (
       <div className="app">
         <Globe onCreate={onGlobeCreate} onDestroy={onGlobeDestroy} />
         <Toolbar />
@@ -67,6 +63,12 @@ class App extends Component {
         <Settings />
         <Loading />
         <GameOver />
+        <ModalNotification
+          id="audio"
+          style="warning"
+          visible={modal === MODAL_AUDIO_NOTIFICATION}
+          close={this.onCloseAudioNotification}
+        />
       </div>
     );
   }

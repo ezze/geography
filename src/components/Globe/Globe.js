@@ -4,9 +4,16 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import ModalNotification from '../ModalNotification';
+
 import { getChallengeController } from '../../global';
 
-@inject('challengeStore') @observer
+import {
+  MODAL_GLOBE_INITIALIZATION_ERROR,
+  MODAL_GLOBE_RENDERING_ERROR
+} from '../../constants';
+
+@inject('generalStore', 'challengeStore') @observer
 class Globe extends Component {
   static propTypes = {
     onCreate: PropTypes.func,
@@ -30,30 +37,35 @@ class Globe extends Component {
   }
 
   createCesium() {
-    this.cesiumWidget = new Cesium.CesiumWidget(this.globeRef.current, {
-      imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
-        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
-      }),
-      creditContainer: document.createElement('div'),
-      orderIndependentTranslucency: true,
-      useDefaultRenderLoop: false
-    });
+    try {
+      this.cesiumWidget = new Cesium.CesiumWidget(this.globeRef.current, {
+        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+          url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+        }),
+        creditContainer: document.createElement('div'),
+        orderIndependentTranslucency: true,
+        useDefaultRenderLoop: false
+      });
 
-    // Swapping drag and tilt events' sources
-    const scene = this.cesiumWidget.scene;
-    scene.screenSpaceCameraController.zoomEventTypes = [
-      Cesium.CameraEventType.MIDDLE_DRAG,
-      Cesium.CameraEventType.WHEEL,
-      Cesium.CameraEventType.PINCH
-    ];
-    scene.screenSpaceCameraController.tiltEventTypes = Cesium.CameraEventType.RIGHT_DRAG;
+      // Swapping drag and tilt events' sources
+      const scene = this.cesiumWidget.scene;
+      scene.screenSpaceCameraController.zoomEventTypes = [
+        Cesium.CameraEventType.MIDDLE_DRAG,
+        Cesium.CameraEventType.WHEEL,
+        Cesium.CameraEventType.PINCH
+      ];
+      scene.screenSpaceCameraController.tiltEventTypes = Cesium.CameraEventType.RIGHT_DRAG;
 
-    this.canvasEventHandler = new Cesium.ScreenSpaceEventHandler(this.cesiumWidget.canvas);
-    this.canvasEventHandler.setInputAction(this.onMouseMove, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-    this.canvasEventHandler.setInputAction(this.onLeftClick, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      this.canvasEventHandler = new Cesium.ScreenSpaceEventHandler(this.cesiumWidget.canvas);
+      this.canvasEventHandler.setInputAction(this.onMouseMove, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+      this.canvasEventHandler.setInputAction(this.onLeftClick, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-    if (typeof this.props.onCreate === 'function') {
-      this.props.onCreate(this.cesiumWidget);
+      if (typeof this.props.onCreate === 'function') {
+        this.props.onCreate(this.cesiumWidget);
+      }
+    }
+    catch(e) {
+      this.props.generalStore.setModal(MODAL_GLOBE_INITIALIZATION_ERROR);
     }
 
     Cesium.requestAnimationFrame(() => this.animate());
@@ -70,9 +82,14 @@ class Globe extends Component {
   }
 
   animate() {
-    this.cesiumWidget.resize();
-    this.cesiumWidget.render();
-    Cesium.requestAnimationFrame(() => this.animate());
+    try {
+      this.cesiumWidget.resize();
+      this.cesiumWidget.render();
+      Cesium.requestAnimationFrame(() => this.animate());
+    }
+    catch (e) {
+      this.props.generalStore.setModal(MODAL_GLOBE_RENDERING_ERROR);
+    }
   }
 
   render() {
@@ -81,7 +98,11 @@ class Globe extends Component {
       'globe-picked': this.props.challengeStore.pickedItemId
     });
     return (
-      <div ref={this.globeRef} className={className}></div>
+      <div className={className}>
+        <div ref={this.globeRef} className="globe-webgl"></div>
+        <ModalNotification id="globe-initialization-error" style="danger" />
+        <ModalNotification id="globe-rendering-error" style="danger" />
+      </div>
     );
   }
 

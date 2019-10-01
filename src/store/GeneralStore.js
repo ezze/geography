@@ -4,11 +4,11 @@ import i18n from 'i18next';
 import BaseStore from './BaseStore';
 
 class GeneralStore extends BaseStore {
-  @observable settingsVisible = false;
   @observable languages = [];
   @observable language = null;
   @observable soundEnabled = true;
   @observable developerMode = false;
+  @observable modal = null;
 
   constructor(options = {}) {
     super({ key: 'general', ...options });
@@ -34,10 +34,6 @@ class GeneralStore extends BaseStore {
     }
   }
 
-  @action setSettingsVisible(settingsVisible) {
-    this.settingsVisible = settingsVisible;
-  }
-
   @action setLanguage(id) {
     if (this.languages.findIndex(language => language.id === id) === -1) {
       throw new TypeError(`Language "${id}" is not supported.`);
@@ -54,6 +50,10 @@ class GeneralStore extends BaseStore {
 
   @action setDeveloperMode(developerMode) {
     this.developerMode = developerMode;
+  }
+
+  @action setModal(modal) {
+    this.modal = modal;
   }
 }
 

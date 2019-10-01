@@ -15,7 +15,7 @@ class GameOver extends Component {
     const { t, challengeStore } = this.props;
     const { gameOver, correctCount, overallCount, score } = challengeStore;
     return (
-      <ModalNotification style="warning" isOpen={gameOver} close={this.close}>
+      <ModalNotification style="warning" visible={gameOver} close={this.close}>
         <h1 className="title is-4">{t('main')}</h1>
         <p><b>{t('score', { score })}</b></p>
         <p>{t('overall-count', { count: overallCount })}</p>

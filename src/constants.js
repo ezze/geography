@@ -6,6 +6,12 @@ export const languages = [
   { id: 'en', label: 'English' }
 ];
 
+// Modal
+export const MODAL_SETTINGS = 'MODAL_SETTINGS';
+export const MODAL_AUDIO_NOTIFICATION = 'MODAL_AUDIO_NOTIFICATION';
+export const MODAL_GLOBE_INITIALIZATION_ERROR = 'MODAL_GLOBE_INITIALIZATION_ERROR';
+export const MODAL_GLOBE_RENDERING_ERROR = 'MODAL_GLOBE_RENDERING_ERROR';
+
 // Camera
 export const CAMERA_SCENE_MODE_2D = '2D';
 export const CAMERA_SCENE_MODE_3D = '3D';

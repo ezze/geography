@@ -3,11 +3,12 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Loading from '../Loading';
-
 import challenges from '../../challenges.json';
 
-import { challengeDurations } from '../../constants';
+import {
+  challengeDurations,
+  MODAL_SETTINGS
+} from '../../constants';
 
 @inject('generalStore', 'challengeStore') @observer
 class Settings extends Component {
@@ -42,17 +43,17 @@ class Settings extends Component {
 
   onCloseClick() {
     const { generalStore } = this.props;
-    generalStore.setSettingsVisible(false);
+    generalStore.setModal(null);
   }
 
   render() {
     const { t, generalStore, challengeStore } = this.props;
-    const { settingsVisible, languages, language, soundEnabled, developerMode } = generalStore;
+    const { languages, language, soundEnabled, developerMode, modal } = generalStore;
     const { id: challengeId, duration, loading } = challengeStore;
 
     const className = classNames({
       modal: true,
-      'is-active': settingsVisible
+      'is-active': modal === MODAL_SETTINGS
     });
 
     const challengeSelectClassName = classNames({

@@ -3,6 +3,11 @@
 
 .toolbar
   position: absolute
+  display: flex
+  flex-direction: row
   left: $toolbar-gap
   top: $toolbar-gap
 
+  > .button ~ .buttons,
+  > .buttons ~ .button
+    margin-left: $toolbar-button-gap

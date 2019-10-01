@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import ReactLoading from 'react-loading';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -7,13 +8,15 @@ class ModalNotification extends Component {
   static propTypes = {
     id: PropTypes.string,
     style: PropTypes.string.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    close: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    close: PropTypes.func
   };
 
   static defaultProps = {
     style: 'info',
-    isOpen: false
+    visible: false,
+    loading: false
   };
 
   constructor(props) {
@@ -22,15 +25,16 @@ class ModalNotification extends Component {
   }
 
   render() {
-    const { t, id, style, isOpen } = this.props;
+    const { t, id, style, visible, loading, close } = this.props;
     const className = classNames({
       modal: true,
-      'is-active': isOpen
+      'is-active': visible
     });
     const notificationClassName = classNames({
       notification: true,
       [`is-${style}`]: true
     });
+
     let content;
     if (id) {
       const title = t(`${id}.title`, { defaultValue: '' });
@@ -42,16 +46,22 @@ class ModalNotification extends Component {
         </div>
       );
     }
-    else {
-      content = this.props.children;
-    }
+
+    const nestedContent = this.props.children ? (
+      <div className="modal-notification-nested">
+        {this.props.children}
+      </div>
+    ) : '';
+
     return (
       <div className={className}>
         <div className="modal-background"></div>
         <div className="modal-content">
           <div className={notificationClassName}>
-            <div className="delete" onClick={this.onCloseClick}></div>
+            {typeof close === 'function' ? <div className="delete" onClick={this.onCloseClick}></div> : ''}
             {content}
+            {nestedContent}
+            {loading ? <ReactLoading className="modal-notification-loading" type="spin" /> : ''}
           </div>
         </div>
       </div>

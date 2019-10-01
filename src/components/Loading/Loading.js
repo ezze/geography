@@ -4,42 +4,28 @@ import { withTranslation } from 'react-i18next';
 import ReactLoading from 'react-loading';
 import classNames from 'classnames';
 
+import ModalNotification from '../ModalNotification';
+
 import { getChallengeController } from '../../global';
 
 @inject('generalStore', 'challengeStore') @observer
 class Loading extends Component {
   render() {
     const { t, generalStore, challengeStore } = this.props;
-    const { settingsVisible } = generalStore;
+    const { modal } = generalStore;
     const { loading, loadingError } = challengeStore;
-    const className = classNames({
-      modal: true,
-      'is-active': !settingsVisible && (loading || loadingError)
-    });
-    const notificationClassName = classNames({
-      notification: true,
-      'is-info': !loadingError,
-      'is-danger': loadingError
-    });
-    const content = loading ? (
-      <ReactLoading className="loading" type="spin" />
-    ) : (
-      <div className="loading-error">
+    const content = !loading ? (
+      <div className="has-text-centered">
         <button className="button" onClick={this.onRetryClick}>{t('retry')}</button>
       </div>
-    );
+    ) : '';
+    const modalId = loadingError ? 'loading-error' : 'loading';
+    const modalStyle = loadingError ? 'danger' : 'info';
+    const modalVisible = !modal && (loading || loadingError);
     return (
-      <div className={className}>
-        <div className="modal-background"></div>
-        <div className="modal-content">
-          <div className={notificationClassName}>
-            <div className="has-text-centered">
-              {t(loadingError ? 'error' : 'challenge')}
-            </div>
-            {content}
-          </div>
-        </div>
-      </div>
+      <ModalNotification id={modalId} style={modalStyle} visible={modalVisible} loading={loading}>
+        {content}
+      </ModalNotification>
     );
   }
 

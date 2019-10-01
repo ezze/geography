@@ -17,11 +17,15 @@
     "close": "Close"
   },
   "loading": {
-    "challenge": "Please wait while challenge is loaded...",
-    "error": "Unable to load challenge!",
     "retry": "Retry"
   },
   "modal-notification": {
+    "loading": {
+      "text": "Please wait while challenge is loaded..."
+    },
+    "loading-error": {
+      "text": "Unable to load challenge!"
+    },
     "audio": {
       "title": "Audio notification",
       "text": "Please note that interacting with a page you allow it play sounds. If you don't want sounds to be played consider disabling them in game settings."

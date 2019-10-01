@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import { getChallengeController } from '../../global';
 
+import { MODAL_SETTINGS } from '../../constants';
+
 @inject('generalStore', 'challengeStore') @observer
 class Toolbar extends Component {
   constructor(props) {
@@ -38,12 +40,12 @@ class Toolbar extends Component {
               <i className="fas fa-eye" />
             </span>
           </button>
-          <button className="button is-white" title={t('settings')} onClick={this.onSettingsClick}>
-            <span className="icon">
-              <i className="fas fa-wrench" />
-            </span>
-          </button>
         </div>
+        <button className="button is-white" title={t('settings')} onClick={this.onSettingsClick}>
+          <span className="icon">
+            <i className="fas fa-wrench" />
+          </span>
+        </button>
       </div>
     );
   }
@@ -60,7 +62,7 @@ class Toolbar extends Component {
 
   onSettingsClick() {
     const { generalStore } = this.props;
-    generalStore.setSettingsVisible(true);
+    generalStore.setModal(MODAL_SETTINGS);
   }
 }
 

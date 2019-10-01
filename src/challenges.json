@@ -573,6 +573,7 @@
 }, {
   "id": "asia-countries",
   "name": { "en": "Countries of Asia", "ru": "Страны Азии" },
+  "enabled": false,
   "items": [{
     "id": "israel",
     "name": { "en": "Israel", "ru": "Израиль" },

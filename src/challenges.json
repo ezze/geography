@@ -406,10 +406,6 @@
     "name": { "en": "Croatia", "ru": "Хорватия" },
     "path": "challenges/europe/croatia.json"
   }, {
-    "id": "cabo-verde",
-    "name": { "en": "Cabo Verde", "ru": "Кабо-Верде" },
-    "path": "challenges/europe/cabo-verde.json"
-  }, {
     "id": "cyprus",
     "name": { "en": "Cyprus", "ru": "Кипр" },
     "path": "challenges/europe/cyprus.json"
@@ -582,5 +578,14 @@
     "id": "turkey",
     "name": { "en": "Turkey", "ru": "Турция" },
     "path": "challenges/asia/turkey.json"
+  }]
+}, {
+  "id": "africa-countries",
+  "name": { "en": "Countries of Africa", "ru": "Страны Африки" },
+  "enabled": false,
+  "items": [{
+    "id": "cabo-verde",
+    "name": { "en": "Cabo Verde", "ru": "Кабо-Верде" },
+    "path": "challenges/africa/cabo-verde.json"
   }]
 }]

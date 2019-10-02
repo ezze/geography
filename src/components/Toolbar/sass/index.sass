@@ -5,16 +5,23 @@
   position: absolute
   display: flex
   flex-direction: row
+  justify-content: space-between
   left: $toolbar-gap
+  right: $toolbar-gap
   top: $toolbar-gap
+  pointer-events: none
 
-  > .button ~ .buttons,
-  > .button ~ .field,
-  > .buttons ~ .button,
-  > .buttons ~ .field,
-  > .field ~ .button,
-  > .field ~ .buttons
-    margin-left: $toolbar-button-gap
+  &.toolbar-narrow
+    right: $toolbar-gap + $challenge-sidebar-width + $challenge-sidebar-gap
+
+  > div
+    display: flex
+    flex-direction: row
+
+    > *
+      pointer-events: auto
+      margin-left: $toolbar-button-gap
+
 
 .toolbar-user-name
   width: $toolbar-user-name-width

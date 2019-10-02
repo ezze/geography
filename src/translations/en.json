@@ -8,7 +8,8 @@
     "restore-view": "Restore initial view",
     "settings": "Settings",
     "edit-user-name": "Edit user name",
-    "hall-of-fame": "Hall of fame"
+    "hall-of-fame": "Hall of fame",
+    "about": "About"
   },
   "settings": {
     "title": "Settings",

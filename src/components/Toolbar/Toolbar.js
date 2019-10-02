@@ -49,12 +49,19 @@ class Toolbar extends Component {
 
   render() {
     const { t, challengeStore } = this.props;
-    const { userName, playMode } = challengeStore;
+    const { userName, playMode, challenge } = challengeStore;
+
+    const className = classNames({
+      toolbar: true,
+      'toolbar-narrow': !playMode && !!challenge
+    });
+
     const playModeButtonClassName = classNames({
       button: true,
       'is-primary': !playMode,
       'is-danger': playMode
     });
+
     const playModeButton = (
       <button className={playModeButtonClassName} title={t(playMode ? 'stop' : 'start')} onClick={this.onPlayModeClick}>
         <span className="icon">
@@ -62,38 +69,48 @@ class Toolbar extends Component {
         </span>
       </button>
     );
+
     return (
-      <div className="toolbar">
-        <div className="buttons has-addons">
-          {playModeButton}
-          <button className="button is-white" title={t('restore-view')} onClick={this.onRestoreViewClick}>
+      <div className={className}>
+        <div>
+          <div className="buttons has-addons">
+            {playModeButton}
+            <button className="button is-white" title={t('hall-of-fame')} onClick={this.onHallOfFameClick}>
             <span className="icon">
-              <i className="fas fa-eye" />
+              <i className="fas fa-list" />
+            </span>
+            </button>
+          </div>
+          <button className="button is-white" title={t('restore-view')} onClick={this.onRestoreViewClick}>
+              <span className="icon">
+                <i className="fas fa-eye" />
+              </span>
+          </button>
+          <div className="field has-addons">
+            <div className="control">
+              <input className="toolbar-user-name input" disabled={true} value={userName} />
+            </div>
+            <div className="control">
+              <button className="button is-primary" title={t('edit-user-name')} onClick={this.onEditUserNameClick}>
+                <span className="icon">
+                  <i className="fas fa-edit" />
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button className="button is-white" title={t('settings')} onClick={this.onSettingsClick}>
+            <span className="icon">
+              <i className="fas fa-wrench" />
+            </span>
+          </button>
+          <button className="button is-white" title={t('about')} onClick={this.onAboutClick}>
+            <span className="icon">
+              <i className="fas fa-question" />
             </span>
           </button>
         </div>
-        <button className="button is-white" title={t('settings')} onClick={this.onSettingsClick}>
-          <span className="icon">
-            <i className="fas fa-wrench" />
-          </span>
-        </button>
-        <div className="field has-addons">
-          <div className="control">
-            <input className="toolbar-user-name input" disabled={true} value={userName} />
-          </div>
-          <div className="control">
-            <button className="button is-primary" title={t('edit-user-name')} onClick={this.onEditUserNameClick}>
-              <span className="icon">
-                <i className="fas fa-edit" />
-              </span>
-            </button>
-          </div>
-        </div>
-        <button className="button is-white" title={t('hall-of-fame')} onClick={this.onHallOfFameClick}>
-          <span className="icon">
-            <i className="fas fa-list" />
-          </span>
-        </button>
       </div>
     );
   }

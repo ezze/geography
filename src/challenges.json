@@ -431,7 +431,7 @@
     "path": "challenges/europe/faroe-islands.json"
   }, {
     "id": "finland",
-    "name": { "en": "Finland", "ru": "Финлядндия" },
+    "name": { "en": "Finland", "ru": "Финляндия" },
     "path": "challenges/europe/finland.json"
   }, {
     "id": "france",

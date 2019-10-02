@@ -148,6 +148,7 @@ class ChallengeStore extends BaseStore {
     super({
       key: 'challenge',
       exclude: [
+        'playMode',
         'items',
         'startTime',
         'elapsedTime',

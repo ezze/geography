@@ -2,7 +2,7 @@ const path = require('path');
 const Koa = require('koa');
 const serve = require('koa-static');
 
-const port = process.env.PORT || 6661;
+const port = process.env.PORT || 6662;
 
 const app = new Koa();
 app.use(serve(path.resolve(__dirname, 'dist')));

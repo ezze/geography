@@ -20,7 +20,8 @@ export default (env, argv) => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `[name].${mode === 'production' ? '[chunkhash:6].' : ''}js`
+      filename: `[name].${mode === 'production' ? '[chunkhash:6].' : ''}js`,
+      publicPath: '/'
     },
     devtool: mode === 'development' ? 'source-map' : false,
     devServer: {
@@ -52,7 +53,7 @@ export default (env, argv) => {
           'css-loader',
           'postcss-loader',
           { loader: 'resolve-url-loader', options: { keepQuery: true } },
-          'sass-loader',
+          { loader: 'sass-loader', options: { sourceMap: true } }
         ],
       }, {
         test: /\.(jpg|png)$/,

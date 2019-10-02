@@ -74,7 +74,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className={challengeSelectClassName}>
                     <select value={challengeId} disabled={loading} onChange={this.onChallengeChange}>
-                      {challenges.map(challenge => (
+                      {challenges.filter(challenge => challenge.enabled !== false).map(challenge => (
                         <option key={challenge.id} value={challenge.id}>
                           {challenge.name[language]}
                         </option>

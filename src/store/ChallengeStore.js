@@ -59,7 +59,9 @@ class ChallengeStore extends BaseStore {
   }
 
   @computed get challenge() {
-    return challenges.find(challenge => challenge.id === this.id) || null;
+    return challenges
+      .filter(challenge => challenge.enabled !== false)
+      .find(challenge => challenge.id === this.id) || null;
   }
 
   @computed get name() {

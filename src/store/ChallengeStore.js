@@ -195,7 +195,7 @@ class ChallengeStore extends BaseStore {
       if (gameOver) {
         this.playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
         const { score } = this;
-        if (score >= 0) {
+        if (score > 0) {
           if (!this.records[this.id]) {
             this.records[this.id] = {};
           }

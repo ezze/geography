@@ -49,8 +49,10 @@ class HallOfFame extends Component {
     );
     return (
       <ModalNotification id="hall-of-fame" visible={modal === MODAL_HALL_OF_FAME} close={this.close}>
-        <p>{t('challenge', { name })}</p>
-        <p>{t('duration', { duration })}</p>
+        <div className="notification is-warning">
+          <p>{t('challenge', { name })}</p>
+          <p>{t('duration', { duration })}</p>
+        </div>
         {table}
       </ModalNotification>
     );

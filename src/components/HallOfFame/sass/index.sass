@@ -4,15 +4,20 @@
 .hall-of-fame-table
   width: $hall-of-fame-table-width
   margin: $hall-of-fame-table-gap auto 0
+  border-collapse: collapse
 
-  td
-    padding: 0 $hall-of-fame-table-cell-gap / 2
+  tr
+    > td
+      padding: $hall-of-fame-table-cell-padding-vertical $hall-of-fame-table-cell-padding-horizontal
+      border: 2px solid $hall-of-fame-table-border-color
 
-    &:first-child
-      padding-left: 0
+    &:nth-child(odd)
+      > td
+        background-color: $hall-of-fame-table-odd-background-color
 
-    &:last-child
-      padding-right: 0
+    &:nth-child(even)
+      > td
+        background-color: $hall-of-fame-table-even-background-color
 
 
 .hall-of-fame-table-place,

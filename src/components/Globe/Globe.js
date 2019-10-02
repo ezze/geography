@@ -13,6 +13,8 @@ import {
   MODAL_GLOBE_RENDERING_ERROR
 } from '../../constants';
 
+import "./sass/index.sass"
+
 @inject('generalStore', 'challengeStore') @observer
 class Globe extends Component {
   static propTypes = {

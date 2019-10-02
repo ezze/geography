@@ -1,4 +1,12 @@
 @import "../../../sass/variables"
+@import "../../ChallengeSidebar/sass/index"
+
+
+$toolbar-gap: 15px !default
+$toolbar-button-gap: 10px !default
+$toolbar-user-name-width: 180px !default
+$toolbar-user-name-text-color: $black !default
+$toolbar-user-name-background-color: $white !default
 
 
 .toolbar
@@ -26,5 +34,5 @@
 .toolbar-user-name
   width: $toolbar-user-name-width
   text-overflow: ellipsis
-  color: $input-color !important
-  background-color: $input-background-color !important
+  color: $toolbar-user-name-text-color !important
+  background-color: $toolbar-user-name-background-color !important

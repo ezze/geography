@@ -8,8 +8,11 @@ import { getChallengeController } from '../../global';
 import {
   MODAL_SETTINGS,
   MODAL_USER_NAME,
-  MODAL_HALL_OF_FAME
+  MODAL_HALL_OF_FAME,
+  MODAL_ABOUT
 } from '../../constants';
+
+import "./sass/index.sass"
 
 @inject('generalStore', 'challengeStore') @observer
 class Toolbar extends Component {
@@ -20,6 +23,7 @@ class Toolbar extends Component {
     this.onSettingsClick = this.onSettingsClick.bind(this);
     this.onEditUserNameClick = this.onEditUserNameClick.bind(this);
     this.onHallOfFameClick = this.onHallOfFameClick.bind(this);
+    this.onAboutClick = this.onAboutClick.bind(this);
   }
 
   onPlayModeClick() {
@@ -45,6 +49,11 @@ class Toolbar extends Component {
   onHallOfFameClick() {
     const { generalStore } = this.props;
     generalStore.setModal(MODAL_HALL_OF_FAME);
+  }
+
+  onAboutClick() {
+    const { generalStore } = this.props;
+    generalStore.setModal(MODAL_ABOUT);
   }
 
   render() {

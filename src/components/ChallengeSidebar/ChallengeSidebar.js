@@ -3,6 +3,8 @@ import { inject, observer } from 'mobx-react';
 
 import ChallengeSidebarItem from './ChallengeSidebarItem';
 
+import "./sass/index.sass"
+
 @inject('challengeStore') @observer
 class ChallengeSidebar extends Component {
   render() {

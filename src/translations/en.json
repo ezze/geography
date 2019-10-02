@@ -56,6 +56,10 @@
     "audio": {
       "title": "Audio notification",
       "text": "Please note that interacting with a page you allow it play sounds. If you don't want sounds to be played consider disabling them in game settings."
+    },
+    "about": {
+      "title": "About",
+      "text": "This game is developed under the impression from Classical Conversions and is dedicated to learning the geography by whole our family."
     }
   },
   "game-over": {
@@ -65,5 +69,12 @@
     "correct-count": "Correct answers' count: {{count}}",
     "incorrect-count": "Incorrect answers' count: {{count}}",
     "hall-of-fame": "Hall of fame"
+  },
+  "about": {
+    "authors": "Authors",
+    "author-1": "Dmitriy Pushkov",
+    "author-2": "Tamara Pushkova",
+    "version": "Version",
+    "browsers": "Browsers"
   }
 }

@@ -10,32 +10,20 @@ import Settings from '../Settings';
 import Loading from '../Loading';
 import UserNamePrompt from '../UserNamePrompt';
 import HallOfFame from '../HallOfFame';
-import ModalNotification from '../ModalNotification';
+import AudioNotification from '../AudioNotification';
 import GameOver from '../GameOver';
+import About from '../About';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
-
-import {
-  MODAL_USER_NAME,
-  MODAL_AUDIO_NOTIFICATION,
-  modalErrors
-} from '../../constants';
 
 @inject('generalStore', 'challengeStore') @observer
 class App extends Component {
   constructor(props) {
     super(props);
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.onCloseAudioNotification = this.onCloseAudioNotification.bind(this);
   }
 
   componentDidMount() {
-    const { generalStore } = this.props;
-    const { soundEnabled, developerMode, modal } = generalStore;
-    if (soundEnabled && !developerMode && !modalErrors.includes(modal)) {
-      this.previousModal = modal;
-      generalStore.setModal(MODAL_AUDIO_NOTIFICATION);
-    }
     document.addEventListener('keydown', this.onKeyDown);
   }
 
@@ -51,20 +39,7 @@ class App extends Component {
     }
   }
 
-  onCloseAudioNotification() {
-    const { generalStore, challengeStore } = this.props;
-    if (!challengeStore.userName) {
-      generalStore.setModal(MODAL_USER_NAME);
-    }
-    else {
-      generalStore.setModal(this.previousModal);
-    }
-    delete this.previousModal;
-  }
-
   render() {
-    const { generalStore } = this.props;
-    const { modal } = generalStore;
     return (
       <div className="app">
         <Globe onCreate={onGlobeCreate} onDestroy={onGlobeDestroy} />
@@ -76,13 +51,9 @@ class App extends Component {
         <Loading />
         <UserNamePrompt />
         <HallOfFame />
-        <ModalNotification
-          id="audio"
-          style="warning"
-          visible={modal === MODAL_AUDIO_NOTIFICATION}
-          close={this.onCloseAudioNotification}
-        />
+        <AudioNotification />
         <GameOver />
+        <About />
       </div>
     );
   }

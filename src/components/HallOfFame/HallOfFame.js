@@ -6,6 +6,8 @@ import ModalNotification from '../ModalNotification';
 
 import { MODAL_HALL_OF_FAME } from '../../constants';
 
+import "./sass/index.sass"
+
 @inject('generalStore', 'challengeStore') @observer
 class HallOfFame extends Component {
   constructor(props) {

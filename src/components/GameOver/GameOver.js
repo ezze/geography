@@ -34,6 +34,7 @@ class GameOver extends Component {
         <p>{t('overall-count', { count: overallCount })}</p>
         <p>{t('correct-count', { count: correctCount })}</p>
         <p>{t('incorrect-count', { count: overallCount - correctCount })}</p>
+        <p>&nbsp;</p>
         <div className="has-text-centered">
           <button className="button" onClick={this.onHallOfFameClick}>{t('hall-of-fame')}</button>
         </div>

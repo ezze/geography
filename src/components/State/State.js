@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import "./sass/index.sass"
+import './sass/index.sass';
 
 @inject('challengeStore') @observer
 class State extends Component {

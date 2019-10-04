@@ -6,9 +6,9 @@ import ModalNotification from '../ModalNotification';
 
 import { MODAL_HALL_OF_FAME } from '../../constants';
 
-import "./sass/index.sass"
+import './sass/index.sass';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore', 'recordStore') @observer
 class HallOfFame extends Component {
   constructor(props) {
     super(props);
@@ -21,8 +21,9 @@ class HallOfFame extends Component {
   }
 
   getRecords() {
-    const { challengeStore } = this.props;
-    const { id, duration, records } = challengeStore;
+    const { challengeStore, recordStore } = this.props;
+    const { id, duration } = challengeStore;
+    const { records } = recordStore;
     if (!records[id] || !records[id][`duration-${duration}`]) {
       return [];
     }

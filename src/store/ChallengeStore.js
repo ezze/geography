@@ -6,7 +6,7 @@ import BaseStore from './BaseStore';
 
 import challenges from '../challenges.json';
 
-import { challengeRecordsCount, challengeDurations } from '../constants';
+import { challengeDurations } from '../constants';
 
 import { delay } from '../helpers';
 
@@ -42,7 +42,6 @@ class ChallengeStore extends BaseStore {
   @observable pickedItemId = null;
   @observable userItemId = null;
   @observable userCorrect = false;
-  @observable records = {};
 
   @observable loading = false;
   @observable loadingError = false;
@@ -165,8 +164,9 @@ class ChallengeStore extends BaseStore {
         'loadingError'
       ], ...options });
 
-    const { generalStore } = options;
+    const { generalStore, recordStore } = options;
     this.generalStore = generalStore;
+    this.recordStore = recordStore;
 
     this.disposeId = reaction(() => this.id, id => {
       if (id) {
@@ -198,25 +198,7 @@ class ChallengeStore extends BaseStore {
         this.playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
         const { score } = this;
         if (score > 0) {
-          if (!this.records[this.id]) {
-            this.records[this.id] = {};
-          }
-          if (!this.records[this.id][`duration-${this.duration}`]) {
-            this.records[this.id][`duration-${this.duration}`] = [];
-          }
-          const records = this.records[this.id][`duration-${this.duration}`];
-          const index = records.findIndex(record => record.score < score);
-          if (index === -1) {
-            if (records.length < challengeRecordsCount) {
-              records.push({ name: this.userName, score });
-            }
-          }
-          else {
-            records.splice(index, 0, { name: this.userName, score });
-            if (records.length > challengeRecordsCount) {
-              records.splice(challengeRecordsCount, 1);
-            }
-          }
+          this.recordStore.add(this.id, this.duration, this.userName, score);
         }
       }
 

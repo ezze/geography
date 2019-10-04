@@ -6,7 +6,7 @@ import ModalNotification from '../ModalNotification';
 
 import { MODAL_ABOUT } from '../../constants';
 
-import "./sass/index.sass"
+import './sass/index.sass';
 
 @inject('generalStore') @observer
 class About extends Component {
@@ -28,7 +28,7 @@ class About extends Component {
           <tbody>
             <tr>
               <td>{t('version')}</td>
-              <td>0.1.0</td>
+              <td>{VERSION}</td>
             </tr>
             <tr>
               <td>{t('authors')}</td>

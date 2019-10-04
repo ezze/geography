@@ -101,6 +101,10 @@ export default (env, argv) => {
     },
     plugins: [
       new webpack.NoEmitOnErrorsPlugin(),
+      new webpack.DefinePlugin({
+        NODE_ENV: JSON.stringify(mode),
+        VERSION: JSON.stringify(packageJson.version)
+      }),
       new HtmlPlugin({
         filename: path.resolve(__dirname, 'dist/index.html'),
         inject: false,

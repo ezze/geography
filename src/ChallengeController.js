@@ -162,8 +162,9 @@ class ChallengeController {
   async unload() {
     if (this.store.loading) {
       await delay(500);
-      return this.unload;
+      return this.unload();
     }
+    this.highlightedId = null;
     this.entityMap = {};
     this.dataSources.removeAll();
   }

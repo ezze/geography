@@ -28,7 +28,7 @@ class About extends Component {
           <tbody>
             <tr>
               <td>{t('version')}</td>
-              <td>0.1.0</td>
+              <td>{VERSION}</td>
             </tr>
             <tr>
               <td>{t('authors')}</td>

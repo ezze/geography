@@ -12,7 +12,7 @@ import {
   MODAL_ABOUT
 } from '../../constants';
 
-import "./sass/index.sass"
+import './sass/index.sass';
 
 @inject('generalStore', 'challengeStore') @observer
 class Toolbar extends Component {
@@ -85,15 +85,15 @@ class Toolbar extends Component {
           <div className="buttons has-addons">
             {playModeButton}
             <button className="button is-white" title={t('hall-of-fame')} onClick={this.onHallOfFameClick}>
-            <span className="icon">
-              <i className="fas fa-list" />
-            </span>
+              <span className="icon">
+                <i className="fas fa-list" />
+              </span>
             </button>
           </div>
           <button className="button is-white" title={t('restore-view')} onClick={this.onRestoreViewClick}>
-              <span className="icon">
-                <i className="fas fa-eye" />
-              </span>
+            <span className="icon">
+              <i className="fas fa-eye" />
+            </span>
           </button>
           <div className="field has-addons">
             <div className="control">

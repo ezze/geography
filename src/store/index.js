@@ -5,12 +5,14 @@ import { languages } from '../constants';
 import GeneralStore from './GeneralStore';
 import CameraStore from './CameraStore';
 import ChallengeStore from './ChallengeStore';
+import RecordStore from './RecordStore';
 
 export const stores = {};
 
 export async function createStores() {
   const generalStore = stores.generalStore = new GeneralStore({ languages });
   stores.cameraStore = new CameraStore();
+  const recordStore = stores.recordStore = new RecordStore();
 
   await new Promise(resolve => {
     const disposeGeneralInit = reaction(() => generalStore.storeInitialized, () => {
@@ -19,7 +21,7 @@ export async function createStores() {
     });
   });
 
-  stores.challengeStore = new ChallengeStore({ generalStore });
+  stores.challengeStore = new ChallengeStore({ generalStore, recordStore });
 
   const storeNames = Object.keys(stores);
 

@@ -6,6 +6,19 @@ export const languages = [
   { id: 'en', label: 'English' }
 ];
 
+// Sounds
+export const SOUND_TYPE_SUCCESS = 'SOUND_TYPE_SUCCESS';
+export const SOUND_TYPE_ERROR = 'SOUND_TYPE_ERROR';
+export const SOUND_TYPE_PICK = 'SOUND_TYPE_PICK';
+export const SOUND_TYPE_GAME_OVER = 'SOUND_TYPE_GAME_OVER';
+
+export const soundTypes = [
+  SOUND_TYPE_SUCCESS,
+  SOUND_TYPE_ERROR,
+  SOUND_TYPE_PICK,
+  SOUND_TYPE_GAME_OVER
+];
+
 // Modal
 export const MODAL_USER_NAME = 'MODAL_USER_NAME';
 export const MODAL_SETTINGS = 'MODAL_SETTINGS';

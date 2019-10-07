@@ -10,22 +10,14 @@ import { challengeDurations } from '../constants';
 
 import { delay } from '../helpers';
 
-import successSoundUrl from '../sound/success.mp3';
-import errorSoundUrl from '../sound/error.mp3';
-import pickSoundUrl from '../sound/pick.mp3';
-import gameOverSoundUrl from '../sound/game-over.mp3';
-
-const SOUND_TYPE_SUCCESS = 'SOUND_TYPE_SUCCESS';
-const SOUND_TYPE_ERROR = 'SOUND_TYPE_ERROR';
-const SOUND_TYPE_PICK = 'SOUND_TYPE_PICK';
-const SOUND_TYPE_GAME_OVER = 'SOUND_TYPE_GAME_OVER';
-
-const soundTypes = [
+import {
   SOUND_TYPE_SUCCESS,
   SOUND_TYPE_ERROR,
   SOUND_TYPE_PICK,
   SOUND_TYPE_GAME_OVER
-];
+} from '../constants';
+
+import { playSound } from '../sound';
 
 class ChallengeStore extends BaseStore {
   @observable userName = '';
@@ -49,9 +41,6 @@ class ChallengeStore extends BaseStore {
   elapsedInterval = null;
   nextTimeout = null;
   guessedIndexes = [];
-
-  sounds = {};
-  playingSounds = {};
 
   @computed get remainingTimeDisplay() {
     return moment.utc(Math.max((this.duration * 60 - this.elapsedTime) * 1000, 0)).format('mm:ss');
@@ -195,7 +184,9 @@ class ChallengeStore extends BaseStore {
 
     this.disposeGameOver = reaction(() => this.gameOver, gameOver => {
       if (gameOver) {
-        this.playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
+        if (this.generalStore.soundEnabled) {
+          playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
+        }
         const { score } = this;
         if (score > 0) {
           this.recordStore.add(this.id, this.duration, this.userName, score);
@@ -209,13 +200,17 @@ class ChallengeStore extends BaseStore {
 
     this.disposePickedItemId = reaction(() => this.pickedItemId, pickedItemId => {
       if (pickedItemId) {
-        this.playSound(SOUND_TYPE_PICK).catch(e => console.error(e));
+        if (this.generalStore.soundEnabled) {
+          playSound(SOUND_TYPE_PICK).catch(e => console.error(e));
+        }
       }
     });
 
     this.disposeUserItemId = reaction(() => this.userItemId, userItemId => {
       if (userItemId) {
-        this.playSound(this.userCorrect ? SOUND_TYPE_SUCCESS : SOUND_TYPE_ERROR).catch(e => console.error(e));
+        if (this.generalStore.soundEnabled) {
+          playSound(this.userCorrect ? SOUND_TYPE_SUCCESS : SOUND_TYPE_ERROR).catch(e => console.error(e));
+        }
       }
 
       if (this.playMode && userItemId === null) {
@@ -230,13 +225,6 @@ class ChallengeStore extends BaseStore {
 
   async init() {
     this.sortItems();
-    if (this.generalStore.developerMode) {
-      this.initSounds().catch(e => console.error(e));
-    }
-    else {
-      await this.initSounds();
-    }
-
     if (this.playMode) {
       await this.start();
     }
@@ -337,68 +325,6 @@ class ChallengeStore extends BaseStore {
     this.guessedIndexes.push(guessedIndex);
     this.guessedItemId = this.itemIds[guessedIndex];
     this.innerCount++;
-  }
-
-  async initSounds() {
-    if (!Audio) {
-      return;
-    }
-
-    for (let i = 0; i < soundTypes.length; i++) {
-      const type = soundTypes[i];
-      let url;
-      switch (type) {
-        case SOUND_TYPE_SUCCESS: url = successSoundUrl; break;
-        case SOUND_TYPE_ERROR: url = errorSoundUrl; break;
-        case SOUND_TYPE_PICK: url = pickSoundUrl; break;
-        case SOUND_TYPE_GAME_OVER: url = gameOverSoundUrl; break;
-      }
-      if (!url) {
-        continue;
-      }
-
-      await new Promise((resolve, reject) => {
-        const sound = new Audio();
-        const onCanPlay = () => {
-          removeListeners();
-          this.sounds[type] = sound;
-          resolve();
-        };
-        const onError = () => {
-          removeListeners();
-          reject();
-        };
-        const removeListeners = () => {
-          sound.removeEventListener('canplaythrough', onCanPlay);
-          sound.removeEventListener('error', onError);
-        };
-        sound.addEventListener('canplaythrough', onCanPlay);
-        sound.addEventListener('error', onError);
-        sound.src = url;
-      });
-    }
-  }
-
-  async playSound(type) {
-    if (!this.generalStore.soundEnabled || this.playingSounds[type]) {
-      return;
-    }
-
-    const sound = this.sounds[type];
-    if (!sound) {
-      return;
-    }
-
-    this.playingSounds[type] = sound;
-    try {
-      await sound.play();
-    }
-    catch (e) {
-      console.error(e);
-    }
-    finally {
-      delete this.playingSounds[type];
-    }
   }
 }
 

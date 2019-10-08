@@ -8,6 +8,8 @@ import { MODAL_ABOUT } from '../../constants';
 
 import './sass/index.sass';
 
+const version = VERSION; // eslint-disable-line no-undef
+
 @inject('generalStore') @observer
 class About extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ class About extends Component {
           <tbody>
             <tr>
               <td>{t('version')}</td>
-              <td>{VERSION}</td>
+              <td>{version}</td>
             </tr>
             <tr>
               <td>{t('authors')}</td>

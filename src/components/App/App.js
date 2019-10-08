@@ -13,6 +13,7 @@ import HallOfFame from '../HallOfFame';
 import AudioNotification from '../AudioNotification';
 import GameOver from '../GameOver';
 import About from '../About';
+import YandexMetrika from '../YandexMetrika';
 
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
@@ -54,6 +55,7 @@ class App extends Component {
         <AudioNotification />
         <GameOver />
         <About />
+        <YandexMetrika />
       </div>
     );
   }

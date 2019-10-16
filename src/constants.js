@@ -1,4 +1,8 @@
 import Cesium from 'cesium';
+import Bowser from 'bowser';
+
+const { parsedResult } = Bowser.getParser(window.navigator.userAgent);
+export const platformType = parsedResult.platform.type;
 
 // Language
 export const languages = [

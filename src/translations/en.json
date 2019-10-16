@@ -60,6 +60,10 @@
     "about": {
       "title": "About",
       "text": "This game is developed under the impression from Classical Conversions and is dedicated to learning the geography by whole our family."
+    },
+    "mobile-unsupported": {
+      "title": "Attention!",
+      "text": "Unfortunatelly, mobile devices are unsupported at the moment. If you are interested in supporting mobile devices, please contact developers."
     }
   },
   "game-over": {

@@ -13,8 +13,10 @@ import HallOfFame from '../HallOfFame';
 import AudioNotification from '../AudioNotification';
 import GameOver from '../GameOver';
 import About from '../About';
+import ModalNotification from '../ModalNotification';
 import YandexMetrika from '../YandexMetrika';
 
+import { platformType } from '../../constants';
 import { onGlobeCreate, onGlobeDestroy } from '../../global';
 
 @inject('generalStore', 'challengeStore') @observer
@@ -41,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    return (
+    return platformType !== 'mobile' ? (
       <div className="app">
         <Globe onCreate={onGlobeCreate} onDestroy={onGlobeDestroy} />
         <Toolbar />
@@ -55,6 +57,11 @@ class App extends Component {
         <AudioNotification />
         <GameOver />
         <About />
+
+      </div>
+    ) : (
+      <div className="app">
+        <ModalNotification id="mobile-unsupported" visible={true} style="danger" />
         <YandexMetrika />
       </div>
     );

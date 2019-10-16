@@ -1,6 +1,6 @@
 {
   "name": "geography",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Geography Game",
   "main": "index.js",
   "repository": "git@gitlab.com:yellowberry/geography",

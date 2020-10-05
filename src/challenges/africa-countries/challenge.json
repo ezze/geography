@@ -172,9 +172,17 @@
     "name": { "en": "Rwanda", "ru": "Руанда" },
     "path": "africa-countries/rwanda.json"
   }, {
+    "id": "sao-tome-and-principe",
+    "name": { "en": "Sao Tome and Principe", "ru": "Сан-Томе и Принсипи" },
+    "path": "africa-countries/sao-tome-and-principe.json"
+  }, {
     "id": "senegal",
     "name": { "en": "Senegal", "ru": "Сенегал" },
     "path": "africa-countries/senegal.json"
+  }, {
+    "id": "seychelles",
+    "name": { "en": "Seychelles", "ru": "Сейшельские острова" },
+    "path": "africa-countries/seychelles.json"
   }, {
     "id": "sierra-leone",
     "name": { "en": "Sierra Leone", "ru": "Сьерра-Леоне" },

@@ -137,7 +137,7 @@ class ChallengeController {
       if (generalStore.developerMode) {
         await Promise.all(items.map(item => {
           const { id, path } = item;
-          return loadGeoJson(path).then(geoJson => {
+          return loadGeoJson(`challenges/${path}`).then(geoJson => {
             return Promise.all(styles.map(style => {
               this.dataSources.add(this.loadGeoObject(id, geoJson, style));
             }));
@@ -148,15 +148,16 @@ class ChallengeController {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           const { id, path } = item;
-          const geoJson = await loadGeoJson(path);
+          const geoJson = await loadGeoJson(`challenges/${path}`);
           for (let j = 0; j < styles.length; j++) {
             const style = styles[j];
-            this.dataSources.add(this.loadGeoObject(id, geoJson, style));
+            const geoObject = this.loadGeoObject(id, geoJson, style);
+            this.dataSources.add(geoObject);
             await delay(1);
           }
         }
       }
-      this.restoreView();
+      this.restoreView().catch(e => console.error(e));
     }
     catch (e) {
       console.error(e);

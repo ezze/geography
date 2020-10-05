@@ -11,6 +11,10 @@ import packageJson from './package.json';
 
 const port = process.env.PORT || 6662;
 
+const {
+  ContextReplacementPlugin
+} = webpack;
+
 export default (env, argv) => {
   const { mode } = argv;
   return {
@@ -131,6 +135,7 @@ export default (env, argv) => {
         filename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
         chunkFilename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
       }),
+      new ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb|ru/)
     ],
   };
 };

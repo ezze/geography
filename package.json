@@ -9,12 +9,10 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "build": "yarn copy:cesium && yarn copy:challenges && webpack --mode=production --progress",
-    "build:dev": "yarn copy:cesium && yarn copy:challenges && webpack --mode=development --progress",
+    "build": "webpack --mode=production --progress",
+    "build:dev": "webpack --mode=development --progress",
     "wds": "webpack-dev-server --mode=production --progress",
     "wds:dev": "webpack-dev-server --mode=development --progress",
-    "copy:cesium": "copyfiles -s -u 4 \"node_modules/cesium/Build/Cesium/**/*\" dist/cesium",
-    "copy:challenges": "rm -Rf dist/challenges && copyfiles -u 1 \"src/challenges/**/*\" dist",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -49,7 +47,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-preset-mobx": "^2.0.0",
-    "copyfiles": "^2.4.0",
+    "copy-webpack-plugin": "^6.2.0",
     "css-loader": "^4.3.0",
     "eslint": "^7.10.0",
     "eslint-config-ezze-react": "^0.9.0",

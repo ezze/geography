@@ -1,4 +1,12 @@
-import Cesium from 'cesium';
+import {
+  DataSourceCollection,
+  DataSourceDisplay,
+  EventHelper,
+  GeoJsonDataSource,
+  ArcType,
+  defined
+} from 'cesium';
+
 import { reaction } from 'mobx';
 
 import {
@@ -69,10 +77,10 @@ class ChallengeController {
 
     const { scene, clock } = cesiumWidget;
 
-    this.dataSources = new Cesium.DataSourceCollection();
-    this.dataSourceDisplay = new Cesium.DataSourceDisplay({ scene, dataSourceCollection: this.dataSources });
+    this.dataSources = new DataSourceCollection();
+    this.dataSourceDisplay = new DataSourceDisplay({ scene, dataSourceCollection: this.dataSources });
 
-    this.eventHelper = new Cesium.EventHelper();
+    this.eventHelper = new EventHelper();
     this.eventHelper.add(clock.onTick, clock => this.dataSourceDisplay.update(clock.currentTime));
 
     this.disposePlayMode = reaction(() => this.store.playMode, playMode => {
@@ -171,7 +179,7 @@ class ChallengeController {
 
   loadGeoObject(id, geoJson, style) {
     const { stroke, fill } = geoObjectColors[style];
-    return Cesium.GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
+    return GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
       geoObject.id = id;
       geoObject.style = style;
       geoObject.show = this.store.playMode ? style === GEOOBJECT_STYLE_HIDDEN : style === GEOOBJECT_STYLE_DEFAULT;
@@ -180,8 +188,8 @@ class ChallengeController {
       for (let i = 0; i < geoObject.entities.values.length; i++) {
         const entity = geoObject.entities.values[i];
         this.entityMap[entity.id] = id;
-        if (Cesium.defined(entity.polygon)) {
-          entity.polygon.arcType = Cesium.ArcType.GEODESIC;
+        if (defined(entity.polygon)) {
+          entity.polygon.arcType = ArcType.GEODESIC;
         }
       }
       return geoObject;

@@ -1,4 +1,7 @@
-import Cesium from 'cesium';
+import {
+  Cartesian3,
+  Math as CesiumMath
+} from 'cesium';
 
 export function parseCoordinates(object, defaultValue) {
   if (defaultValue === undefined) {
@@ -13,19 +16,19 @@ export function parseCoordinates(object, defaultValue) {
   const value = object.value;
 
   if (type === 'cartesian') {
-    return Cesium.Cartesian3.fromArray(object.value);
+    return Cartesian3.fromArray(object.value);
   }
 
   if (type === 'cartographic') {
     if (typeof value.longitude === 'number' && typeof value.latitude === 'number') {
-      return Cesium.Cartesian3.fromRadians(value.longitude, value.latitude, value.height);
+      return Cartesian3.fromRadians(value.longitude, value.latitude, value.height);
     }
     return defaultValue;
   }
 
   if (type === 'cartographicDegrees') {
     if (typeof value.longitude === 'number' && typeof value.latitude === 'number') {
-      return Cesium.Cartesian3.fromDegrees(value.longitude, value.latitude, value.height);
+      return Cartesian3.fromDegrees(value.longitude, value.latitude, value.height);
     }
     return defaultValue;
   }
@@ -40,13 +43,13 @@ export function parseAngle(object, defaultValue) {
 
   let value;
   if (object && typeof object === 'object' && typeof object.type === 'string' && typeof object.value === 'number') {
-    value = object.type === 'degrees' ? Cesium.Math.toRadians(object.value) : object.value;
+    value = object.type === 'degrees' ? CesiumMath.toRadians(object.value) : object.value;
   }
   else {
     value = object;
   }
 
-  return typeof value === 'number' ? Cesium.Math.convertLongitudeRange(value) : defaultValue;
+  return typeof value === 'number' ? CesiumMath.convertLongitudeRange(value) : defaultValue;
 }
 
 export function parseView(object, defaultValue) {
@@ -74,7 +77,7 @@ export function parseView(object, defaultValue) {
     else if (heading !== undefined || pitch !== undefined || roll !== undefined) {
       view.orientation = {
         heading: parseAngle(heading, 0.0),
-        pitch: parseAngle(pitch, Cesium.Math.toRadians(-90.0)),
+        pitch: parseAngle(pitch, CesiumMath.toRadians(-90.0)),
         roll: parseAngle(roll, 0.0)
       };
     }

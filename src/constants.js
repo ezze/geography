@@ -1,4 +1,4 @@
-import Cesium from 'cesium';
+import { Color } from 'cesium';
 import Bowser from 'bowser';
 
 const { parsedResult } = Bowser.getParser(window.navigator.userAgent);
@@ -46,12 +46,12 @@ export const cameraMaxHeight = 60000000.0;
 export const challengeRecordsCount = 5;
 export const challengeDurations = [3, 5, 7, 10, 15];
 export const challengeItemOpacity = 0.25;
-export const challengeItemDefaultColor = Cesium.Color.fromCssColorString('#fff');
-export const challengeItemDefaultFillColor = Cesium.Color.fromAlpha(challengeItemDefaultColor, challengeItemOpacity);
-export const challengeItemPickedColor = Cesium.Color.fromCssColorString('#f4e10b');
-export const challengeItemPickedFillColor = Cesium.Color.fromAlpha(challengeItemPickedColor, challengeItemOpacity);
-export const challengeItemCorrectColor = Cesium.Color.fromCssColorString('#87d912');
-export const challengeItemCorrectFillColor = Cesium.Color.fromAlpha(challengeItemCorrectColor, challengeItemOpacity);
-export const challengeItemWrongColor = Cesium.Color.fromCssColorString('#ff5501');
-export const challengeItemWrongFillColor = Cesium.Color.fromAlpha(challengeItemWrongColor, challengeItemOpacity);
-export const challengeItemHiddenColor = Cesium.Color.fromAlpha(challengeItemDefaultColor, 0.004);
+export const challengeItemDefaultColor = Color.fromCssColorString('#fff');
+export const challengeItemDefaultFillColor = Color.fromAlpha(challengeItemDefaultColor, challengeItemOpacity);
+export const challengeItemPickedColor = Color.fromCssColorString('#f4e10b');
+export const challengeItemPickedFillColor = Color.fromAlpha(challengeItemPickedColor, challengeItemOpacity);
+export const challengeItemCorrectColor = Color.fromCssColorString('#87d912');
+export const challengeItemCorrectFillColor = Color.fromAlpha(challengeItemCorrectColor, challengeItemOpacity);
+export const challengeItemWrongColor = Color.fromCssColorString('#ff5501');
+export const challengeItemWrongFillColor = Color.fromAlpha(challengeItemWrongColor, challengeItemOpacity);
+export const challengeItemHiddenColor = Color.fromAlpha(challengeItemDefaultColor, 0.004);

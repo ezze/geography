@@ -5,6 +5,7 @@ import webpack from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
 import htmlTemplate from 'html-webpack-template';
 import FaviconsPlugin from 'favicons-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import packageJson from './package.json';
@@ -17,6 +18,14 @@ const {
 
 export default (env, argv) => {
   const { mode } = argv;
+
+  const nodeModulesDirPath = path.resolve(__dirname, 'node_modules');
+  const distDirPath = path.resolve(__dirname, 'dist');
+
+  const cesiumDirName = `Cesium${mode === 'development' ? 'Unminified' : ''}`;
+  const cesiumDirPath = path.resolve(nodeModulesDirPath, `cesium/Build/${cesiumDirName}`);
+  const challengesDirPath = path.resolve(__dirname, 'src/challenges');
+
   return {
     context: path.resolve(__dirname, 'src'),
     entry: {
@@ -125,7 +134,7 @@ export default (env, argv) => {
           content: '0',
         }],
         appMountId: 'app',
-        scripts: ['./cesium/Cesium.js'],
+        scripts: ['cesium/Cesium.js'],
         minify: {
           collapseWhitespace: mode === 'production',
         },
@@ -134,6 +143,12 @@ export default (env, argv) => {
       new MiniCssExtractPlugin({
         filename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
         chunkFilename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: cesiumDirPath, to: path.resolve(distDirPath, 'cesium') },
+          { from: challengesDirPath, to: path.resolve(distDirPath, 'challenges') }
+        ]
       }),
       new ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb|ru/)
     ],

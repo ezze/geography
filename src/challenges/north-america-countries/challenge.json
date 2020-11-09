@@ -1,0 +1,75 @@
+{
+  "id": "north-america-countries",
+  "name": { "en": "North America Countries", "ru": "Страны Северной Америки" },
+  "minimumZoomDistance": 1000000.0,
+  "view": {
+    "destination": {
+      "west": -120,
+      "south": -45,
+      "north": 0,
+      "east": -80,
+      "units": "degrees"
+    }
+  },
+  "items": [{
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }, {
+    "id": "",
+    "name": { "en": "", "ru": "" },
+    "path": "north-america-countries/.json"
+  }]
+}

@@ -1,4 +1,11 @@
-import Cesium from 'cesium';
+import {
+  CesiumWidget,
+  CameraEventType,
+  ScreenSpaceEventType,
+  ScreenSpaceEventHandler,
+  ArcGisMapServerImageryProvider,
+  requestAnimationFrame
+} from 'cesium';
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
@@ -40,8 +47,8 @@ class Globe extends Component {
 
   createCesium() {
     try {
-      this.cesiumWidget = new Cesium.CesiumWidget(this.globeRef.current, {
-        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+      this.cesiumWidget = new CesiumWidget(this.globeRef.current, {
+        imageryProvider: new ArcGisMapServerImageryProvider({
           url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
         }),
         creditContainer: document.createElement('div'),
@@ -52,15 +59,15 @@ class Globe extends Component {
       // Swapping drag and tilt events' sources
       const scene = this.cesiumWidget.scene;
       scene.screenSpaceCameraController.zoomEventTypes = [
-        Cesium.CameraEventType.MIDDLE_DRAG,
-        Cesium.CameraEventType.WHEEL,
-        Cesium.CameraEventType.PINCH
+        CameraEventType.MIDDLE_DRAG,
+        CameraEventType.WHEEL,
+        CameraEventType.PINCH
       ];
-      scene.screenSpaceCameraController.tiltEventTypes = Cesium.CameraEventType.RIGHT_DRAG;
+      scene.screenSpaceCameraController.tiltEventTypes = CameraEventType.RIGHT_DRAG;
 
-      this.canvasEventHandler = new Cesium.ScreenSpaceEventHandler(this.cesiumWidget.canvas);
-      this.canvasEventHandler.setInputAction(this.onMouseMove, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-      this.canvasEventHandler.setInputAction(this.onLeftClick, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      this.canvasEventHandler = new ScreenSpaceEventHandler(this.cesiumWidget.canvas);
+      this.canvasEventHandler.setInputAction(this.onMouseMove, ScreenSpaceEventType.MOUSE_MOVE);
+      this.canvasEventHandler.setInputAction(this.onLeftClick, ScreenSpaceEventType.LEFT_CLICK);
 
       if (typeof this.props.onCreate === 'function') {
         this.props.onCreate(this.cesiumWidget);
@@ -71,12 +78,12 @@ class Globe extends Component {
       this.props.generalStore.setModal(MODAL_GLOBE_INITIALIZATION_ERROR);
     }
 
-    Cesium.requestAnimationFrame(() => this.animate());
+    requestAnimationFrame(() => this.animate());
   }
 
   destroyCesium() {
-    this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-    this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    this.canvasEventHandler.removeInputAction(ScreenSpaceEventType.MOUSE_MOVE);
+    this.canvasEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_CLICK);
     this.cesiumWidget.destroy();
 
     if (typeof this.props.onDestroy === 'function') {
@@ -88,7 +95,7 @@ class Globe extends Component {
     try {
       this.cesiumWidget.resize();
       this.cesiumWidget.render();
-      Cesium.requestAnimationFrame(() => this.animate());
+      requestAnimationFrame(() => this.animate());
     }
     catch (e) {
       console.error(e);

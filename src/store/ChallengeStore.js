@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import BaseStore from './BaseStore';
 
-import challenges from '../challenges.json';
+import challenges from '../challenges';
 
 import { challengeDurations } from '../constants';
 

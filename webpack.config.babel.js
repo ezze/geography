@@ -5,18 +5,31 @@ import webpack from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
 import htmlTemplate from 'html-webpack-template';
 import FaviconsPlugin from 'favicons-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import packageJson from './package.json';
 
 const port = process.env.PORT || 6662;
 
+const {
+  ContextReplacementPlugin
+} = webpack;
+
 export default (env, argv) => {
   const { mode } = argv;
+
+  const nodeModulesDirPath = path.resolve(__dirname, 'node_modules');
+  const distDirPath = path.resolve(__dirname, 'dist');
+
+  const cesiumDirName = `Cesium${mode === 'development' ? 'Unminified' : ''}`;
+  const cesiumDirPath = path.resolve(nodeModulesDirPath, `cesium/Build/${cesiumDirName}`);
+  const challengesDirPath = path.resolve(__dirname, 'src/challenges');
+
   return {
     context: path.resolve(__dirname, 'src'),
     entry: {
-      [packageJson.name]: ['core-js/stable', 'regenerator-runtime/runtime', './index.js'],
+      [packageJson.name]: ['core-js/stable', 'regenerator-runtime/runtime', './index.js']
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -27,16 +40,16 @@ export default (env, argv) => {
     devServer: {
       contentBase: path.resolve(__dirname, 'dist'),
       port,
-      historyApiFallback: true,
+      historyApiFallback: true
     },
     resolve: {
       symlinks: false,
       modules: ['node_modules'],
-      extensions: ['.js'],
+      extensions: ['.js']
     },
     resolveLoader: {
       modules: ['node_modules'],
-      moduleExtensions: ['.js'],
+      moduleExtensions: ['.js']
     },
     externals: {
       cesium: 'Cesium'
@@ -45,7 +58,7 @@ export default (env, argv) => {
       rules: [{
         test: /\.jsx?$/,
         use: 'babel-loader',
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       }, {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -54,15 +67,15 @@ export default (env, argv) => {
           'postcss-loader',
           { loader: 'resolve-url-loader', options: { keepQuery: true } },
           { loader: 'sass-loader', options: { sourceMap: true } }
-        ],
+        ]
       }, {
         test: /\.(jpg|png)$/,
         use: {
           loader: 'file-loader',
           options: {
-            name: 'img/[name].[hash:6].[ext]',
-          },
-        },
+            name: 'img/[name].[hash:6].[ext]'
+          }
+        }
       }, {
         test: /\.(eot|otf|svg|ttf|woff2?)/,
         use: {
@@ -80,7 +93,7 @@ export default (env, argv) => {
             name: 'sound/[name].[hash:6].[ext]'
           }
         }
-      }],
+      }]
     },
     optimization: {
       splitChunks: {
@@ -89,15 +102,15 @@ export default (env, argv) => {
             name: 'vendor',
             test: /node_modules/,
             chunks: 'initial',
-            enforce: true,
-          },
-        },
+            enforce: true
+          }
+        }
       },
-      runtimeChunk: true,
+      runtimeChunk: true
     },
     performance: {
       maxEntrypointSize: 1024 * 1024,
-      maxAssetSize: 1024 * 1024,
+      maxAssetSize: 1024 * 1024
     },
     plugins: [
       new webpack.NoEmitOnErrorsPlugin(),
@@ -112,25 +125,32 @@ export default (env, argv) => {
         title: 'Geography',
         meta: [{
           'http-equiv': 'Cache-Control',
-          content: 'no-cache, no-store, must-revalidate',
+          content: 'no-cache, no-store, must-revalidate'
         }, {
           'http-equiv': 'Pragma',
-          content: 'no-cache',
+          content: 'no-cache'
         }, {
           'http-equiv': 'Expires',
-          content: '0',
+          content: '0'
         }],
         appMountId: 'app',
-        scripts: ['./cesium/Cesium.js'],
+        scripts: ['cesium/Cesium.js'],
         minify: {
-          collapseWhitespace: mode === 'production',
-        },
+          collapseWhitespace: mode === 'production'
+        }
       }),
       new FaviconsPlugin(path.resolve(__dirname, 'src/yellowberry.png')),
       new MiniCssExtractPlugin({
         filename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
-        chunkFilename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`,
+        chunkFilename: `css/${mode === 'development' ? '[name].css' : '[name].[hash:6].css'}`
       }),
-    ],
+      new CopyPlugin({
+        patterns: [
+          { from: cesiumDirPath, to: path.resolve(distDirPath, 'cesium') },
+          { from: challengesDirPath, to: path.resolve(distDirPath, 'challenges') }
+        ]
+      }),
+      new ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb|ru/)
+    ]
   };
 };

@@ -1,4 +1,12 @@
-import Cesium from 'cesium';
+import {
+  DataSourceCollection,
+  DataSourceDisplay,
+  EventHelper,
+  GeoJsonDataSource,
+  ArcType,
+  defined
+} from 'cesium';
+
 import { reaction } from 'mobx';
 
 import {
@@ -10,7 +18,8 @@ import {
   challengeItemCorrectFillColor,
   challengeItemWrongColor,
   challengeItemWrongFillColor,
-  challengeItemHiddenColor
+  challengeItemHiddenColor,
+  challengeItemHiddenFillColor
 } from './constants';
 
 import { delay } from './helpers';
@@ -40,7 +49,7 @@ const geoObjectColors = {
   },
   [GEOOBJECT_STYLE_HIDDEN]: {
     stroke: challengeItemHiddenColor,
-    fill: challengeItemHiddenColor
+    fill: challengeItemHiddenFillColor
   }
 };
 
@@ -69,10 +78,10 @@ class ChallengeController {
 
     const { scene, clock } = cesiumWidget;
 
-    this.dataSources = new Cesium.DataSourceCollection();
-    this.dataSourceDisplay = new Cesium.DataSourceDisplay({ scene, dataSourceCollection: this.dataSources });
+    this.dataSources = new DataSourceCollection();
+    this.dataSourceDisplay = new DataSourceDisplay({ scene, dataSourceCollection: this.dataSources });
 
-    this.eventHelper = new Cesium.EventHelper();
+    this.eventHelper = new EventHelper();
     this.eventHelper.add(clock.onTick, clock => this.dataSourceDisplay.update(clock.currentTime));
 
     this.disposePlayMode = reaction(() => this.store.playMode, playMode => {
@@ -129,7 +138,7 @@ class ChallengeController {
       if (generalStore.developerMode) {
         await Promise.all(items.map(item => {
           const { id, path } = item;
-          return loadGeoJson(path).then(geoJson => {
+          return loadGeoJson(`challenges/${path}`).then(geoJson => {
             return Promise.all(styles.map(style => {
               this.dataSources.add(this.loadGeoObject(id, geoJson, style));
             }));
@@ -140,15 +149,16 @@ class ChallengeController {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           const { id, path } = item;
-          const geoJson = await loadGeoJson(path);
+          const geoJson = await loadGeoJson(`challenges/${path}`);
           for (let j = 0; j < styles.length; j++) {
             const style = styles[j];
-            this.dataSources.add(this.loadGeoObject(id, geoJson, style));
+            const geoObject = this.loadGeoObject(id, geoJson, style);
+            this.dataSources.add(geoObject);
             await delay(1);
           }
         }
       }
-      this.restoreView();
+      this.restoreView().catch(e => console.error(e));
     }
     catch (e) {
       console.error(e);
@@ -171,7 +181,7 @@ class ChallengeController {
 
   loadGeoObject(id, geoJson, style) {
     const { stroke, fill } = geoObjectColors[style];
-    return Cesium.GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
+    return GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
       geoObject.id = id;
       geoObject.style = style;
       geoObject.show = this.store.playMode ? style === GEOOBJECT_STYLE_HIDDEN : style === GEOOBJECT_STYLE_DEFAULT;
@@ -180,8 +190,8 @@ class ChallengeController {
       for (let i = 0; i < geoObject.entities.values.length; i++) {
         const entity = geoObject.entities.values[i];
         this.entityMap[entity.id] = id;
-        if (Cesium.defined(entity.polygon)) {
-          entity.polygon.arcType = Cesium.ArcType.GEODESIC;
+        if (defined(entity.polygon)) {
+          entity.polygon.arcType = ArcType.GEODESIC;
         }
       }
       return geoObject;

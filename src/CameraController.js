@@ -1,14 +1,22 @@
-import Cesium from 'cesium';
+import {
+  Cartesian3,
+  Math as CesiumMath,
+  ScreenSpaceEventType,
+  ScreenSpaceEventHandler,
+  Rectangle,
+  SceneMode,
+  Fullscreen
+} from 'cesium';
 import { observe } from 'mobx';
 
-import { parseView } from './cameraHelpers';
+import { parseView } from "./cameraHelpers";
 
 import {
   CAMERA_SCENE_MODE_2D,
   CAMERA_SCENE_MODE_3D,
   cameraMinHeight,
   cameraMaxHeight
-} from './constants';
+} from "./constants";
 
 class CameraController {
   constructor(options = {}) {
@@ -34,34 +42,34 @@ class CameraController {
 
     // Subscribe to state changes
     this.disposeFullscreenMode = observe(store, 'fullscreenMode', ({ newValue: fullscreenMode }) => {
-      if (!Cesium.Fullscreen.supportsFullscreen()) {
+      if (!Fullscreen.supportsFullscreen()) {
         return;
       }
       if (fullscreenMode) {
-        Cesium.Fullscreen.requestFullscreen(document.querySelector('body'));
+        Fullscreen.requestFullscreen(document.querySelector('body'));
       }
       else {
-        Cesium.Fullscreen.exitFullscreen();
+        Fullscreen.exitFullscreen();
       }
     });
     this.disposeSceneMode = observe(store, 'sceneMode', ({ newValue: sceneMode }) => {
-      scene.mode = Cesium.SceneMode[sceneMode === CAMERA_SCENE_MODE_2D ? 'SCENE2D' : 'SCENE3D'];
+      scene.mode = SceneMode[sceneMode === CAMERA_SCENE_MODE_2D ? 'SCENE2D' : 'SCENE3D'];
     });
 
     // Subscribe to changes of fullscreen mode and screen mode to validate the state
     const { morphComplete } = scene;
     this.removeSceneModeListener = morphComplete.addEventListener(this.onSceneModeChange, this);
     this.onFullscreenChange = this.onFullscreenChange.bind(this);
-    document.addEventListener(Cesium.Fullscreen.changeEventName, this.onFullscreenChange);
+    document.addEventListener(Fullscreen.changeEventName, this.onFullscreenChange);
 
     // Interrupt flight on user interaction
     const cancelFlight = () => camera.cancelFlight();
-    this.canvasEventHandler = new Cesium.ScreenSpaceEventHandler(cesiumWidget.canvas);
-    this.canvasEventHandler.setInputAction(cancelFlight, Cesium.ScreenSpaceEventType.LEFT_DOWN);
-    this.canvasEventHandler.setInputAction(cancelFlight, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
+    this.canvasEventHandler = new ScreenSpaceEventHandler(cesiumWidget.canvas);
+    this.canvasEventHandler.setInputAction(cancelFlight, ScreenSpaceEventType.LEFT_DOWN);
+    this.canvasEventHandler.setInputAction(cancelFlight, ScreenSpaceEventType.RIGHT_DOWN);
 
     // Initializing scene mode
-    scene.mode = Cesium.SceneMode[store.sceneMode === CAMERA_SCENE_MODE_2D ? 'SCENE2D' : 'SCENE3D'];
+    scene.mode = SceneMode[store.sceneMode === CAMERA_SCENE_MODE_2D ? 'SCENE2D' : 'SCENE3D'];
 
     // Initializing view
     this.initialView = parseView(this.store.view);
@@ -76,9 +84,9 @@ class CameraController {
     this.disposeFullscreenMode();
     this.disposeSceneMode();
     this.removeSceneModeListener();
-    document.removeEventListener(Cesium.Fullscreen.changeEventName, this.onFullscreenChange);
-    this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOWN);
-    this.canvasEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_DOWN);
+    document.removeEventListener(Fullscreen.changeEventName, this.onFullscreenChange);
+    this.canvasEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_DOWN);
+    this.canvasEventHandler.removeInputAction(ScreenSpaceEventType.RIGHT_DOWN);
     clearInterval(this.viewUpdater);
   }
 
@@ -100,10 +108,10 @@ class CameraController {
         typeof east === 'number' && typeof north === 'number'
       ) {
         if (units === 'degrees') {
-          camera.flyTo({ destination: Cesium.Rectangle.fromDegrees(west, south, east, north) });
+          camera.flyTo({ destination: Rectangle.fromDegrees(west, south, east, north) });
         }
         else {
-          camera.flyTo({ destination: Cesium.Rectangle.fromRadians(west, south, east, north) });
+          camera.flyTo({ destination: Rectangle.fromRadians(west, south, east, north) });
         }
         return;
       }
@@ -170,9 +178,9 @@ class CameraController {
     // Checking whether view has been changed
     if (
       this.view !== null &&
-      Cesium.Cartesian3.equals(view.destination, this.view.destination) &&
-      Cesium.Cartesian3.equals(view.orientation.direction, this.view.orientation.direction) &&
-      Cesium.Cartesian3.equals(view.orientation.up, this.view.orientation.up)
+      Cartesian3.equals(view.destination, this.view.destination) &&
+      Cartesian3.equals(view.orientation.direction, this.view.orientation.direction) &&
+      Cartesian3.equals(view.orientation.up, this.view.orientation.up)
     ) {
       return;
     }
@@ -187,16 +195,16 @@ class CameraController {
     }
 
     const { camera } = this.cesiumWidget;
-    const destination = Cesium.Cartesian3.clone(camera.position);
+    const destination = Cartesian3.clone(camera.position);
     const orientation = {
       heading: 0.0,
-      pitch: Cesium.Math.toRadians(-90.0),
+      pitch: CesiumMath.toRadians(-90.0),
       roll: 0.0
     };
 
     // We should have a difference between current position and destination position
     // otherwise an empty flight will be created (see CameraFlightPath.createTween in Cesium sources)
-    let diff = Math.min(destination.x, destination.y, destination.z) * Cesium.Math.EPSILON6;
+    let diff = Math.min(destination.x, destination.y, destination.z) * CesiumMath.EPSILON6;
     diff = Math.abs(Math.round(diff) * 10);
     destination.x += diff;
     destination.y += diff;
@@ -206,14 +214,14 @@ class CameraController {
   }
 
   onFullscreenChange() {
-    const fullscreenMode = Cesium.Fullscreen.fullscreen;
+    const fullscreenMode = Fullscreen.fullscreen;
     if (this.store.fullscreenMode !== fullscreenMode) {
       this.store.setFullscreenMode(fullscreenMode);
     }
   }
 
   onSceneModeChange(sceneTransitioner, oldMode, newMode) {
-    const sceneMode = newMode === Cesium.SceneMode.SCENE2D ? CAMERA_SCENE_MODE_2D : CAMERA_SCENE_MODE_3D;
+    const sceneMode = newMode === SceneMode.SCENE2D ? CAMERA_SCENE_MODE_2D : CAMERA_SCENE_MODE_3D;
     if (this.store.sceneMode !== sceneMode) {
       this.store.setSceneMode(sceneMode);
     }

@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import challenges from '../../challenges.json';
+import challenges from '../../challenges';
 
 import {
   challengeDurations,

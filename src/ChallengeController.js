@@ -18,7 +18,8 @@ import {
   challengeItemCorrectFillColor,
   challengeItemWrongColor,
   challengeItemWrongFillColor,
-  challengeItemHiddenColor
+  challengeItemHiddenColor,
+  challengeItemHiddenFillColor
 } from './constants';
 
 import { delay } from './helpers';
@@ -48,7 +49,7 @@ const geoObjectColors = {
   },
   [GEOOBJECT_STYLE_HIDDEN]: {
     stroke: challengeItemHiddenColor,
-    fill: challengeItemHiddenColor
+    fill: challengeItemHiddenFillColor
   }
 };
 

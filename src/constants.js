@@ -54,4 +54,5 @@ export const challengeItemCorrectColor = Color.fromCssColorString('#87d912');
 export const challengeItemCorrectFillColor = Color.fromAlpha(challengeItemCorrectColor, challengeItemOpacity);
 export const challengeItemWrongColor = Color.fromCssColorString('#ff5501');
 export const challengeItemWrongFillColor = Color.fromAlpha(challengeItemWrongColor, challengeItemOpacity);
-export const challengeItemHiddenColor = Color.fromAlpha(challengeItemDefaultColor, 0.004);
+export const challengeItemHiddenColor = Color.fromCssColorString('#e4fdff');
+export const challengeItemHiddenFillColor = Color.fromAlpha(challengeItemHiddenColor, challengeItemOpacity);

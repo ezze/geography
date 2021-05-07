@@ -172,9 +172,9 @@
     "name": { "en": "Rwanda", "ru": "Руанда" },
     "path": "africa-countries/rwanda.json"
   }, {
-    "id": "sao-tome-and-principe",
-    "name": { "en": "Sao Tome and Principe", "ru": "Сан-Томе и Принсипи" },
-    "path": "africa-countries/sao-tome-and-principe.json"
+    "id": "san-tome-and-principe",
+    "name": { "en": "San Tome and Principe", "ru": "Сан-Томе и Принсипи" },
+    "path": "africa-countries/san-tome-and-principe.json"
   }, {
     "id": "senegal",
     "name": { "en": "Senegal", "ru": "Сенегал" },

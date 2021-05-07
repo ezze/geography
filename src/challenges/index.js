@@ -8,6 +8,6 @@ export default [
   russianRegions,
   europeCountries,
   asiaCountries,
-  southAmericaCountries,
-  africaCountries
+  southAmericaCountries
+  // africaCountries
 ];

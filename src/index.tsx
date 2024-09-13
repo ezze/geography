@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const i18n = await initI18n();
   await initSounds();
 
-  console.log(i18n.t('app:dsdname'));
-
   reaction(
     () => generalStore.language,
     () => {

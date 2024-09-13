@@ -3,12 +3,11 @@ import { initReactI18next } from 'react-i18next';
 
 import { languages } from '../const';
 
-import { I18N_NAMESPACE } from './const';
 import en from './en.json';
 import ru from './ru.json';
-import { Language } from './types';
+import { Language, Translation } from './types';
 
-const translations = new Map<Language, Record<string, unknown>>();
+const translations = new Map<Language, Translation>();
 translations.set('en', en);
 translations.set('ru', ru);
 
@@ -39,7 +38,10 @@ export async function initI18n(defaultLanguage?: Language): Promise<I18n> {
   });
 
   translations.forEach((translation, language) => {
-    i18next.addResourceBundle(language, I18N_NAMESPACE, translation);
+    const namespaces = Object.keys(translation);
+    namespaces.forEach((namespace) => {
+      i18next.addResourceBundle(language, namespace, translation[namespace]);
+    });
   });
 
   i18n = i18next;

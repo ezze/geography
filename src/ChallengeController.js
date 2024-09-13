@@ -1,12 +1,4 @@
-import {
-  DataSourceCollection,
-  DataSourceDisplay,
-  EventHelper,
-  GeoJsonDataSource,
-  ArcType,
-  defined
-} from 'cesium';
-
+import { DataSourceCollection, DataSourceDisplay, EventHelper, GeoJsonDataSource, ArcType, defined } from 'cesium';
 import { reaction } from 'mobx';
 
 import {
@@ -20,8 +12,7 @@ import {
   challengeItemWrongFillColor,
   challengeItemHiddenColor,
   challengeItemHiddenFillColor
-} from './constants';
-
+} from './const';
 import { delay } from './helpers';
 
 const GEOOBJECT_STYLE_DEFAULT = 'GEOOBJECT_STYLE_DEFAULT';
@@ -82,29 +73,41 @@ class ChallengeController {
     this.dataSourceDisplay = new DataSourceDisplay({ scene, dataSourceCollection: this.dataSources });
 
     this.eventHelper = new EventHelper();
-    this.eventHelper.add(clock.onTick, clock => this.dataSourceDisplay.update(clock.currentTime));
+    this.eventHelper.add(clock.onTick, (clock) => this.dataSourceDisplay.update(clock.currentTime));
 
-    this.disposePlayMode = reaction(() => this.store.playMode, playMode => {
-      this.validateGeoObjectVisibility();
-      if (playMode) {
-        this.restoreView().catch(e => console.error(e));
+    this.disposePlayMode = reaction(
+      () => this.store.playMode,
+      (playMode) => {
+        this.validateGeoObjectVisibility();
+        if (playMode) {
+          this.restoreView().catch((e) => console.error(e));
+        }
       }
-    });
+    );
 
-    this.disposeChallengeId = reaction(() => this.store.id, async() => {
-      await this.unload();
-      await this.load();
-    });
+    this.disposeChallengeId = reaction(
+      () => this.store.id,
+      async() => {
+        await this.unload();
+        await this.load();
+      }
+    );
 
-    this.disposePickedChallengeItemId = reaction(() => this.store.pickedItemId, id => {
-      this.highlightGeoObject(id);
-    });
+    this.disposePickedChallengeItemId = reaction(
+      () => this.store.pickedItemId,
+      (id) => {
+        this.highlightGeoObject(id);
+      }
+    );
 
-    this.disposeUserChallengeItemId = reaction(() => this.store.userItemId, () => {
-      this.validateGeoObjectVisibility();
-    });
+    this.disposeUserChallengeItemId = reaction(
+      () => this.store.userItemId,
+      () => {
+        this.validateGeoObjectVisibility();
+      }
+    );
 
-    this.load().catch(e => console.error(e));
+    this.load().catch((e) => console.error(e));
   }
 
   destroy() {
@@ -136,16 +139,19 @@ class ChallengeController {
       const styles = Object.keys(geoObjectColors);
       const { generalStore } = this.store;
       if (generalStore.developerMode) {
-        await Promise.all(items.map(item => {
-          const { id, path } = item;
-          return loadGeoJson(`challenges/${path}`).then(geoJson => {
-            return Promise.all(styles.map(style => {
-              this.dataSources.add(this.loadGeoObject(id, geoJson, style));
-            }));
-          });
-        }));
-      }
-      else {
+        await Promise.all(
+          items.map((item) => {
+            const { id, path } = item;
+            return loadGeoJson(`challenges/${path}`).then((geoJson) => {
+              return Promise.all(
+                styles.map((style) => {
+                  this.dataSources.add(this.loadGeoObject(id, geoJson, style));
+                })
+              );
+            });
+          })
+        );
+      } else {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           const { id, path } = item;
@@ -158,13 +164,11 @@ class ChallengeController {
           }
         }
       }
-      this.restoreView().catch(e => console.error(e));
-    }
-    catch (e) {
+      this.restoreView().catch((e) => console.error(e));
+    } catch (e) {
       console.error(e);
       this.store.setLoadingError(true);
-    }
-    finally {
+    } finally {
       this.store.setLoading(false);
     }
   }
@@ -181,7 +185,7 @@ class ChallengeController {
 
   loadGeoObject(id, geoJson, style) {
     const { stroke, fill } = geoObjectColors[style];
-    return GeoJsonDataSource.load(geoJson, { stroke, fill }).then(geoObject => {
+    return GeoJsonDataSource.load(geoJson, { stroke, fill }).then((geoObject) => {
       geoObject.id = id;
       geoObject.style = style;
       geoObject.show = this.store.playMode ? style === GEOOBJECT_STYLE_HIDDEN : style === GEOOBJECT_STYLE_DEFAULT;
@@ -225,12 +229,10 @@ class ChallengeController {
         }
 
         if (userItemId) {
-          geoObject.show = (
+          geoObject.show =
             (id === guessedItemId && style === GEOOBJECT_STYLE_CORRECT) ||
-            (id === userItemId && style === GEOOBJECT_STYLE_WRONG && !userCorrect)
-          );
-        }
-        else {
+            (id === userItemId && style === GEOOBJECT_STYLE_WRONG && !userCorrect);
+        } else {
           geoObject.show = false;
         }
 
@@ -287,8 +289,7 @@ async function loadGeoJson(path) {
       return response.json();
     }
     return Promise.reject(`Unable to load GeoJSON ${path}.`);
-  }
-  catch (e) {
+  } catch (e) {
     return Promise.reject(`Unable to load GeoJSON ${path}.`);
   }
 }

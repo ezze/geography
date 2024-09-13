@@ -2,22 +2,13 @@ import { observable, computed, action, reaction } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 import moment from 'moment';
 
-import BaseStore from './BaseStore';
-
 import challenges from '../challenges';
-
-import { challengeDurations } from '../constants';
-
+import { challengeDurations } from '../const';
+import { SOUND_TYPE_SUCCESS, SOUND_TYPE_ERROR, SOUND_TYPE_PICK, SOUND_TYPE_GAME_OVER } from '../const';
 import { delay } from '../helpers';
-
-import {
-  SOUND_TYPE_SUCCESS,
-  SOUND_TYPE_ERROR,
-  SOUND_TYPE_PICK,
-  SOUND_TYPE_GAME_OVER
-} from '../constants';
-
 import { playSound } from '../sound';
+
+import BaseStore from './BaseStore';
 
 class ChallengeStore extends BaseStore {
   @observable userName = '';
@@ -47,9 +38,10 @@ class ChallengeStore extends BaseStore {
   }
 
   @computed get challenge() {
-    return challenges
-      .filter(challenge => challenge.enabled !== false)
-      .find(challenge => challenge.id === this.id) || null;
+    return (
+      challenges.filter((challenge) => challenge.enabled !== false).find((challenge) => challenge.id === this.id) ||
+      null
+    );
   }
 
   @computed get name() {
@@ -62,12 +54,12 @@ class ChallengeStore extends BaseStore {
   }
 
   @computed get itemIds() {
-    return this.items.map(item => item.id);
+    return this.items.map((item) => item.id);
   }
 
   @computed get item() {
-    return createTransformer(id => {
-      return this.items.find(item => item.id === id) || null;
+    return createTransformer((id) => {
+      return this.items.find((item) => item.id === id) || null;
     });
   }
 
@@ -100,14 +92,14 @@ class ChallengeStore extends BaseStore {
   }
 
   @action setChallenge(id) {
-    if (challenges.findIndex(challenge => challenge.id === id) >= 0) {
+    if (challenges.findIndex((challenge) => challenge.id === id) >= 0) {
       const playMode = this.playMode;
       if (playMode) {
         this.playMode = false;
       }
       this.id = id;
       if (playMode) {
-        setTimeout(() => this.playMode = true, 0);
+        setTimeout(() => (this.playMode = true), 0);
       }
     }
   }
@@ -120,8 +112,7 @@ class ChallengeStore extends BaseStore {
     if (id) {
       const challengeItem = this.item(id);
       this.pickedItemId = challengeItem ? id : null;
-    }
-    else {
+    } else {
       this.pickedItemId = null;
     }
   }
@@ -151,76 +142,98 @@ class ChallengeStore extends BaseStore {
         'userCorrect',
         'loading',
         'loadingError'
-      ], ...options });
+      ],
+      ...options
+    });
 
     const { generalStore, recordStore } = options;
     this.generalStore = generalStore;
     this.recordStore = recordStore;
 
-    this.disposeId = reaction(() => this.id, id => {
-      if (id) {
+    this.disposeId = reaction(
+      () => this.id,
+      (id) => {
+        if (id) {
+          this.sortItems();
+        }
+      }
+    );
+
+    this.disposeLanguage = reaction(
+      () => generalStore.language,
+      () => {
         this.sortItems();
       }
-    });
+    );
 
-    this.disposeLanguage = reaction(() => generalStore.language, () => {
-      this.sortItems();
-    });
-
-    this.disposePlayMode = reaction(() => this.playMode, playMode => {
-      if (playMode) {
-        this.start().catch(e => console.error(e));
-      }
-      else {
-        this.stop();
-      }
-    });
-
-    this.disposeDuration = reaction(() => this.duration, () => {
-      if (this.playMode) {
-        this.start().catch(e => console.error(e));
-      }
-    });
-
-    this.disposeGameOver = reaction(() => this.gameOver, gameOver => {
-      if (gameOver) {
-        if (this.generalStore.soundEnabled) {
-          playSound(SOUND_TYPE_GAME_OVER).catch(e => console.error(e));
-        }
-        const { score } = this;
-        if (score > 0) {
-          this.recordStore.add(this.id, this.duration, this.userName, score);
+    this.disposePlayMode = reaction(
+      () => this.playMode,
+      (playMode) => {
+        if (playMode) {
+          this.start().catch((e) => console.error(e));
+        } else {
+          this.stop();
         }
       }
+    );
 
-      if (this.playMode && !gameOver) {
-        this.playMode = false;
-      }
-    });
-
-    this.disposePickedItemId = reaction(() => this.pickedItemId, pickedItemId => {
-      if (pickedItemId) {
-        if (this.generalStore.soundEnabled) {
-          playSound(SOUND_TYPE_PICK).catch(e => console.error(e));
+    this.disposeDuration = reaction(
+      () => this.duration,
+      () => {
+        if (this.playMode) {
+          this.start().catch((e) => console.error(e));
         }
       }
-    });
+    );
 
-    this.disposeUserItemId = reaction(() => this.userItemId, userItemId => {
-      if (userItemId) {
-        if (this.generalStore.soundEnabled) {
-          playSound(this.userCorrect ? SOUND_TYPE_SUCCESS : SOUND_TYPE_ERROR).catch(e => console.error(e));
+    this.disposeGameOver = reaction(
+      () => this.gameOver,
+      (gameOver) => {
+        if (gameOver) {
+          if (this.generalStore.soundEnabled) {
+            playSound(SOUND_TYPE_GAME_OVER).catch((e) => console.error(e));
+          }
+          const { score } = this;
+          if (score > 0) {
+            this.recordStore.add(this.id, this.duration, this.userName, score);
+          }
+        }
+
+        if (this.playMode && !gameOver) {
+          this.playMode = false;
         }
       }
+    );
 
-      if (this.playMode && userItemId === null) {
-        if (this.nextTimeout) {
-          clearTimeout(this.nextTimeout);
-          this.nextTimeout = null;
+    this.disposePickedItemId = reaction(
+      () => this.pickedItemId,
+      (pickedItemId) => {
+        if (pickedItemId) {
+          if (this.generalStore.soundEnabled) {
+            playSound(SOUND_TYPE_PICK).catch((e) => console.error(e));
+          }
         }
-        this.guessNextItem();
       }
-    });
+    );
+
+    this.disposeUserItemId = reaction(
+      () => this.userItemId,
+      (userItemId) => {
+        if (userItemId) {
+          if (this.generalStore.soundEnabled) {
+            playSound(this.userCorrect ? SOUND_TYPE_SUCCESS : SOUND_TYPE_ERROR).catch((e) => console.error(e));
+          }
+        }
+
+        if (this.playMode && userItemId === null) {
+          if (this.nextTimeout) {
+            clearTimeout(this.nextTimeout);
+            this.nextTimeout = null;
+          }
+          this.guessNextItem();
+        }
+      }
+    );
   }
 
   async init() {
@@ -243,9 +256,11 @@ class ChallengeStore extends BaseStore {
 
   sortItems() {
     const { language } = this.generalStore;
-    this.items = this.challenge ? [].concat(this.challenge.items).sort((item1, item2) => {
-      return item1.name[language].localeCompare(item2.name[language]);
-    }) : [];
+    this.items = this.challenge ?
+      [].concat(this.challenge.items).sort((item1, item2) => {
+        return item1.name[language].localeCompare(item2.name[language]);
+      }) :
+      [];
   }
 
   async start() {
@@ -319,8 +334,7 @@ class ChallengeStore extends BaseStore {
     let guessedIndex;
     do {
       guessedIndex = Math.floor(Math.random() * this.itemIds.length);
-    }
-    while (this.guessedIndexes.includes(guessedIndex));
+    } while (this.guessedIndexes.includes(guessedIndex));
 
     this.guessedIndexes.push(guessedIndex);
     this.guessedItemId = this.itemIds[guessedIndex];

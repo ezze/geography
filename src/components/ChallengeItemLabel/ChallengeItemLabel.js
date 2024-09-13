@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 
 import './sass/index.sass';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class ChallengeItemLabel extends Component {
   render() {
     const { generalStore, challengeStore } = this.props;
@@ -15,8 +16,7 @@ class ChallengeItemLabel extends Component {
       if (guessedItem) {
         content = guessedItem.name[language];
       }
-    }
-    else {
+    } else {
       if (pickedItem) {
         content = pickedItem.name[language];
       }
@@ -25,12 +25,12 @@ class ChallengeItemLabel extends Component {
     return content ? (
       <div className="challenge-item-label">
         <article className="message is-primary">
-          <div className="message-body">
-            {content}
-          </div>
+          <div className="message-body">{content}</div>
         </article>
       </div>
-    ) : '';
+    ) : (
+      ''
+    );
   }
 }
 

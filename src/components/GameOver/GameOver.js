@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
+import { MODAL_HALL_OF_FAME } from '../../const';
 import ModalNotification from '../ModalNotification';
 
-import { MODAL_HALL_OF_FAME } from '../../constants';
-
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class GameOver extends Component {
   constructor(props) {
     super(props);
@@ -30,13 +30,17 @@ class GameOver extends Component {
     return (
       <ModalNotification style="warning" visible={gameOver} close={this.close}>
         <h1 className="title is-4">{t('main')}</h1>
-        <p><b>{t('score', { score })}</b></p>
+        <p>
+          <b>{t('score', { score })}</b>
+        </p>
         <p>{t('overall-count', { count: overallCount })}</p>
         <p>{t('correct-count', { count: correctCount })}</p>
         <p>{t('incorrect-count', { count: overallCount - correctCount })}</p>
         <p>&nbsp;</p>
         <div className="has-text-centered">
-          <button className="button" onClick={this.onHallOfFameClick}>{t('hall-of-fame')}</button>
+          <button className="button" onClick={this.onHallOfFameClick}>
+            {t('hall-of-fame')}
+          </button>
         </div>
       </ModalNotification>
     );

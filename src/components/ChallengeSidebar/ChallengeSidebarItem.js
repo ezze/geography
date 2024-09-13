@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
+import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class ChallengeSidebarItem extends Component {
   constructor(props) {
     super(props);

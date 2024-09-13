@@ -1,11 +1,13 @@
+import Bowser, { Parser } from 'bowser';
 import { Color } from 'cesium';
-import Bowser from 'bowser';
 
-const { parsedResult } = Bowser.getParser(window.navigator.userAgent);
-export const platformType = parsedResult.platform.type;
+import { Language } from './i18n/types';
+
+const browser: Parser.Parser = Bowser.getParser(window.navigator.userAgent);
+export const platformType = browser.getBrowser();
 
 // Language
-export const languages = [
+export const languages: Array<{ id: Language; label: string }> = [
   { id: 'ru', label: 'Русский' },
   { id: 'en', label: 'English' }
 ];
@@ -16,12 +18,7 @@ export const SOUND_TYPE_ERROR = 'SOUND_TYPE_ERROR';
 export const SOUND_TYPE_PICK = 'SOUND_TYPE_PICK';
 export const SOUND_TYPE_GAME_OVER = 'SOUND_TYPE_GAME_OVER';
 
-export const soundTypes = [
-  SOUND_TYPE_SUCCESS,
-  SOUND_TYPE_ERROR,
-  SOUND_TYPE_PICK,
-  SOUND_TYPE_GAME_OVER
-];
+export const soundTypes = [SOUND_TYPE_SUCCESS, SOUND_TYPE_ERROR, SOUND_TYPE_PICK, SOUND_TYPE_GAME_OVER];
 
 // Modal
 export const MODAL_USER_NAME = 'MODAL_USER_NAME';
@@ -31,10 +28,7 @@ export const MODAL_AUDIO_NOTIFICATION = 'MODAL_AUDIO_NOTIFICATION';
 export const MODAL_GLOBE_INITIALIZATION_ERROR = 'MODAL_GLOBE_INITIALIZATION_ERROR';
 export const MODAL_GLOBE_RENDERING_ERROR = 'MODAL_GLOBE_RENDERING_ERROR';
 export const MODAL_ABOUT = 'MODAL_ABOUT';
-export const modalErrors = [
-  MODAL_GLOBE_INITIALIZATION_ERROR,
-  MODAL_GLOBE_RENDERING_ERROR
-];
+export const modalErrors = [MODAL_GLOBE_INITIALIZATION_ERROR, MODAL_GLOBE_RENDERING_ERROR];
 
 // Camera
 export const CAMERA_SCENE_MODE_2D = '2D';

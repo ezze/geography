@@ -6,23 +6,19 @@ import {
   ArcGisMapServerImageryProvider,
   requestAnimationFrame
 } from 'cesium';
-import React, { Component } from 'react';
+import classNames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from 'react';
 
-import ModalNotification from '../ModalNotification';
-
+import { MODAL_GLOBE_INITIALIZATION_ERROR, MODAL_GLOBE_RENDERING_ERROR } from '../../const';
 import { getChallengeController } from '../../global';
-
-import {
-  MODAL_GLOBE_INITIALIZATION_ERROR,
-  MODAL_GLOBE_RENDERING_ERROR
-} from '../../constants';
+import ModalNotification from '../ModalNotification';
 
 import './sass/index.sass';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class Globe extends Component {
   static propTypes = {
     onCreate: PropTypes.func,
@@ -72,8 +68,7 @@ class Globe extends Component {
       if (typeof this.props.onCreate === 'function') {
         this.props.onCreate(this.cesiumWidget);
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
       this.props.generalStore.setModal(MODAL_GLOBE_INITIALIZATION_ERROR);
     }
@@ -96,8 +91,7 @@ class Globe extends Component {
       this.cesiumWidget.resize();
       this.cesiumWidget.render();
       requestAnimationFrame(() => this.animate());
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
       this.props.generalStore.setModal(MODAL_GLOBE_RENDERING_ERROR);
     }
@@ -118,11 +112,7 @@ class Globe extends Component {
           style="danger"
           visible={modal === MODAL_GLOBE_INITIALIZATION_ERROR}
         />
-        <ModalNotification
-          id="globe-rendering-error"
-          style="danger"
-          visible={modal === MODAL_GLOBE_RENDERING_ERROR}
-        />
+        <ModalNotification id="globe-rendering-error" style="danger" visible={modal === MODAL_GLOBE_RENDERING_ERROR} />
       </div>
     );
   }

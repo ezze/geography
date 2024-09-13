@@ -9,14 +9,8 @@ import {
 } from 'cesium';
 import { observe } from 'mobx';
 
-import { parseView } from "./cameraHelpers";
-
-import {
-  CAMERA_SCENE_MODE_2D,
-  CAMERA_SCENE_MODE_3D,
-  cameraMinHeight,
-  cameraMaxHeight
-} from "./constants";
+import { parseView } from './cameraHelpers';
+import { CAMERA_SCENE_MODE_2D, CAMERA_SCENE_MODE_3D, cameraMinHeight, cameraMaxHeight } from './const';
 
 class CameraController {
   constructor(options = {}) {
@@ -36,7 +30,7 @@ class CameraController {
     const { scene, camera } = cesiumWidget;
 
     // Setting minimal and maximal height of the camera
-    const controller = this.controller = scene.screenSpaceCameraController;
+    const controller = (this.controller = scene.screenSpaceCameraController);
     controller.minimumZoomDistance = cameraMinHeight;
     controller.maximumZoomDistance = cameraMaxHeight;
 
@@ -47,8 +41,7 @@ class CameraController {
       }
       if (fullscreenMode) {
         Fullscreen.requestFullscreen(document.querySelector('body'));
-      }
-      else {
+      } else {
         Fullscreen.exitFullscreen();
       }
     });
@@ -104,13 +97,14 @@ class CameraController {
     if (destination && typeof destination === 'object') {
       const { west, south, east, north, units } = destination;
       if (
-        typeof west === 'number' && typeof south === 'number' &&
-        typeof east === 'number' && typeof north === 'number'
+        typeof west === 'number' &&
+        typeof south === 'number' &&
+        typeof east === 'number' &&
+        typeof north === 'number'
       ) {
         if (units === 'degrees') {
           camera.flyTo({ destination: Rectangle.fromDegrees(west, south, east, north) });
-        }
-        else {
+        } else {
           camera.flyTo({ destination: Rectangle.fromRadians(west, south, east, north) });
         }
         return;
@@ -150,7 +144,7 @@ class CameraController {
   }
 
   setTranslation(translation) {
-    return this.controller.enableTranslate = translation;
+    return (this.controller.enableTranslate = translation);
   }
 
   updateView() {

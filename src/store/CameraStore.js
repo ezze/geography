@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { CAMERA_SCENE_MODE_3D } from '../constants';
+import { CAMERA_SCENE_MODE_3D } from '../const';
 
 import BaseStore from './BaseStore';
 

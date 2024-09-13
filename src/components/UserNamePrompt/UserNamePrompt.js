@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
+import { MODAL_USER_NAME } from '../../const';
 import ModalNotification from '../ModalNotification';
 
-import { MODAL_USER_NAME } from '../../constants';
-
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class UserNamePrompt extends Component {
   state = {
     userName: ''
@@ -23,11 +23,14 @@ class UserNamePrompt extends Component {
   componentDidMount() {
     const { generalStore, challengeStore } = this.props;
     this.setState({ userName: challengeStore.userName });
-    this.disposeUserName = reaction(() => generalStore.modal, modal => {
-      if (modal === MODAL_USER_NAME) {
-        this.setState({ userName: challengeStore.userName });
+    this.disposeUserName = reaction(
+      () => generalStore.modal,
+      (modal) => {
+        if (modal === MODAL_USER_NAME) {
+          this.setState({ userName: challengeStore.userName });
+        }
       }
-    });
+    );
   }
 
   componentWillUnmount() {
@@ -59,12 +62,12 @@ class UserNamePrompt extends Component {
     const { t, generalStore, challengeStore } = this.props;
     const { modal } = generalStore;
     const cancelButton = challengeStore.userName ? (
-      <button
-        className="button is-danger"
-        disabled={!challengeStore.userName}
-        onClick={this.onCancelClick}
-      >{t('cancel')}</button>
-    ) : '';
+      <button className="button is-danger" disabled={!challengeStore.userName} onClick={this.onCancelClick}>
+        {t('cancel')}
+      </button>
+    ) : (
+      ''
+    );
     return (
       <ModalNotification id="user-name" visible={modal === MODAL_USER_NAME}>
         <form onSubmit={this.onApplyClick}>
@@ -74,7 +77,9 @@ class UserNamePrompt extends Component {
             </div>
           </div>
           <div className="buttons is-right">
-            <button className="button is-primary" disabled={!userName} onClick={this.onApplyClick}>{t('apply')}</button>
+            <button className="button is-primary" disabled={!userName} onClick={this.onApplyClick}>
+              {t('apply')}
+            </button>
             {cancelButton}
           </div>
         </form>

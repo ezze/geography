@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 import challenges from '../../challenges';
+import { challengeDurations, MODAL_SETTINGS } from '../../const';
 
-import {
-  challengeDurations,
-  MODAL_SETTINGS
-} from '../../constants';
-
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -74,11 +71,13 @@ class Settings extends Component {
                 <div className="control">
                   <div className={challengeSelectClassName}>
                     <select value={challengeId} disabled={loading} onChange={this.onChallengeChange}>
-                      {challenges.filter(challenge => challenge.enabled !== false).map(challenge => (
-                        <option key={challenge.id} value={challenge.id}>
-                          {challenge.name[language]}
-                        </option>
-                      ))}
+                      {challenges
+                        .filter((challenge) => challenge.enabled !== false)
+                        .map((challenge) => (
+                          <option key={challenge.id} value={challenge.id}>
+                            {challenge.name[language]}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -88,7 +87,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select value={duration} onChange={this.onDurationChange}>
-                      {challengeDurations.concat(developerMode ? [0.1] : []).map(duration => (
+                      {challengeDurations.concat(developerMode ? [0.1] : []).map((duration) => (
                         <option key={duration} value={duration}>
                           {duration}
                         </option>
@@ -102,7 +101,7 @@ class Settings extends Component {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select value={language} onChange={this.onLanguageChange}>
-                      {languages.map(languageItem => (
+                      {languages.map((languageItem) => (
                         <option key={languageItem.id} value={languageItem.id}>
                           {languageItem.label}
                         </option>
@@ -118,7 +117,9 @@ class Settings extends Component {
                 </label>
               </div>
               <div className="buttons is-right">
-                <button className="button is-primary" onClick={this.onCloseClick}>{t('close')}</button>
+                <button className="button is-primary" onClick={this.onCloseClick}>
+                  {t('close')}
+                </button>
               </div>
             </div>
           </div>

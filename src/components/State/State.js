@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 
 import './sass/index.sass';
 
-@inject('challengeStore') @observer
+@inject('challengeStore')
+@observer
 class State extends Component {
   render() {
     const { challengeStore } = this.props;
@@ -12,10 +13,15 @@ class State extends Component {
       <div className="state">
         <div>{remainingTimeDisplay}</div>
         <div>
-          <span className="state-score">{score}</span> <span>({correctCount}/{overallCount})</span>
+          <span className="state-score">{score}</span>{' '}
+          <span>
+            ({correctCount}/{overallCount})
+          </span>
         </div>
       </div>
-    ) : '';
+    ) : (
+      ''
+    );
   }
 }
 

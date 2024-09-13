@@ -1,8 +1,8 @@
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import ReactLoading from 'react-loading';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import './sass/index.sass';
 
@@ -49,10 +49,10 @@ class ModalNotification extends Component {
     }
 
     const nestedContent = this.props.children ? (
-      <div className="modal-notification-nested">
-        {this.props.children}
-      </div>
-    ) : '';
+      <div className="modal-notification-nested">{this.props.children}</div>
+    ) : (
+      ''
+    );
 
     return (
       <div className={className}>

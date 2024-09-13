@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 
+import { MODAL_AUDIO_NOTIFICATION, MODAL_USER_NAME, modalErrors } from '../../const';
 import ModalNotification from '../ModalNotification';
 
-import {
-  MODAL_AUDIO_NOTIFICATION,
-  MODAL_USER_NAME,
-  modalErrors
-} from '../../constants';
-
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class AudioNotification extends Component {
   constructor(props) {
     super(props);
@@ -29,8 +25,7 @@ class AudioNotification extends Component {
     const { generalStore, challengeStore } = this.props;
     if (!challengeStore.userName) {
       generalStore.setModal(MODAL_USER_NAME);
-    }
-    else {
+    } else {
       generalStore.setModal(this.previousModal);
     }
     delete this.previousModal;
@@ -40,12 +35,7 @@ class AudioNotification extends Component {
     const { generalStore } = this.props;
     const { modal } = generalStore;
     return (
-      <ModalNotification
-        id="audio"
-        style="warning"
-        visible={modal === MODAL_AUDIO_NOTIFICATION}
-        close={this.close}
-      />
+      <ModalNotification id="audio" style="warning" visible={modal === MODAL_AUDIO_NOTIFICATION} close={this.close} />
     );
   }
 }

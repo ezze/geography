@@ -1,7 +1,6 @@
-import { stores } from './store';
-
 import CameraController from './CameraController';
 import ChallengeController from './ChallengeController';
+import { stores } from './store';
 
 let cameraController = null;
 let challengeController = null;

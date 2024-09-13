@@ -1,7 +1,4 @@
-import {
-  Cartesian3,
-  Math as CesiumMath
-} from 'cesium';
+import { Cartesian3, Math as CesiumMath } from 'cesium';
 
 export function parseCoordinates(object, defaultValue) {
   if (defaultValue === undefined) {
@@ -44,8 +41,7 @@ export function parseAngle(object, defaultValue) {
   let value;
   if (object && typeof object === 'object' && typeof object.type === 'string' && typeof object.value === 'number') {
     value = object.type === 'degrees' ? CesiumMath.toRadians(object.value) : object.value;
-  }
-  else {
+  } else {
     value = object;
   }
 
@@ -73,8 +69,7 @@ export function parseView(object, defaultValue) {
         direction: parseCoordinates(direction),
         up: parseCoordinates(up)
       };
-    }
-    else if (heading !== undefined || pitch !== undefined || roll !== undefined) {
+    } else if (heading !== undefined || pitch !== undefined || roll !== undefined) {
       view.orientation = {
         heading: parseAngle(heading, 0.0),
         pitch: parseAngle(pitch, CesiumMath.toRadians(-90.0)),

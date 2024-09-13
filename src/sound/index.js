@@ -1,15 +1,9 @@
-import {
-  SOUND_TYPE_SUCCESS,
-  SOUND_TYPE_ERROR,
-  SOUND_TYPE_PICK,
-  SOUND_TYPE_GAME_OVER,
-  soundTypes
-} from '../constants';
+import { SOUND_TYPE_SUCCESS, SOUND_TYPE_ERROR, SOUND_TYPE_PICK, SOUND_TYPE_GAME_OVER, soundTypes } from '../const';
 
-import successSoundUrl from './success.mp3';
 import errorSoundUrl from './error.mp3';
-import pickSoundUrl from './pick.mp3';
 import gameOverSoundUrl from './game-over.mp3';
+import pickSoundUrl from './pick.mp3';
+import successSoundUrl from './success.mp3';
 
 const sounds = {};
 const playingSounds = {};
@@ -23,10 +17,18 @@ export async function initSounds() {
     const type = soundTypes[i];
     let url;
     switch (type) {
-      case SOUND_TYPE_SUCCESS: url = successSoundUrl; break;
-      case SOUND_TYPE_ERROR: url = errorSoundUrl; break;
-      case SOUND_TYPE_PICK: url = pickSoundUrl; break;
-      case SOUND_TYPE_GAME_OVER: url = gameOverSoundUrl; break;
+      case SOUND_TYPE_SUCCESS:
+        url = successSoundUrl;
+        break;
+      case SOUND_TYPE_ERROR:
+        url = errorSoundUrl;
+        break;
+      case SOUND_TYPE_PICK:
+        url = pickSoundUrl;
+        break;
+      case SOUND_TYPE_GAME_OVER:
+        url = gameOverSoundUrl;
+        break;
     }
     if (!url) {
       continue;
@@ -67,11 +69,9 @@ export async function playSound(type) {
   playingSounds[type] = sound;
   try {
     await sound.play();
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
-  }
-  finally {
+  } finally {
     delete playingSounds[type];
   }
 }

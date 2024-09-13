@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
+import { MODAL_SETTINGS, MODAL_USER_NAME, MODAL_HALL_OF_FAME, MODAL_ABOUT } from '../../const';
 import { getChallengeController } from '../../global';
-
-import {
-  MODAL_SETTINGS,
-  MODAL_USER_NAME,
-  MODAL_HALL_OF_FAME,
-  MODAL_ABOUT
-} from '../../constants';
 
 import './sass/index.sass';
 
-@inject('generalStore', 'challengeStore') @observer
+@inject('generalStore', 'challengeStore')
+@observer
 class Toolbar extends Component {
   constructor(props) {
     super(props);

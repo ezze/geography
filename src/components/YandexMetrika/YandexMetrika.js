@@ -6,9 +6,11 @@ class YandexMetrika extends Component {
   componentDidMount() {
     if (mode === 'production') {
       (function(m, e, t, r, i, k, a) {
-        m[i] = m[i] || function() {
-          (m[i].a = m[i].a || []).push(arguments);
-        };
+        m[i] =
+          m[i] ||
+          function() {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
         m[i].l = 1 * new Date();
         k = e.createElement(t);
         a = e.getElementsByTagName(t)[0];
@@ -17,7 +19,8 @@ class YandexMetrika extends Component {
         a.parentNode.insertBefore(k, a);
       })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
-      ym(55673590, 'init', { // eslint-disable-line no-undef
+      ym(55673590, 'init', {
+        // eslint-disable-line no-undef
         clickmap: true,
         trackLinks: true,
         accurateTrackBounce: true,
@@ -33,7 +36,9 @@ class YandexMetrika extends Component {
           <img src="https://mc.yandex.ru/watch/55673590" style="position:absolute; left:-9999px;" alt="" />
         </div>
       </noscript>
-    ) : '';
+    ) : (
+      ''
+    );
   }
 }
 

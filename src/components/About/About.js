@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
+import { MODAL_ABOUT } from '../../const';
 import ModalNotification from '../ModalNotification';
-
-import { MODAL_ABOUT } from '../../constants';
 
 import './sass/index.sass';
 
 const version = VERSION; // eslint-disable-line no-undef
 
-@inject('generalStore') @observer
+@inject('generalStore')
+@observer
 class About extends Component {
   constructor(props) {
     super(props);

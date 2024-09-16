@@ -8,7 +8,7 @@ import { SOUND_TYPE_SUCCESS, SOUND_TYPE_ERROR, SOUND_TYPE_PICK, SOUND_TYPE_GAME_
 import { delay } from '../helpers';
 import { playSound } from '../sound';
 
-import BaseStore from './BaseStore';
+import { BaseStore } from './BaseStore';
 
 class ChallengeStore extends BaseStore {
   @observable userName = '';
@@ -44,13 +44,14 @@ class ChallengeStore extends BaseStore {
     );
   }
 
-  @computed get name() {
-    const { language } = this.generalStore;
-    if (!this.challenge) {
-      return '';
-    }
-    const { name } = this.challenge;
-    return name[language] || '';
+  @computed get name(): string {
+    return '';
+    // const { language } = this.generalStore;
+    // if (!this.challenge) {
+    //   return '';
+    // }
+    // const { name } = this.challenge;
+    // return name[language] || '';
   }
 
   @computed get itemIds() {

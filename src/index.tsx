@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const generalStore = new GeneralStore();
 
   const i18n = await initI18n();
+  await generalStore.init();
   await initSounds();
 
   reaction(

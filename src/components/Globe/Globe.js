@@ -17,7 +17,6 @@ import ModalNotification from '../ModalNotification';
 
 import './sass/index.sass';
 
-@inject('generalStore', 'challengeStore')
 @observer
 class Globe extends Component {
   static propTypes = {

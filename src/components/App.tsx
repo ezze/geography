@@ -27,7 +27,6 @@ export const App = observer(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.keyCode === 68 && event.shiftKey) {
         const { developerMode } = generalStore;
-
         generalStore.setDeveloperMode(!developerMode);
       }
     };
@@ -38,7 +37,11 @@ export const App = observer(() => {
     };
   }, []);
 
-  return <>hello world</>;
+  return (
+    <div className="app">
+      <Globe onCreate={onGlobeCreate} onDestory={onGlobeDestroy} />
+    </div>
+  );
 });
 
 // class App extends Component {

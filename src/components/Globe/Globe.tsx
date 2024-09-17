@@ -84,14 +84,15 @@ export const Globe = observer((props: GlobeProps) => {
 
     try {
       cesiumWidget = new CesiumWidget(globeElement, {
-        baseLayer: new ImageryLayer(
-          new ArcGisMapServerImageryProvider({
-            // url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
-          })
+        baseLayer: ImageryLayer.fromProviderAsync(
+          ArcGisMapServerImageryProvider.fromUrl(
+            'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+          ),
+          {}
         ),
         creditContainer: document.createElement('div'),
         orderIndependentTranslucency: true,
-        useDefaultRenderLoop: true
+        useDefaultRenderLoop: false
       });
 
       // Swapping drag and tilt events' sources
@@ -110,6 +111,18 @@ export const Globe = observer((props: GlobeProps) => {
       if (typeof onCreate === 'function') {
         onCreate(cesiumWidget, cameraStore, challengeStore);
       }
+
+      const animate = () => {
+        try {
+          cesiumWidget.resize();
+          cesiumWidget.render();
+          requestAnimationFrame(() => animate());
+        } catch (e) {
+          generalStore.setModal(ModalType.GlobeRenderingError);
+        }
+      };
+
+      requestAnimationFrame(() => animate());
     } catch (e) {
       console.error(e);
       generalStore.setModal(ModalType.GlobeInitializationError);
@@ -125,8 +138,6 @@ export const Globe = observer((props: GlobeProps) => {
       }
     };
   }, []);
-
-  // requestAnimationFrame(() => this.animate());
 
   return (
     <div className={className}>
@@ -144,19 +155,3 @@ export const Globe = observer((props: GlobeProps) => {
     </div>
   );
 });
-
-// @observer
-// class Globe1 extends Component {
-//   animate() {
-//     try {
-//       this.cesiumWidget.resize();
-//       this.cesiumWidget.render();
-//       requestAnimationFrame(() => this.animate());
-//     } catch (e) {
-//       console.error(e);
-//       this.props.generalStore.setModal(MODAL_GLOBE_RENDERING_ERROR);
-//     }
-//   }
-// }
-//
-// export default Globe1;

@@ -18,252 +18,252 @@ export const europe: Challenge = {
     {
       id: 'albania',
       name: { en: 'Albania', ru: 'Албания' },
-      path: 'europe-countries/albania.json'
+      path: 'albania.json'
     },
     {
       id: 'andorra',
       name: { en: 'Andorra', ru: 'Андорра' },
-      path: 'europe-countries/andorra.json'
+      path: 'andorra.json'
     },
     {
       id: 'armenia',
       name: { en: 'Armenia', ru: 'Армения' },
-      path: 'europe-countries/armenia.json'
+      path: 'armenia.json'
     },
     {
       id: 'austria',
       name: { en: 'Austria', ru: 'Австрия' },
-      path: 'europe-countries/austria.json'
+      path: 'austria.json'
     },
     {
       id: 'azerbaijan',
       name: { en: 'Azerbaijan', ru: 'Азербайджан' },
-      path: 'europe-countries/azerbaijan.json'
+      path: 'azerbaijan.json'
     },
     {
       id: 'belarus',
       name: { en: 'Belarus', ru: 'Белоруссия' },
-      path: 'europe-countries/belarus.json'
+      path: 'belarus.json'
     },
     {
       id: 'belgium',
       name: { en: 'Belgium', ru: 'Бельгия' },
-      path: 'europe-countries/belgium.json'
+      path: 'belgium.json'
     },
     {
       id: 'bosnia-and-herzegovina',
       name: { en: 'Bosnia & Herzegovina', ru: 'Босния и Герцеговина' },
-      path: 'europe-countries/bosnia-and-herzegovina.json'
+      path: 'bosnia-and-herzegovina.json'
     },
     {
       id: 'bulgaria',
       name: { en: 'Bulgaria', ru: 'Болгария' },
-      path: 'europe-countries/bulgaria.json'
+      path: 'bulgaria.json'
     },
     {
       id: 'croatia',
       name: { en: 'Croatia', ru: 'Хорватия' },
-      path: 'europe-countries/croatia.json'
+      path: 'croatia.json'
     },
     {
       id: 'cyprus',
       name: { en: 'Cyprus', ru: 'Кипр' },
-      path: 'europe-countries/cyprus.json'
+      path: 'cyprus.json'
     },
     {
       id: 'czech-republic',
       name: { en: 'Czech Republic', ru: 'Чехия' },
-      path: 'europe-countries/czech-republic.json'
+      path: 'czech-republic.json'
     },
     {
       id: 'denmark',
       name: { en: 'Denmark', ru: 'Дания' },
-      path: 'europe-countries/denmark.json'
+      path: 'denmark.json'
     },
     {
       id: 'estonia',
       name: { en: 'Estonia', ru: 'Эстония' },
-      path: 'europe-countries/estonia.json'
+      path: 'estonia.json'
     },
     {
       id: 'faroe-islands',
       name: { en: 'Faroe islands', ru: 'Фарерские острова' },
-      path: 'europe-countries/faroe-islands.json'
+      path: 'faroe-islands.json'
     },
     {
       id: 'finland',
       name: { en: 'Finland', ru: 'Финляндия' },
-      path: 'europe-countries/finland.json'
+      path: 'finland.json'
     },
     {
       id: 'france',
       name: { en: 'France', ru: 'Франция' },
-      path: 'europe-countries/france.json'
+      path: 'france.json'
     },
     {
       id: 'georgia',
       name: { en: 'Georgia', ru: 'Грузия' },
-      path: 'europe-countries/georgia.json'
+      path: 'georgia.json'
     },
     {
       id: 'germany',
       name: { en: 'Germany', ru: 'Германия' },
-      path: 'europe-countries/germany.json'
+      path: 'germany.json'
     },
     {
       id: 'great-britain',
       name: { en: 'Great Britain', ru: 'Великобритания' },
-      path: 'europe-countries/great-britain.json'
+      path: 'great-britain.json'
     },
     {
       id: 'greece',
       name: { en: 'Greece', ru: 'Греция' },
-      path: 'europe-countries/greece.json'
+      path: 'greece.json'
     },
     {
       id: 'hungary',
       name: { en: 'Hungary', ru: 'Венгрия' },
-      path: 'europe-countries/hungary.json'
+      path: 'hungary.json'
     },
     {
       id: 'iceland',
       name: { en: 'Iceland', ru: 'Исландия' },
-      path: 'europe-countries/iceland.json'
+      path: 'iceland.json'
     },
     {
       id: 'ireland',
       name: { en: 'Ireland', ru: 'Ирландия' },
-      path: 'europe-countries/ireland.json'
+      path: 'ireland.json'
     },
     {
       id: 'italy',
       name: { en: 'Italy', ru: 'Италия' },
-      path: 'europe-countries/italy.json'
+      path: 'italy.json'
     },
     {
       id: 'kosovo',
       name: { en: 'Kosovo', ru: 'Косово' },
-      path: 'europe-countries/kosovo.json'
+      path: 'kosovo.json'
     },
     {
       id: 'latvia',
       name: { en: 'Latvia', ru: 'Латвия' },
-      path: 'europe-countries/latvia.json'
+      path: 'latvia.json'
     },
     {
       id: 'liechtenstein',
       name: { en: 'Liechtenstein', ru: 'Лихтенштейн' },
-      path: 'europe-countries/liechtenstein.json'
+      path: 'liechtenstein.json'
     },
     {
       id: 'lithuania',
       name: { en: 'Lithuania', ru: 'Литва' },
-      path: 'europe-countries/lithuania.json'
+      path: 'lithuania.json'
     },
     {
       id: 'luxembourg',
       name: { en: 'Luxembourg', ru: 'Люксембург' },
-      path: 'europe-countries/luxembourg.json'
+      path: 'luxembourg.json'
     },
     {
       id: 'macedonia',
       name: { en: 'Macedonia', ru: 'Македония' },
-      path: 'europe-countries/macedonia.json'
+      path: 'macedonia.json'
     },
     {
       id: 'malta',
       name: { en: 'malta', ru: 'Мальта' },
-      path: 'europe-countries/malta.json'
+      path: 'malta.json'
     },
     {
       id: 'moldova',
       name: { en: 'Moldova', ru: 'Молдавия' },
-      path: 'europe-countries/moldova.json'
+      path: 'moldova.json'
     },
     {
       id: 'monaco',
       name: { en: 'Monaco', ru: 'Монако' },
-      path: 'europe-countries/monaco.json'
+      path: 'monaco.json'
     },
     {
       id: 'montenegro',
       name: { en: 'Montenegro', ru: 'Черногория' },
-      path: 'europe-countries/montenegro.json'
+      path: 'montenegro.json'
     },
     {
       id: 'netherlands',
       name: { en: 'Netherlands', ru: 'Нидерланды' },
-      path: 'europe-countries/netherlands.json'
+      path: 'netherlands.json'
     },
     {
       id: 'northern-cyprus',
       name: { en: 'Northern Cyprus', ru: 'Северный Кипр' },
-      path: 'europe-countries/northern-cyprus.json'
+      path: 'northern-cyprus.json'
     },
     {
       id: 'norway',
       name: { en: 'Norway', ru: 'Норвегия' },
-      path: 'europe-countries/norway.json'
+      path: 'norway.json'
     },
     {
       id: 'poland',
       name: { en: 'Poland', ru: 'Польша' },
-      path: 'europe-countries/poland.json'
+      path: 'poland.json'
     },
     {
       id: 'portugal',
       name: { en: 'Portugal', ru: 'Португалия' },
-      path: 'europe-countries/portugal.json'
+      path: 'portugal.json'
     },
     {
       id: 'romania',
       name: { en: 'Romania', ru: 'Румыния' },
-      path: 'europe-countries/romania.json'
+      path: 'romania.json'
     },
     {
       id: 'russia',
       name: { en: 'Russia', ru: 'Россия' },
-      path: 'europe-countries/russia.json'
+      path: 'russia.json'
     },
     {
       id: 'san-marino',
       name: { en: 'San marino', ru: 'Сан-Марино' },
-      path: 'europe-countries/san-marino.json'
+      path: 'san-marino.json'
     },
     {
       id: 'serbia',
       name: { en: 'Serbia', ru: 'Сербия' },
-      path: 'europe-countries/serbia.json'
+      path: 'serbia.json'
     },
     {
       id: 'slovakia',
       name: { en: 'Slovakia', ru: 'Словакия' },
-      path: 'europe-countries/slovakia.json'
+      path: 'slovakia.json'
     },
     {
       id: 'slovenia',
       name: { en: 'Slovenia', ru: 'Словения' },
-      path: 'europe-countries/slovenia.json'
+      path: 'slovenia.json'
     },
     {
       id: 'spain',
       name: { en: 'Spain', ru: 'Испания' },
-      path: 'europe-countries/spain.json'
+      path: 'spain.json'
     },
     {
       id: 'sweden',
       name: { en: 'Sweden', ru: 'Швеция' },
-      path: 'europe-countries/sweden.json'
+      path: 'sweden.json'
     },
     {
       id: 'switzerland',
       name: { en: 'Switzerland', ru: 'Швейцария' },
-      path: 'europe-countries/switzerland.json'
+      path: 'switzerland.json'
     },
     {
       id: 'ukraine',
       name: { en: 'Ukraine', ru: 'Украина' },
-      path: 'europe-countries/ukraine.json'
+      path: 'ukraine.json'
     }
   ]
 };

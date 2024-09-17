@@ -18,62 +18,62 @@ export const southAmerica: Challenge = {
     {
       id: 'argentina',
       name: { en: 'Argentina', ru: 'Аргентина' },
-      path: 'south-america-countries/argentina.json'
+      path: 'argentina.json'
     },
     {
       id: 'bolivia',
       name: { en: 'Bolivia', ru: 'Боливия' },
-      path: 'south-america-countries/bolivia.json'
+      path: 'bolivia.json'
     },
     {
       id: 'brazil',
       name: { en: 'Brazil', ru: 'Бразилия' },
-      path: 'south-america-countries/brazil.json'
+      path: 'brazil.json'
     },
     {
       id: 'chile',
       name: { en: 'chile', ru: 'Чили' },
-      path: 'south-america-countries/chile.json'
+      path: 'chile.json'
     },
     {
       id: 'colombia',
       name: { en: 'Colombia', ru: 'Колумбия' },
-      path: 'south-america-countries/colombia.json'
+      path: 'colombia.json'
     },
     {
       id: 'ecuador',
       name: { en: 'Ecuador', ru: 'Эквадор' },
-      path: 'south-america-countries/ecuador.json'
+      path: 'ecuador.json'
     },
     {
       id: 'guyana',
       name: { en: 'Guyana', ru: 'Гвиана' },
-      path: 'south-america-countries/guyana.json'
+      path: 'guyana.json'
     },
     {
       id: 'paraguay',
       name: { en: 'Paraguay', ru: 'Парагвай' },
-      path: 'south-america-countries/paraguay.json'
+      path: 'paraguay.json'
     },
     {
       id: 'peru',
       name: { en: 'Peru', ru: 'Перу' },
-      path: 'south-america-countries/peru.json'
+      path: 'peru.json'
     },
     {
       id: 'suriname',
       name: { en: 'Suriname', ru: 'Суринам' },
-      path: 'south-america-countries/suriname.json'
+      path: 'suriname.json'
     },
     {
       id: 'uruguay',
       name: { en: 'Uruguay', ru: 'Уругвая' },
-      path: 'south-america-countries/uruguay.json'
+      path: 'uruguay.json'
     },
     {
       id: 'venezuela',
       name: { en: 'Venezuela', ru: 'Венесуэла' },
-      path: 'south-america-countries/venezuela.json'
+      path: 'venezuela.json'
     }
   ]
 };

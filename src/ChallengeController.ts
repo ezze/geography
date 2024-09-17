@@ -138,7 +138,7 @@ export class ChallengeController {
         await Promise.all(
           items.map((item) => {
             const { id, path } = item;
-            return loadGeoJson(`challenges/${path}`).then((geoJson) => {
+            return loadGeoJson(`challenges/${challenge.id}/${path}`).then((geoJson) => {
               return Promise.all(
                 styles.map((style) => {
                   this.dataSources.add(this.loadGeoObject(id, geoJson, style));
@@ -151,7 +151,7 @@ export class ChallengeController {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           const { id, path } = item;
-          const geoJson = await loadGeoJson(`challenges/${path}`);
+          const geoJson = await loadGeoJson(`challenges/${challenge.id}/${path}`);
           for (let j = 0; j < styles.length; j++) {
             const style = styles[j];
             const geoObject = this.loadGeoObject(id, geoJson, style);

@@ -8,13 +8,26 @@ import App from './components/App';
 import { initI18n } from './i18n/i18n';
 import reportWebVitals from './reportWebVitals';
 import { initSounds } from './sound';
-import GeneralStore, { GeneralStoreContext } from './store/GeneralStore';
+import { CameraStore, CameraStoreContext } from './store/CameraStore';
+import { ChallengeStore, ChallengeStoreContext } from './store/ChallengeStore';
+import { GeneralStore, GeneralStoreContext } from './store/GeneralStore';
+import { ResultStore } from './store/ResultStore';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const generalStore = new GeneralStore();
-
   const i18n = await initI18n();
+
+  const generalStore = new GeneralStore();
   await generalStore.init();
+
+  const resultStore = new ResultStore();
+  await resultStore.init();
+
+  const challengeStore = new ChallengeStore(generalStore, resultStore);
+  await challengeStore.init();
+
+  const cameraStore = new CameraStore();
+  await cameraStore.init();
+
   await initSounds();
 
   reaction(
@@ -34,9 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   root.render(
     <React.StrictMode>
       <GeneralStoreContext.Provider value={generalStore}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
+        <ChallengeStoreContext.Provider value={challengeStore}>
+          <CameraStoreContext.Provider value={cameraStore}>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </CameraStoreContext.Provider>
+        </ChallengeStoreContext.Provider>
       </GeneralStoreContext.Provider>
     </React.StrictMode>
   );

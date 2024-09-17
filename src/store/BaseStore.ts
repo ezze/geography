@@ -1,6 +1,6 @@
 import { observable, runInAction } from 'mobx';
 
-import { Store } from './types';
+import { Store } from './interface';
 
 export class BaseStore implements Store {
   @observable initialized = false;

@@ -54,7 +54,7 @@
     "@stylistic/js/no-tabs": "error",
     "@stylistic/js/no-trailing-spaces": "error",
     "@stylistic/js/no-whitespace-before-property": "error",
-    "@stylistic/js/operator-linebreak": ["error", "after"],
+    "@stylistic/js/operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
     "@stylistic/js/quote-props": ["error", "as-needed"],
     "@stylistic/js/rest-spread-spacing": ["error", "never"],
     "@stylistic/js/semi-spacing": ["error", { "before": false, "after": true }],
@@ -78,7 +78,7 @@
       }
     ],
     "@stylistic/ts/object-curly-spacing": ["error", "always", { "arraysInObjects": true, "objectsInObjects": false }],
-    "@stylistic/ts/quotes": ["error", "single"],
+    "@stylistic/ts/quotes": ["error", "single", { "avoidEscape": true }],
     "@stylistic/ts/semi": ["error", "always"],
     "@stylistic/ts/space-before-blocks": "error",
     "@stylistic/ts/space-before-function-paren": ["error", {

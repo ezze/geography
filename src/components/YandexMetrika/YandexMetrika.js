@@ -5,10 +5,10 @@ const mode = NODE_ENV; // eslint-disable-line no-undef
 class YandexMetrika extends Component {
   componentDidMount() {
     if (mode === 'production') {
-      (function(m, e, t, r, i, k, a) {
+      (function (m, e, t, r, i, k, a) {
         m[i] =
           m[i] ||
-          function() {
+          function () {
             (m[i].a = m[i].a || []).push(arguments);
           };
         m[i].l = 1 * new Date();

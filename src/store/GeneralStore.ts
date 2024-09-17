@@ -1,10 +1,10 @@
 import i18n, { TFunction } from 'i18next';
-import { observable, action } from 'mobx';
+import { observable, action, makeObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 import { createContext } from 'react';
-import { Context } from 'react';
 
 import { Language } from '../i18n/types';
+import { ModalType } from '../types';
 
 import { BaseStore } from './BaseStore';
 
@@ -12,15 +12,16 @@ export type GeneralStoreOptions = {
   language?: Language;
 };
 
-class GeneralStore extends BaseStore {
+export class GeneralStore extends BaseStore {
   @observable languages: Array<Language> = ['en', 'ru'];
   @observable language: Language = this.languages[0];
   @observable soundEnabled = true;
   @observable developerMode = false;
-  @observable modal = false;
+  @observable modal?: ModalType;
 
   constructor(options?: GeneralStoreOptions) {
     super();
+    makeObservable(this);
 
     const { language } = options || {};
 
@@ -29,10 +30,14 @@ class GeneralStore extends BaseStore {
     }
 
     if (i18n.isInitialized) {
-      this.setLanguage(this.language);
+      (async () => {
+        await this.setLanguage(this.language);
+      })();
     } else {
       i18n.on('initialized', () => {
-        this.setLanguage(this.language);
+        (async () => {
+          await this.setLanguage(this.language);
+        })();
       });
     }
   }
@@ -65,11 +70,9 @@ class GeneralStore extends BaseStore {
     this.developerMode = developerMode;
   }
 
-  @action setModal(modal: boolean): void {
+  @action setModal(modal: ModalType): void {
     this.modal = modal;
   }
 }
-
-export default GeneralStore;
 
 export const GeneralStoreContext = createContext(undefined as unknown as GeneralStore);

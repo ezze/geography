@@ -67,6 +67,8 @@ export enum ModalType {
   Settings = 'settings',
   Results = 'results',
   AudioNotification = 'audio-notification',
+  Loading = 'loading',
+  LoadingError = 'loading-error',
   GlobeInitializationError = 'globe-initialization-error',
   GlobeRenderingError = 'globe-rendering-error',
   About = 'about'

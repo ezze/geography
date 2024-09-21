@@ -9,6 +9,7 @@ import { ChallengeItem } from '../challenges/types';
 import { challengeDurations } from '../const';
 import { SOUND_TYPE_SUCCESS, SOUND_TYPE_ERROR, SOUND_TYPE_PICK, SOUND_TYPE_GAME_OVER } from '../const';
 import { delay } from '../helpers';
+import { translateItem } from '../i18n/utils';
 import { playSound } from '../sound';
 
 import { GeneralStore } from './GeneralStore';
@@ -246,8 +247,8 @@ export class ChallengeStore extends ReactionStore {
     const { challenge } = this;
     const items = challenge ? [...challenge.items] : [];
     items.sort((item1, item2) => {
-      const name1 = typeof item1.name === 'string' ? item1.name : item1.name[language];
-      const name2 = typeof item2.name === 'string' ? item2.name : item2.name[language];
+      const name1 = translateItem(item1.name, language);
+      const name2 = translateItem(item2.name, language);
       return name1.localeCompare(name2);
     });
     this.items = items;

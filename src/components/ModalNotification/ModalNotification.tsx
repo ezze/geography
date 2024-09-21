@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactLoading from 'react-loading';
 
-import './modal-notification.sass';
+import './ModalNotification.sass';
 import { ModalType } from '../../types';
 
 export type ModalNotificationProps = {
@@ -16,7 +16,7 @@ export type ModalNotificationProps = {
 };
 
 export const ModalNotification = (props: ModalNotificationProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('modal-notification');
   const { id, style, visible, loading, close, children } = props;
   const className = classNames({ modal: true, 'is-active': visible });
   const notificationClassName = classNames({ notification: true, [`is-${style}`]: !!style });

@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { useContext, useEffect, useRef } from 'react';
 
-import './globe.sass';
+import './Globe.sass';
 
 import { getChallengeController } from '../../global';
 import { CameraStore, CameraStoreContext } from '../../store/CameraStore';

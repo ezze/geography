@@ -70,7 +70,7 @@ export class GeneralStore extends BaseStore {
     this.developerMode = developerMode;
   }
 
-  @action setModal(modal: ModalType): void {
+  @action setModal(modal?: ModalType): void {
     this.modal = modal;
   }
 }

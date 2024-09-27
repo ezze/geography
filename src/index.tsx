@@ -16,10 +16,10 @@ import { ResultStore, ResultStoreContext } from './store/ResultStore';
 const strictMode = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const i18n = await initI18n();
-
   const generalStore = new GeneralStore();
   await generalStore.init();
+
+  const i18n = await initI18n();
 
   const resultStore = new ResultStore();
   await resultStore.init();

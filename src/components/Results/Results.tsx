@@ -7,10 +7,10 @@ import { ResultStoreContext } from '../../store/ResultStore';
 import { ModalType } from '../../types';
 import { ModalNotification } from '../ModalNotification/ModalNotification';
 
-import './HallOfFame.sass';
+import './Results.sass';
 
-export const HallOfFame = observer(() => {
-  const { t } = useTranslation('hall-of-fame');
+export const Results = observer(() => {
+  const { t } = useTranslation('results');
 
   const challengeStore = useContext(ChallengeStoreContext);
   const resultStore = useContext(ResultStoreContext);
@@ -19,19 +19,19 @@ export const HallOfFame = observer(() => {
   const results = resultStore.get(id, duration);
   const table =
     results.length > 0 ? (
-      <table className="hall-of-fame-table">
+      <table className="results-table">
         <tbody>
           {results.map((record, i) => (
             <tr key={i}>
-              <td className="hall-of-fame-table-place">{i + 1}</td>
-              <td className="hall-of-fame-table-name">{record.name}</td>
-              <td className="hall-of-fame-table-score">{record.score}</td>
+              <td className="results-table-place">{i + 1}</td>
+              <td className="results-table-name">{record.name}</td>
+              <td className="results-table-score">{record.score}</td>
             </tr>
           ))}
         </tbody>
       </table>
     ) : (
-      <div className="hall-of-fame-table has-text-centered">{t('no-results')}</div>
+      <div className="results-table has-text-centered">{t('no-results')}</div>
     );
 
   return (

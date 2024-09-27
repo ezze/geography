@@ -10,8 +10,8 @@ import { ChallengeItemLabel } from './ChallengeItemLabel/ChallengeItemLabel';
 import { ChallengeSidebar } from './ChallengeSidebar/ChallengeSidebar';
 import { GameOver } from './GameOver';
 import { Globe } from './Globe/Globe';
-import { HallOfFame } from './HallOfFame/HallOfFame';
 import { Loading } from './Loading';
+import { Results } from './Results/Results';
 import { Settings } from './Settings';
 import State from './State/State';
 import { Toolbar } from './Toolbar/Toolbar';
@@ -45,7 +45,7 @@ export const App = observer(() => {
       <Settings />
       <Loading />
       <UserNamePrompt />
-      <HallOfFame />
+      <Results />
       <AudioNotification />
       <GameOver />
       <About />

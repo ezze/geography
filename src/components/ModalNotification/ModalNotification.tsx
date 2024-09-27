@@ -13,12 +13,13 @@ export type ModalNotificationProps = {
   id: ModalType;
   style?: string;
   loading?: boolean;
+  closable?: boolean;
   onClose?: () => void;
   children?: ReactNode;
 };
 
 export const ModalNotification = observer((props: ModalNotificationProps) => {
-  const { id, style, loading, onClose, children } = props;
+  const { id, style, loading, closable = true, onClose, children } = props;
 
   const { t } = useTranslation('modal-notification');
 
@@ -46,13 +47,15 @@ export const ModalNotification = observer((props: ModalNotificationProps) => {
       <div className="modal-background"></div>
       <div className="modal-content">
         <div className={notificationClassName}>
-          <div
-            className="delete"
-            onClick={() => {
-              generalStore.setModal(undefined);
-              onClose?.();
-            }}
-          />
+          {closable && (
+            <div
+              className="delete"
+              onClick={() => {
+                generalStore.setModal(undefined);
+                onClose?.();
+              }}
+            />
+          )}
           {content}
           {nestedContent}
           {loading && <ReactLoading className="modal-notification-loading" type="spin" />}

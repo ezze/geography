@@ -56,7 +56,7 @@ export const GameOver = observer(() => {
             generalStore.setModal(ModalType.Results);
           }}
         >
-          {t('hall-of-fame')}
+          {t('best-results')}
         </button>
       </div>
     </ModalNotification>

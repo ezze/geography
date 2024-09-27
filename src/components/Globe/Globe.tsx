@@ -33,7 +33,6 @@ export const Globe = observer((props: GlobeProps) => {
   const challengeStore = useContext(ChallengeStoreContext);
   const cameraStore = useContext(CameraStoreContext);
 
-  const { modal } = generalStore;
   const className = classNames({
     globe: true,
     'globe-picked': challengeStore.pickedItemId
@@ -142,8 +141,8 @@ export const Globe = observer((props: GlobeProps) => {
   return (
     <div className={className}>
       <div ref={globeRef} className="globe-webgl"></div>
-      <ModalNotification id={ModalType.GlobeInitializationError} style="danger" />
-      <ModalNotification id={ModalType.GlobeRenderingError} style="danger" />
+      <ModalNotification id={ModalType.GlobeInitializationError} style="danger" closable={false} />
+      <ModalNotification id={ModalType.GlobeRenderingError} style="danger" closable={false} />
     </div>
   );
 });

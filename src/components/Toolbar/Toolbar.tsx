@@ -70,7 +70,7 @@ export const Toolbar = observer(() => {
             </button>
           </p>
           <p className="control">
-            <button className="button is-white" title={t('hall-of-fame')} onClick={onHallOfFameClick}>
+            <button className="button is-white" title={t('best-results')} onClick={onHallOfFameClick}>
               <span className="icon">
                 <i className="fas fa-list" />
               </span>

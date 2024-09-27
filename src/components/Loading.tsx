@@ -64,8 +64,8 @@ export const Loading = observer(() => {
 
   return (
     <>
-      <ModalNotification id={ModalType.Loading} style="info" loading={loading} />
-      <ModalNotification id={ModalType.LoadingError} style="danger">
+      <ModalNotification id={ModalType.Loading} style="info" loading={loading} closable={false} />
+      <ModalNotification id={ModalType.LoadingError} style="danger" closable={false}>
         <div className="has-text-centered">
           <button className="button" onClick={onRetryClick}>
             {t('retry')}

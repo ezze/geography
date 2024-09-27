@@ -8,7 +8,7 @@
     "restore-view": "Restore initial view",
     "settings": "Settings",
     "edit-user-name": "Edit user name",
-    "hall-of-fame": "Hall of fame",
+    "best-results": "Best results",
     "about": "About"
   },
   "settings": {
@@ -26,7 +26,7 @@
     "apply": "Apply",
     "cancel": "Cancel"
   },
-  "hall-of-fame": {
+  "results": {
     "challenge": "Challenge: \"{{name}}\"",
     "duration": "Duration (in minutes): {{duration}}",
     "no-results": "No results for this challenge yet..."
@@ -50,8 +50,8 @@
     "user-name": {
       "text": "Input user name:"
     },
-    "hall-of-fame": {
-      "title": "Hall of fame"
+    "results": {
+      "title": "Best results"
     },
     "audio": {
       "title": "Audio notification",
@@ -68,7 +68,7 @@
     "overall-count": "Overall answers' count: {{count}}",
     "correct-count": "Correct answers' count: {{count}}",
     "incorrect-count": "Incorrect answers' count: {{count}}",
-    "hall-of-fame": "Hall of fame"
+    "best-results": "Best results"
   },
   "about": {
     "authors": "Authors",

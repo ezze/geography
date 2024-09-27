@@ -1,0 +1,35 @@
+$results-table-width: 300px !default
+$results-table-gap: 15px !default
+$results-table-cell-padding-horizontal: 15px !default
+$results-table-cell-padding-vertical: 5px !default
+$results-table-odd-background-color: #fffce9 !default
+$results-table-even-background-color: #fff8d3 !default
+$results-table-border-color: orange !default
+
+
+.results-table
+  width: $results-table-width
+  margin: $results-table-gap auto 0
+  border-collapse: collapse
+
+  tr
+    > td
+      padding: $results-table-cell-padding-vertical $results-table-cell-padding-horizontal
+      border: 2px solid $results-table-border-color
+
+    &:nth-child(odd)
+      > td
+        background-color: $results-table-odd-background-color
+
+    &:nth-child(even)
+      > td
+        background-color: $results-table-even-background-color
+
+
+.results-table-place,
+.results-table-score
+  text-align: right !important
+
+
+.results-table-name
+  width: 100%

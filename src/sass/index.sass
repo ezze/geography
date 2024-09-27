@@ -1,9 +1,7 @@
-@use 'bulma/sass' with ($primary: #72c3e5, $orange: #ffa200)
+@import "~bulma"
 
 @import "~@fortawesome/fontawesome-free/scss/fontawesome"
 @import "~@fortawesome/fontawesome-free/scss/solid"
-
-@import "./variables"
 
 html
   min-height: 600px
@@ -14,6 +12,12 @@ body
   min-height: 100vh
   min-width: 1024px
   user-select: none
+  background-color: #000
+
+.panel-block
+  background-color: #fff
+  flex-direction: column
+  align-items: stretch
 
 #app,
 .app
@@ -23,7 +27,3 @@ body
   left: 0
   right: 0
   overflow: hidden
-
-.panel-block
-  background-color: $white
-  display: block

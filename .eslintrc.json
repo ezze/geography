@@ -97,7 +97,8 @@
         "alphabetize": {
           "caseInsensitive": true,
           "order": "asc"
-        }
+        },
+        "warnOnUnassignedImports": false
       }
     ]
   }

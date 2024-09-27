@@ -71,6 +71,7 @@ export enum ModalType {
   LoadingError = 'loading-error',
   GlobeInitializationError = 'globe-initialization-error',
   GlobeRenderingError = 'globe-rendering-error',
+  GameOver = 'game-over',
   About = 'about'
 }
 

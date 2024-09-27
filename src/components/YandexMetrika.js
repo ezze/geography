@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 
-const mode = NODE_ENV; // eslint-disable-line no-undef
-
-class YandexMetrika extends Component {
+export class YandexMetrika extends Component {
   componentDidMount() {
-    if (mode === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       (function (m, e, t, r, i, k, a) {
         m[i] =
           m[i] ||
@@ -19,8 +17,8 @@ class YandexMetrika extends Component {
         a.parentNode.insertBefore(k, a);
       })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
+      // eslint-disable-next-line no-undef
       ym(55673590, 'init', {
-        // eslint-disable-line no-undef
         clickmap: true,
         trackLinks: true,
         accurateTrackBounce: true,
@@ -30,16 +28,12 @@ class YandexMetrika extends Component {
   }
 
   render() {
-    return mode === 'production' ? (
+    return process.env.NODE_ENV === 'production' ? (
       <noscript>
         <div>
           <img src="https://mc.yandex.ru/watch/55673590" style="position:absolute; left:-9999px;" alt="" />
         </div>
       </noscript>
-    ) : (
-      ''
-    );
+    ) : null;
   }
 }
-
-export default YandexMetrika;

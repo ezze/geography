@@ -40,19 +40,8 @@ export const Settings = observer(() => {
     generalStore.setModal(undefined);
   };
 
-  const className = classNames({
-    modal: true,
-    'is-active': modal === ModalType.Settings
-  });
-
-  const challengeSelectClassName = classNames({
-    select: true,
-    'is-fullwidth': true,
-    'is-loading': loading
-  });
-
   return (
-    <div className={className}>
+    <div className={classNames('modal', { 'is-active': modal === ModalType.Settings })}>
       <div className="modal-background"></div>
       <div className="modal-content">
         <div className="panel">
@@ -61,7 +50,7 @@ export const Settings = observer(() => {
             <div className="field">
               <label className="label">{t('challenge')}</label>
               <div className="control">
-                <div className={challengeSelectClassName}>
+                <div className={classNames('select', 'is-fullwidth', { 'is-loading': loading })}>
                   <select value={challengeId} disabled={loading} onChange={onChallengeChange}>
                     {challenges
                       .filter((challenge) => challenge.enabled)

@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { makePersistable, stopPersisting } from 'mobx-persist-store';
 import { computedFn } from 'mobx-utils';
+import { createContext } from 'react';
 
 import { challengeRecordsCount } from '../const';
 import { Result } from '../types';
@@ -59,3 +60,5 @@ export class ResultStore extends BaseStore {
     this.results[id][duration] = results;
   }
 }
+
+export const ResultStoreContext = createContext(undefined as unknown as ResultStore);

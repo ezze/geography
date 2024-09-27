@@ -3,8 +3,9 @@ import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactLoading from 'react-loading';
 
-import './ModalNotification.sass';
 import { ModalType } from '../../types';
+
+import './ModalNotification.sass';
 
 export type ModalNotificationProps = {
   id: ModalType;

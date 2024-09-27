@@ -1,12 +1,11 @@
-@import "../../sass/variables"
 @import "../ChallengeSidebar/ChallengeSidebar"
 
 
 $toolbar-gap: 15px !default
 $toolbar-button-gap: 10px !default
 $toolbar-user-name-width: 180px !default
-$toolbar-user-name-text-color: $black !default
-$toolbar-user-name-background-color: $white !default
+$toolbar-user-name-text-color: #000 !default
+$toolbar-user-name-background-color: #fff !default
 
 
 .toolbar
@@ -23,12 +22,17 @@ $toolbar-user-name-background-color: $white !default
     right: $toolbar-gap + $challenge-sidebar-width + $challenge-sidebar-gap
 
   > div
+    pointer-events: auto
     display: flex
     flex-direction: row
+    align-items: center
 
-    > *
+    > *:not(:first-child)
       pointer-events: auto
       margin-left: $toolbar-button-gap
+
+    > .field
+      margin-bottom: 0
 
 
 .toolbar-user-name

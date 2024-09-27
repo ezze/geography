@@ -53,24 +53,28 @@ export const Toolbar = observer(() => {
     'is-danger': playMode
   });
 
-  const playModeButton = (
-    <button className={playModeButtonClassName} title={t(playMode ? 'stop' : 'start')} onClick={onPlayModeClick}>
-      <span className="icon">
-        <i className={`fas fa-${playMode ? 'stop' : 'play'}`} />
-      </span>
-    </button>
-  );
-
   return (
     <div className={className}>
       <div>
-        <div className="buttons has-addons">
-          {playModeButton}
-          <button className="button is-white" title={t('hall-of-fame')} onClick={onHallOfFameClick}>
-            <span className="icon">
-              <i className="fas fa-list" />
-            </span>
-          </button>
+        <div className="field has-addons">
+          <p className="control">
+            <button
+              className={playModeButtonClassName}
+              title={t(playMode ? 'stop' : 'start')}
+              onClick={onPlayModeClick}
+            >
+              <span className="icon">
+                <i className={`fas fa-${playMode ? 'stop' : 'play'}`} />
+              </span>
+            </button>
+          </p>
+          <p className="control">
+            <button className="button is-white" title={t('hall-of-fame')} onClick={onHallOfFameClick}>
+              <span className="icon">
+                <i className="fas fa-list" />
+              </span>
+            </button>
+          </p>
         </div>
         <button className="button is-white" title={t('restore-view')} onClick={onRestoreViewClick}>
           <span className="icon">

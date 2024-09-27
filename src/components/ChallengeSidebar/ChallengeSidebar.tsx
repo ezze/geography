@@ -17,7 +17,7 @@ export const ChallengeSidebar = observer(() => {
 
   return (
     <div className="challenge-sidebar">
-      <nav className="panel">
+      <nav className="panel is-primary">
         <p className="panel-heading">{name}</p>
         <div className="panel-block">
           <aside className="menu">

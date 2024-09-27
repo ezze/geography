@@ -1,17 +1,17 @@
 import { reaction } from 'mobx';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './sass/index.sass';
 import { I18nextProvider } from 'react-i18next';
 
 import App from './components/App';
 import { initI18n } from './i18n/i18n';
 import reportWebVitals from './reportWebVitals';
+import './sass/index.sass';
 import { initSounds } from './sound';
 import { CameraStore, CameraStoreContext } from './store/CameraStore';
 import { ChallengeStore, ChallengeStoreContext } from './store/ChallengeStore';
 import { GeneralStore, GeneralStoreContext } from './store/GeneralStore';
-import { ResultStore } from './store/ResultStore';
+import { ResultStore, ResultStoreContext } from './store/ResultStore';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const i18n = await initI18n();
@@ -47,13 +47,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   root.render(
     <React.StrictMode>
       <GeneralStoreContext.Provider value={generalStore}>
-        <ChallengeStoreContext.Provider value={challengeStore}>
-          <CameraStoreContext.Provider value={cameraStore}>
-            <I18nextProvider i18n={i18n}>
-              <App />
-            </I18nextProvider>
-          </CameraStoreContext.Provider>
-        </ChallengeStoreContext.Provider>
+        <ResultStoreContext.Provider value={resultStore}>
+          <ChallengeStoreContext.Provider value={challengeStore}>
+            <CameraStoreContext.Provider value={cameraStore}>
+              <I18nextProvider i18n={i18n}>
+                <App />
+              </I18nextProvider>
+            </CameraStoreContext.Provider>
+          </ChallengeStoreContext.Provider>
+        </ResultStoreContext.Provider>
       </GeneralStoreContext.Provider>
     </React.StrictMode>
   );

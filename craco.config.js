@@ -1,4 +1,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+
+const  packageJson = require('./package.json');
 
 const overrideWebpackConfig = ({ webpackConfig, cracoConfig, pluginOptions, context: { env, paths } }) => {
   webpackConfig.plugins.push(new CopyPlugin({
@@ -6,6 +9,10 @@ const overrideWebpackConfig = ({ webpackConfig, cracoConfig, pluginOptions, cont
       { from: 'node_modules/cesium/Build/Cesium', to: 'cesium' },
       { context: 'src/challenges', from: '**/*.json', to: 'challenges' }
     ]
+  }));
+
+  webpackConfig.plugins.push(new webpack.DefinePlugin({
+    VERSION: JSON.stringify(packageJson.version)
   }));
 
   webpackConfig.externals = {

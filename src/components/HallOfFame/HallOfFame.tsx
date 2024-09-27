@@ -18,8 +18,8 @@ export const HallOfFame = observer(() => {
   const resultStore = useContext(ResultStoreContext);
 
   const { modal } = generalStore;
-  const { name, duration } = challengeStore;
-  const results = resultStore.get(name, duration);
+  const { id, name, duration } = challengeStore;
+  const results = resultStore.get(id, duration);
   const table =
     results.length > 0 ? (
       <table className="hall-of-fame-table">

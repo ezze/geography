@@ -8,8 +8,12 @@ import { Result } from '../types';
 
 import { BaseStore } from './BaseStore';
 
+function getDurationKey(duration: number): string {
+  return `${duration}`;
+}
+
 export class ResultStore extends BaseStore {
-  @observable results: Record<string, Record<number, Array<Result>>> = {};
+  @observable results: Record<string, Record<string, Array<Result>>> = {};
 
   constructor() {
     super();
@@ -35,20 +39,21 @@ export class ResultStore extends BaseStore {
     if (!challengeResults) {
       return [];
     }
-    const durationResults = challengeResults[duration];
+    const durationResults = challengeResults[getDurationKey(duration)];
     return [...durationResults];
   });
 
   @action add(id: string, duration: number, name: string, score: number): void {
     const date = new Date();
+    const result: Result = { name, score, date };
     const results = this.get(id, duration);
     const index = results.findIndex((result) => result.score < score);
     if (index === -1) {
       if (results.length < challengeRecordsCount) {
-        results.push({ name, score, date });
+        results.push(result);
       }
     } else {
-      results.splice(index, 0, { name, score, date });
+      results.splice(index, 0, result);
       if (results.length > challengeRecordsCount) {
         results.splice(challengeRecordsCount, 1);
       }
@@ -57,7 +62,7 @@ export class ResultStore extends BaseStore {
     if (!this.results[id]) {
       this.results[id] = {};
     }
-    this.results[id][duration] = results;
+    this.results[id][getDurationKey(duration)] = results;
   }
 }
 

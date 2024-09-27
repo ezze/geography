@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import './Toolbar.sass';
 import { getChallengeController } from '../../global';
 import { ChallengeStoreContext } from '../../store/ChallengeStore';
 import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ModalType } from '../../types';
+
+import './Toolbar.sass';
 
 export const Toolbar = observer(() => {
   const { t } = useTranslation('toolbar');

@@ -128,43 +128,9 @@ export class CameraController {
 
   flyToView(view: CameraView) {
     const { camera } = this.cesiumWidget;
-    const v = parseCameraView(view);
-    camera.flyTo(v);
+    const cesiumView = parseCameraView(view);
+    camera.flyTo(cesiumView);
   }
-
-  // flyToInitialView() {
-  //   this.flyToView(this.initialView);
-  // }
-  //
-  // flyToBoundingSphere(boundingSphere, options) {
-  //   this.cesiumWidget.camera.flyToBoundingSphere(boundingSphere, options);
-  // }
-  //
-  // zoomIn() {
-  //   const { camera } = this.cesiumWidget;
-  //   camera.zoomIn.apply(camera, arguments);
-  // }
-  //
-  // zoomOut() {
-  //   const { camera } = this.cesiumWidget;
-  //   camera.zoomOut.apply(camera, arguments);
-  // }
-  //
-  // getRotation() {
-  //   return this.controller.enableRotate;
-  // }
-  //
-  // setRotation(rotation) {
-  //   this.controller.enableRotate = rotation;
-  // }
-  //
-  // getTranslation() {
-  //   return this.controller.enableTranslate;
-  // }
-  //
-  // setTranslation(translation) {
-  //   return (this.controller.enableTranslate = translation);
-  // }
 
   updateView() {
     const { camera } = this.cesiumWidget;

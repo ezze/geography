@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
+
+import { ChallengeStoreContext } from '../../store/ChallengeStore';
 
 import './State.sass';
-import { ChallengeStoreContext } from '../../store/ChallengeStore';
 
 export const State = observer(() => {
   const challengeStore = useContext(ChallengeStoreContext);

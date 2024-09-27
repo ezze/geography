@@ -1,5 +1,5 @@
 import { reaction } from 'mobx';
-import React from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 
@@ -12,6 +12,8 @@ import { CameraStore, CameraStoreContext } from './store/CameraStore';
 import { ChallengeStore, ChallengeStoreContext } from './store/ChallengeStore';
 import { GeneralStore, GeneralStoreContext } from './store/GeneralStore';
 import { ResultStore, ResultStoreContext } from './store/ResultStore';
+
+const strictMode = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
   const i18n = await initI18n();
@@ -43,22 +45,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     throw new TypeError('Root element is not found');
   }
 
-  const root = createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <GeneralStoreContext.Provider value={generalStore}>
-        <ResultStoreContext.Provider value={resultStore}>
-          <ChallengeStoreContext.Provider value={challengeStore}>
-            <CameraStoreContext.Provider value={cameraStore}>
-              <I18nextProvider i18n={i18n}>
-                <App />
-              </I18nextProvider>
-            </CameraStoreContext.Provider>
-          </ChallengeStoreContext.Provider>
-        </ResultStoreContext.Provider>
-      </GeneralStoreContext.Provider>
-    </React.StrictMode>
+  const content = (
+    <GeneralStoreContext.Provider value={generalStore}>
+      <ResultStoreContext.Provider value={resultStore}>
+        <ChallengeStoreContext.Provider value={challengeStore}>
+          <CameraStoreContext.Provider value={cameraStore}>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </CameraStoreContext.Provider>
+        </ChallengeStoreContext.Provider>
+      </ResultStoreContext.Provider>
+    </GeneralStoreContext.Provider>
   );
+
+  const root = createRoot(rootElement);
+  root.render(strictMode ? <StrictMode>{content}</StrictMode> : content);
 });
 
 // If you want to start measuring performance in your app, pass a function

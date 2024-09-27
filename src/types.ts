@@ -66,7 +66,7 @@ export enum ModalType {
   UserName = 'user-name',
   Settings = 'settings',
   Results = 'results',
-  AudioNotification = 'audio-notification',
+  AudioNotification = 'audio',
   Loading = 'loading',
   LoadingError = 'loading-error',
   GlobeInitializationError = 'globe-initialization-error',
@@ -74,5 +74,3 @@ export enum ModalType {
   GameOver = 'game-over',
   About = 'about'
 }
-
-export const modalErrors = [ModalType.GlobeInitializationError, ModalType.GlobeRenderingError];

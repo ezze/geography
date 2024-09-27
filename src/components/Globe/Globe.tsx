@@ -10,14 +10,14 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { useContext, useEffect, useRef } from 'react';
 
-import './Globe.sass';
-
 import { getChallengeController } from '../../global';
 import { CameraStore, CameraStoreContext } from '../../store/CameraStore';
 import { ChallengeStore, ChallengeStoreContext } from '../../store/ChallengeStore';
 import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ModalType } from '../../types';
 import { ModalNotification } from '../ModalNotification/ModalNotification';
+
+import './Globe.sass';
 
 export type GlobeProps = {
   onCreate?: (cesiumWidget: CesiumWidget, cameraStore: CameraStore, challengeStore: ChallengeStore) => void;

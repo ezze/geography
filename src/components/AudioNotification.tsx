@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { modalErrors } from '../const';
 import { ChallengeStoreContext } from '../store/ChallengeStore';
@@ -36,6 +36,6 @@ export const AudioNotification = observer(() => {
         }
         setPreviousModal(undefined);
       }}
-    />
+    ></ModalNotification>
   );
 });

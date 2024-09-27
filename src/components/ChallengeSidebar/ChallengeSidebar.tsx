@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 import { ChallengeStoreContext } from '../../store/ChallengeStore';
 

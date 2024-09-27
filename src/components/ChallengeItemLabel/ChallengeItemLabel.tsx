@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react';
 import { ReactNode, useContext } from 'react';
 
-import './ChallengeItemLabel.sass';
 import { translateItem } from '../../i18n/utils';
 import { ChallengeStoreContext } from '../../store/ChallengeStore';
 import { GeneralStoreContext } from '../../store/GeneralStore';
+
+import './ChallengeItemLabel.sass';
 
 export const ChallengeItemLabel = observer(() => {
   const generalStore = useContext(GeneralStoreContext);

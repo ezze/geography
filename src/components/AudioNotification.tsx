@@ -16,19 +16,17 @@ export const AudioNotification = observer(() => {
 
   useEffect(() => {
     const { soundEnabled, developerMode, modal } = generalStore;
-    if (soundEnabled && !developerMode && modal && !modalErrors.includes(modal)) {
+    if (soundEnabled && !developerMode && (modal === undefined || !modalErrors.includes(modal))) {
       setPreviousModal(modal);
       generalStore.setModal(ModalType.AudioNotification);
     }
   }, []);
 
-  const { modal } = generalStore;
   return (
     <ModalNotification
       id={ModalType.AudioNotification}
       style="warning"
-      visible={modal === ModalType.AudioNotification}
-      close={() => {
+      onClose={() => {
         if (!challengeStore.userName) {
           generalStore.setModal(ModalType.UserName);
         } else {

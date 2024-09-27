@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import { observer } from 'mobx-react';
+import { ReactNode, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactLoading from 'react-loading';
 
+import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ModalType } from '../../types';
 
 import './ModalNotification.sass';
@@ -10,16 +12,19 @@ import './ModalNotification.sass';
 export type ModalNotificationProps = {
   id: ModalType;
   style?: string;
-  visible?: boolean;
   loading?: boolean;
-  close?: () => void;
+  onClose?: () => void;
   children?: ReactNode;
 };
 
-export const ModalNotification = (props: ModalNotificationProps) => {
+export const ModalNotification = observer((props: ModalNotificationProps) => {
+  const { id, style, loading, onClose, children } = props;
+
   const { t } = useTranslation('modal-notification');
-  const { id, style, visible, loading, close, children } = props;
-  const className = classNames({ modal: true, 'is-active': visible });
+
+  const generalStore = useContext(GeneralStoreContext);
+
+  const className = classNames({ modal: true, 'is-active': generalStore.modal === id });
   const notificationClassName = classNames({ notification: true, [`is-${style}`]: !!style });
 
   let content;
@@ -41,7 +46,13 @@ export const ModalNotification = (props: ModalNotificationProps) => {
       <div className="modal-background"></div>
       <div className="modal-content">
         <div className={notificationClassName}>
-          {typeof close === 'function' && <div className="delete" onClick={close}></div>}
+          <div
+            className="delete"
+            onClick={() => {
+              generalStore.setModal(undefined);
+              onClose?.();
+            }}
+          />
           {content}
           {nestedContent}
           {loading && <ReactLoading className="modal-notification-loading" type="spin" />}
@@ -49,4 +60,4 @@ export const ModalNotification = (props: ModalNotificationProps) => {
       </div>
     </div>
   );
-};
+});

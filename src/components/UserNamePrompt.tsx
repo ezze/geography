@@ -15,8 +15,6 @@ export const UserNamePrompt = observer(() => {
   const generalStore = useContext(GeneralStoreContext);
   const challengeStore = useContext(ChallengeStoreContext);
 
-  const { modal } = generalStore;
-
   const [userName, setUserName] = useState(() => challengeStore.userName);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -59,7 +57,7 @@ export const UserNamePrompt = observer(() => {
     ''
   );
   return (
-    <ModalNotification id={ModalType.UserName} visible={modal === ModalType.UserName}>
+    <ModalNotification id={ModalType.UserName}>
       <form onSubmit={onApplyClick}>
         <div className="field">
           <div className="control">

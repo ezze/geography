@@ -1,5 +1,6 @@
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ChallengeStoreContext } from '../store/ChallengeStore';
@@ -14,15 +15,29 @@ export const GameOver = observer(() => {
   const generalStore = useContext(GeneralStoreContext);
   const challengeStore = useContext(ChallengeStoreContext);
 
-  const { gameOver, correctCount, overallCount, score } = challengeStore;
+  const { correctCount, overallCount, score } = challengeStore;
+
+  useEffect(() => {
+    const disposeGameOver = reaction(
+      () => challengeStore.gameOver,
+      (gameOver) => {
+        if (gameOver) {
+          generalStore.setModal(ModalType.GameOver);
+        }
+      }
+    );
+
+    return () => {
+      disposeGameOver();
+    };
+  }, []);
 
   return (
     <ModalNotification
       id={ModalType.GameOver}
       style="warning"
-      visible={gameOver}
-      close={() => {
-        challengeStore.gameOver = false;
+      onClose={() => {
+        challengeStore.resetGameOver();
       }}
     >
       <h1 className="title is-4">{t('main')}</h1>

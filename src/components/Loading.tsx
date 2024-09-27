@@ -1,5 +1,6 @@
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getChallengeController } from '../global';
@@ -20,23 +21,57 @@ export const Loading = observer(() => {
     challengeController.load().catch((e) => console.error(e));
   };
 
-  const { modal } = generalStore;
-  const { loading, loadingError } = challengeStore;
-  const content = !loading ? (
-    <div className="has-text-centered">
-      <button className="button" onClick={onRetryClick}>
-        {t('retry')}
-      </button>
-    </div>
-  ) : (
-    ''
-  );
-  const modalId = loadingError ? ModalType.LoadingError : ModalType.Loading;
-  const modalStyle = loadingError ? 'danger' : 'info';
-  const modalVisible = !modal && (loading || loadingError);
+  const { loading } = challengeStore;
+
+  useEffect(() => {
+    const disposeLoading = reaction(
+      () => challengeStore.loading,
+      (loading) => {
+        if (loading && generalStore.modal === undefined) {
+          generalStore.setModal(ModalType.Loading);
+        } else if (generalStore.modal === ModalType.Loading) {
+          generalStore.setModal(undefined);
+        }
+      }
+    );
+
+    const disposeLoadingError = reaction(
+      () => challengeStore.loadingError,
+      (loadingError) => {
+        if (loadingError) {
+          generalStore.setModal(ModalType.LoadingError);
+        }
+      }
+    );
+
+    const disposeModal = reaction(
+      () => generalStore.modal,
+      (modal, previousModal) => {
+        if (modal === undefined && previousModal !== undefined) {
+          if (challengeStore.loading) {
+            generalStore.setModal(ModalType.Loading);
+          }
+        }
+      }
+    );
+
+    return () => {
+      disposeLoading();
+      disposeLoadingError();
+      disposeModal();
+    };
+  }, []);
+
   return (
-    <ModalNotification id={modalId} style={modalStyle} visible={modalVisible} loading={loading}>
-      {content}
-    </ModalNotification>
+    <>
+      <ModalNotification id={ModalType.Loading} style="info" loading={loading} />
+      <ModalNotification id={ModalType.LoadingError} style="danger">
+        <div className="has-text-centered">
+          <button className="button" onClick={onRetryClick}>
+            {t('retry')}
+          </button>
+        </div>
+      </ModalNotification>
+    </>
   );
 });

@@ -142,16 +142,8 @@ export const Globe = observer((props: GlobeProps) => {
   return (
     <div className={className}>
       <div ref={globeRef} className="globe-webgl"></div>
-      <ModalNotification
-        id={ModalType.GlobeInitializationError}
-        style="danger"
-        visible={modal === ModalType.GlobeInitializationError}
-      />
-      <ModalNotification
-        id={ModalType.GlobeRenderingError}
-        style="danger"
-        visible={modal === ModalType.GlobeRenderingError}
-      />
+      <ModalNotification id={ModalType.GlobeInitializationError} style="danger" />
+      <ModalNotification id={ModalType.GlobeRenderingError} style="danger" />
     </div>
   );
 });

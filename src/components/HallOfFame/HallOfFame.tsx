@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ChallengeStoreContext } from '../../store/ChallengeStore';
-import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ResultStoreContext } from '../../store/ResultStore';
 import { ModalType } from '../../types';
 import { ModalNotification } from '../ModalNotification/ModalNotification';
@@ -13,11 +12,9 @@ import './HallOfFame.sass';
 export const HallOfFame = observer(() => {
   const { t } = useTranslation('hall-of-fame');
 
-  const generalStore = useContext(GeneralStoreContext);
   const challengeStore = useContext(ChallengeStoreContext);
   const resultStore = useContext(ResultStoreContext);
 
-  const { modal } = generalStore;
   const { id, name, duration } = challengeStore;
   const results = resultStore.get(id, duration);
   const table =
@@ -38,11 +35,7 @@ export const HallOfFame = observer(() => {
     );
 
   return (
-    <ModalNotification
-      id={ModalType.Results}
-      visible={modal === ModalType.Results}
-      close={() => generalStore.setModal(undefined)}
-    >
+    <ModalNotification id={ModalType.Results}>
       <div className="notification is-warning">
         <p>{t('challenge', { name })}</p>
         <p>{t('duration', { duration })}</p>

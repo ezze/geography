@@ -318,6 +318,10 @@ export class ChallengeStore extends ReactionStore {
     }
   }
 
+  @action resetGameOver() {
+    this.gameOver = false;
+  }
+
   @action guess(): void {
     this.userCorrect = this.guessedItemId === this.pickedItemId;
     if (this.userCorrect) {

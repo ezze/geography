@@ -1,8 +1,6 @@
 import { observer } from 'mobx-react';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ModalType } from '../../types';
 import { ModalNotification } from '../ModalNotification/ModalNotification';
 
@@ -13,19 +11,8 @@ const version = VERSION;
 
 export const About = observer(() => {
   const { t } = useTranslation('about');
-
-  const generalStore = useContext(GeneralStoreContext);
-
-  const { modal } = generalStore;
-
   return (
-    <ModalNotification
-      id={ModalType.About}
-      visible={modal === ModalType.About}
-      close={() => {
-        generalStore.setModal(undefined);
-      }}
-    >
+    <ModalNotification id={ModalType.About}>
       <table className="about-table" align="center">
         <tbody>
           <tr>

@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { makePersistable } from 'mobx-persist-store';
+import { makePersistable, stopPersisting } from 'mobx-persist-store';
 import { createContext } from 'react';
 
 import { CameraSceneMode, CameraView } from '../types';
@@ -30,6 +30,11 @@ export class CameraStore extends BaseStore {
       storage: window.localStorage
     });
     return super.init();
+  }
+
+  async dispose(): Promise<void> {
+    stopPersisting(this);
+    return super.dispose();
   }
 
   @action setFullscreenMode(fullscreenMode: boolean): void {

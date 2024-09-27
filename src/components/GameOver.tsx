@@ -37,6 +37,7 @@ export const GameOver = observer(() => {
         <button
           className="button"
           onClick={() => {
+            challengeStore.gameOver = false;
             generalStore.setModal(ModalType.Results);
           }}
         >

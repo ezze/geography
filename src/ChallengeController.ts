@@ -1,4 +1,12 @@
-import { DataSourceCollection, DataSourceDisplay, EventHelper, GeoJsonDataSource, CesiumWidget, Color } from 'cesium';
+import {
+  DataSourceCollection,
+  DataSourceDisplay,
+  EventHelper,
+  GeoJsonDataSource,
+  CesiumWidget,
+  Color,
+  ArcType
+} from 'cesium';
 import { IReactionDisposer, reaction } from 'mobx';
 
 import { CameraController } from './CameraController';
@@ -186,13 +194,13 @@ export class ChallengeController {
       geoObject.show = this.store.playMode ? style === 'hidden' : style === 'default';
       Object.assign(geoObject, { style });
       // // TODO: temporary fix for polygons: https://github.com/AnalyticalGraphicsInc/cesium/issues/8042
-      // for (let i = 0; i < geoObject.entities.values.length; i++) {
-      //   const entity = geoObject.entities.values[i];
-      //   this.entityMap[entity.id] = id;
-      //   if (defined(entity.polygon)) {
-      //     entity.polygon.arcType = ArcType.GEODESIC;
-      //   }
-      // }
+      for (let i = 0; i < geoObject.entities.values.length; i++) {
+        const entity = geoObject.entities.values[i];
+        this.entityMap[entity.id] = id;
+        if (entity.polygon) {
+          Object.assign(entity.polygon, { arcType: ArcType.GEODESIC });
+        }
+      }
       return geoObject as GeoObject;
     });
   }

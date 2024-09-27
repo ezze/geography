@@ -36,6 +36,7 @@ export const HallOfFame = observer(() => {
     ) : (
       <div className="hall-of-fame-table has-text-centered">{t('no-results')}</div>
     );
+
   return (
     <ModalNotification
       id={ModalType.Results}

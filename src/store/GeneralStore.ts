@@ -1,6 +1,6 @@
 import i18n, { TFunction } from 'i18next';
 import { observable, action, makeObservable } from 'mobx';
-import { makePersistable } from 'mobx-persist-store';
+import { makePersistable, stopPersisting } from 'mobx-persist-store';
 import { createContext } from 'react';
 
 import { Language } from '../i18n/types';
@@ -42,7 +42,7 @@ export class GeneralStore extends BaseStore {
     }
   }
 
-  async init() {
+  async init(): Promise<void> {
     await makePersistable(this, {
       name: 'general',
       storage: window.localStorage,
@@ -50,6 +50,11 @@ export class GeneralStore extends BaseStore {
     });
 
     return super.init();
+  }
+
+  async dispose(): Promise<void> {
+    stopPersisting(this);
+    return super.dispose();
   }
 
   @action async setLanguage(language: Language): Promise<TFunction> {

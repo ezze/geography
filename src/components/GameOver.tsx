@@ -52,7 +52,7 @@ export const GameOver = observer(() => {
         <button
           className="button"
           onClick={() => {
-            challengeStore.gameOver = false;
+            challengeStore.resetGameOver();
             generalStore.setModal(ModalType.Results);
           }}
         >

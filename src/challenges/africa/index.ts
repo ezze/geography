@@ -50,7 +50,7 @@ export const africa: Challenge = {
     { id: 'ghana', name: { en: 'Ghana', ru: 'Гана' }, path: 'ghana.json' },
     { id: 'guinea', name: { en: 'Guinea', ru: 'Гвинея' }, path: 'guinea.json' },
     { id: 'guinea-bissau', name: { en: 'Guinea-Bissau', ru: 'Гвинея-Биссау' }, path: 'guinea-bissau.json' },
-    { id: 'ivory-coast', name: { en: 'Ivory Coast', ru: "Код'т-Ивуар" }, path: 'ivory-coast.json' },
+    { id: 'ivory-coast', name: { en: 'Ivory Coast', ru: "Кот'д-Ивуар" }, path: 'ivory-coast.json' },
     { id: 'kenya', name: { en: 'Kenya', ru: 'Кения' }, path: 'kenya.json' },
     { id: 'lesotho', name: { en: 'Lesotho', ru: 'Лесото' }, path: 'lesotho.json' },
     { id: 'liberia', name: { en: 'Liberia', ru: 'Либерия' }, path: 'liberia.json' },

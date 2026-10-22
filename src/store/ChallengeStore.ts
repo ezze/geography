@@ -22,14 +22,14 @@ export class ChallengeStore extends ReactionStore {
   @observable id = challenges[0].id;
   @observable items: Array<ChallengeItem> = [];
   @observable duration = challengeDurations[1];
-  @observable startTime?: number;
+  @observable startTime?: number = undefined;
   @observable elapsedTime = 0;
   @observable gameOver = false;
-  @observable guessedItemId?: string;
+  @observable guessedItemId?: string = undefined;
   @observable innerCount = 0;
   @observable correctCount = 0;
-  @observable pickedItemId?: string;
-  @observable userItemId?: string;
+  @observable pickedItemId?: string = undefined;
+  @observable userItemId?: string = undefined;
   @observable userCorrect = false;
 
   @observable loading = false;

@@ -1,4 +1,4 @@
-@import "../ChallengeSidebar/ChallengeSidebar"
+@use "../ChallengeSidebar/variables" as sidebar
 
 
 $toolbar-gap: 15px !default
@@ -19,7 +19,7 @@ $toolbar-user-name-background-color: #fff !default
   pointer-events: none
 
   &.toolbar-narrow
-    right: $toolbar-gap + $challenge-sidebar-width + $challenge-sidebar-gap
+    right: $toolbar-gap + sidebar.$challenge-sidebar-width + sidebar.$challenge-sidebar-gap
 
   > div
     pointer-events: auto

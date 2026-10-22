@@ -6,7 +6,6 @@ import { ModalNotification } from '../ModalNotification/ModalNotification';
 
 import './About.sass';
 
-// @ts-ignore
 const version = VERSION;
 
 export const About = observer(() => {

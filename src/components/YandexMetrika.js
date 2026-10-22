@@ -31,7 +31,7 @@ export class YandexMetrika extends Component {
     return process.env.NODE_ENV === 'production' ? (
       <noscript>
         <div>
-          <img src="https://mc.yandex.ru/watch/55673590" style="position:absolute; left:-9999px;" alt="" />
+          <img src="https://mc.yandex.ru/watch/55673590" style={{ position: 'absolute', left: '-9999px' }} alt="" />
         </div>
       </noscript>
     ) : null;

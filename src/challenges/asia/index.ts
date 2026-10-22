@@ -51,6 +51,11 @@ export const asia: Challenge = {
       path: 'china.json'
     },
     {
+      id: 'east-timor',
+      name: { en: 'East Timor', ru: 'Восточный Тимор' },
+      path: 'east-timor.json'
+    },
+    {
       id: 'hong-kong',
       name: { en: 'Hong Kong', ru: 'Гонконг' },
       path: 'hong-kong.json'
@@ -116,9 +121,19 @@ export const asia: Challenge = {
       path: 'lebanon.json'
     },
     {
+      id: 'macau',
+      name: { en: 'Macau', ru: 'Макао' },
+      path: 'macau.json'
+    },
+    {
       id: 'malaysia',
       name: { en: 'Malaysia', ru: 'Малайзия' },
       path: 'malaysia.json'
+    },
+    {
+      id: 'maldives',
+      name: { en: 'Maldives', ru: 'Мальдивы' },
+      path: 'maldives.json'
     },
     {
       id: 'mongolia',
@@ -149,6 +164,11 @@ export const asia: Challenge = {
       id: 'pakistan',
       name: { en: 'Pakistan', ru: 'Пакистан' },
       path: 'pakistan.json'
+    },
+    {
+      id: 'palestine',
+      name: { en: 'Palestine', ru: 'Палестина' },
+      path: 'palestine.json'
     },
     {
       id: 'philippines',

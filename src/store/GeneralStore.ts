@@ -17,7 +17,7 @@ export class GeneralStore extends BaseStore {
   @observable language: Language = this.languages[0];
   @observable soundEnabled = true;
   @observable developerMode = false;
-  @observable modal?: ModalType;
+  @observable modal?: ModalType = undefined;
 
   constructor(options?: GeneralStoreOptions) {
     super();

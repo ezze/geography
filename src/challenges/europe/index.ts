@@ -68,6 +68,7 @@ export const europe: Challenge = {
     { id: 'spain', name: { en: 'Spain', ru: 'Испания' }, path: 'spain.json' },
     { id: 'sweden', name: { en: 'Sweden', ru: 'Швеция' }, path: 'sweden.json' },
     { id: 'switzerland', name: { en: 'Switzerland', ru: 'Швейцария' }, path: 'switzerland.json' },
-    { id: 'ukraine', name: { en: 'Ukraine', ru: 'Украина' }, path: 'ukraine.json' }
+    { id: 'ukraine', name: { en: 'Ukraine', ru: 'Украина' }, path: 'ukraine.json' },
+    { id: 'vatican', name: { en: 'Vatican City', ru: 'Ватикан' }, path: 'vatican.json' }
   ]
 };

@@ -6,6 +6,19 @@ $modal-notification-loading-gap: 15px !default
   display: block
   width: $modal-notification-loading-width
   margin: $modal-notification-loading-gap auto 0
+  animation: modal-notification-spin 1s linear infinite
+
+  > circle
+    fill: none
+    stroke: currentColor
+    stroke-width: 4
+    stroke-linecap: round
+    stroke-dasharray: 60 82
+
+
+@keyframes modal-notification-spin
+  to
+    transform: rotate(360deg)
 
 
 .modal-notification-nested

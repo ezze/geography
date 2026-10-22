@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { ReactNode, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactLoading from 'react-loading';
 
 import { GeneralStoreContext } from '../../store/GeneralStore';
 import { ModalType } from '../../types';
@@ -58,7 +57,11 @@ export const ModalNotification = observer((props: ModalNotificationProps) => {
           )}
           {content}
           {nestedContent}
-          {loading && <ReactLoading className="modal-notification-loading" type="spin" />}
+          {loading && (
+            <svg className="modal-notification-loading" viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="13" />
+            </svg>
+          )}
         </div>
       </div>
     </div>
